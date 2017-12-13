@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.waterfairy.imageselect.activity.ImageSelectActivity">
+    <!--top-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/action_bar_height"
+        android:background="@color/colorMain">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/action_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_pressed_style"
+            android:clickable="true"
+            android:padding="15dp"
+            android:src="@mipmap/back"/>
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/back"
+            android:background="#22FFFFFF"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/back"
+            android:text="图片选择"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/ensure_button"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/style_ensure_button2"
+            android:text="完成"
+            android:textColor="@drawable/style_text_ensure_button2"/>
+    </RelativeLayout>
+    <!--内容区-->
+
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/action_bar_height"
+        android:layout_marginTop="@dimen/action_bar_height"/>
+
+    <LinearLayout
+        android:id="@+id/folder_list_lin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:background="#66000000"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:background="@color/colorWhite"
+            android:paddingTop="3dp"/>
+    </LinearLayout>
+    <!--bottom-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/action_bar_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorMain">
+
+        <LinearLayout
+            android:id="@+id/folder_select_button_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_pressed_style"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp">
+
+            <TextView
+                android:id="@+id/path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:maxWidth="200dp"
+                android:text="图片"
+                android:textColor="@color/colorWhite"/>
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="@dimen/action_bar_height"
+                android:layout_height="@dimen/action_bar_height"
+                android:padding="17dp"
+                android:src="@mipmap/arrow_down"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/pri_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_pressed_style"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="预览"
+            android:textColor="#88FFFFFF"/>
+
+    </RelativeLayout>
+</RelativeLayout>

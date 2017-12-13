@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.waterfairy.imageselect.activity.ImageViewPagerShowActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:id="@+id/rel_top"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/action_bar_height"
+        android:background="@color/colorMain">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/action_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_pressed_style"
+            android:clickable="true"
+            android:onClick="back"
+            android:padding="15dp"
+            android:src="@mipmap/back"/>
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/back"
+            android:background="#22FFFFFF"/>
+
+        <Button
+            android:id="@+id/ensure_button"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/style_ensure_button"
+            android:text="完成"
+            android:textColor="@drawable/style_text_ensure_button"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:id="@+id/rel_bottom"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/action_bar_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorMain">
+
+        <LinearLayout
+            android:id="@+id/select_button_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingRight="10dp">
+
+            <CheckBox
+                android:id="@+id/check_box"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="选择"
+                android:textColor="@color/colorWhite"/>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>
