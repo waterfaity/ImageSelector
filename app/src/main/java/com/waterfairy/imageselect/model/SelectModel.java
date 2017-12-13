@@ -48,7 +48,7 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
 
     @Override
     public void onSearchSuccess(ArrayList<SearchFolderBean> fileList) {
-        mShareTool.saveFolder(fileList);
+//        mShareTool.saveFolder(fileList);
         mPresenter.onGetFoldersSuccess(fileList);
     }
 

@@ -92,7 +92,6 @@ public class PictureSearchTool {
      * @param onSearchListener
      */
     private void search(File file, int deep, OnSearchListener onSearchListener) {
-        Log.i(TAG, "search: " + deep);
         if (file.exists() && deep < this.deep && !file.getName().startsWith(".") && !(deep == 0 && TextUtils.equals("Android", file.getName()))) {
             File[] list = file.listFiles();
             if (list != null) {

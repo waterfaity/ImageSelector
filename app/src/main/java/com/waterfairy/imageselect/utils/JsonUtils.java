@@ -8,8 +8,11 @@ import com.google.gson.Gson;
  */
 
 public class JsonUtils {
-    public static String objectToJson(Object object){
-        Gson gson=new Gson();
-       return gson.toJson(object);
+    public static String objectToJson(Object object) {
+        if (object == null) {
+            return "";
+        }
+        Gson gson = new Gson();
+        return gson.toJson(object);
     }
 }
