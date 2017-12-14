@@ -16,12 +16,12 @@
         android:id="@+id/rel_top"
         android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar_height"
-        android:background="@color/colorMain">
+        android:layout_height="@dimen/image_selector_action_bar_height"
+        android:background="@color/imageSelectorColorMain">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="@dimen/action_bar_height"
+            android:layout_width="@dimen/image_selector_action_bar_height"
             android:layout_height="match_parent"
             android:background="@drawable/bg_pressed_style"
             android:clickable="true"
@@ -53,9 +53,9 @@
         android:id="@+id/rel_bottom"
         android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar_height"
+        android:layout_height="@dimen/image_selector_action_bar_height"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorMain">
+        android:background="@color/imageSelectorColorMain">
 
         <LinearLayout
             android:id="@+id/select_button_lin"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="选择"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/imageSelectorColorWhite"/>
 
 
         </LinearLayout>

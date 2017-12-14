@@ -160,11 +160,11 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     public void setEnsureCanClick(boolean canClick) {
         if (canClick) {
             mBTEnsure.setBackgroundResource(R.drawable.style_ensure_button);
-            mBTEnsure.setTextColor(getResources().getColor(R.color.colorWhite));
+            mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorWhite));
             mBTEnsure.setClickable(true);
         } else {
             mBTEnsure.setBackgroundResource(R.drawable.style_ensure_button2);
-            mBTEnsure.setTextColor(getResources().getColor(R.color.colorEnsureShadow));
+            mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorEnsureShadow));
             mBTEnsure.setClickable(false);
         }
     }

@@ -14,8 +14,8 @@
     <RelativeLayout
         android:id="@+id/rel_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar_height"
-        android:background="@color/colorMain"
+        android:layout_height="@dimen/image_selector_action_bar_height"
+        android:background="@color/imageSelectorColorMain"
         android:clickable="true">
 
         <ImageView

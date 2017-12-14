@@ -1,6 +1,5 @@
 package com.waterfairy.imageselect.activity;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -158,7 +157,7 @@ public class ImageSelectActivity extends AppCompatActivity implements SelectView
             mTVPriView.setTextColor(Color.WHITE);
             mTVPriView.setOnClickListener(this);
             mBTEnsure.setBackgroundResource(R.drawable.style_ensure_button);
-            mBTEnsure.setTextColor(getResources().getColor(R.color.colorWhite));
+            mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorWhite));
             mBTEnsure.setClickable(true);
         } else {
             mBTEnsure.setText("完成");
@@ -166,7 +165,7 @@ public class ImageSelectActivity extends AppCompatActivity implements SelectView
             mTVPriView.setOnClickListener(null);
             mTVPriView.setTextColor(Color.parseColor("#88FFFFFF"));
             mBTEnsure.setBackgroundResource(R.drawable.style_ensure_button2);
-            mBTEnsure.setTextColor(getResources().getColor(R.color.colorEnsureShadow));
+            mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorEnsureShadow));
             mBTEnsure.setClickable(false);
         }
     }

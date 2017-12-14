@@ -10,15 +10,15 @@
         android:supportsRtl="true">
         <activity
             android:name=".activity.ImageSelectActivity"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:name=".activity.ImageShowActivity"
-            android:theme="@style/FullScreen">
+            android:theme="@style/ImageSelectorFullScreen">
         </activity>
         <activity
             android:name=".activity.ImageViewPagerShowActivity"
-            android:theme="@style/FullScreen">
+            android:theme="@style/ImageSelectorFullScreen">
         </activity>
     </application>
 </manifest>
