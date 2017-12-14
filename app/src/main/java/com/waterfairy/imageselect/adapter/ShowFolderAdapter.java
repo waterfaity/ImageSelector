@@ -55,7 +55,7 @@ public class ShowFolderAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_folder_list, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.image_selector_item_folder_list, parent, false);
             convertView.setTag(new  ViewHolder(convertView));
         }
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();

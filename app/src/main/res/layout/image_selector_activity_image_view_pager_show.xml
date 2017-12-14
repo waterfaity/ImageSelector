@@ -23,11 +23,11 @@
             android:id="@+id/back"
             android:layout_width="@dimen/image_selector_action_bar_height"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_pressed_style"
+            android:background="@drawable/image_selector_bg_pressed_style"
             android:clickable="true"
             android:onClick="back"
             android:padding="15dp"
-            android:src="@mipmap/back"/>
+            android:src="@mipmap/image_selector_back"/>
 
         <TextView
             android:layout_width="1dp"
@@ -43,9 +43,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/style_ensure_button"
+            android:background="@drawable/image_selector_style_ensure_button"
             android:text="完成"
-            android:textColor="@drawable/style_text_ensure_button"/>
+            android:textColor="@drawable/image_selector_style_text_ensure_button"/>
     </RelativeLayout>
 
     <RelativeLayout

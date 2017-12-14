@@ -16,7 +16,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:background="@drawable/fore_show_img"
+            android:background="@drawable/image_selector_fore_show_img"
             android:layout_height="match_parent"/>
 
         <CheckBox

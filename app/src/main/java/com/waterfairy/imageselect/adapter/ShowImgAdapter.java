@@ -67,7 +67,7 @@ public class ShowImgAdapter extends BaseAdapter implements View.OnClickListener 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_img_show, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.image_selector_item_img_show, parent, false);
             convertView.setTag(new ViewHolder(convertView));
         }
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();

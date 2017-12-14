@@ -1,10 +1,12 @@
 package com.waterfairy.imageselect.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_view_pager_show);
+        setContentView(R.layout.image_selector_activity_image_view_pager_show);
         getExtra();
         findView();
         initView();
@@ -159,11 +161,11 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
     public void setEnsureCanClick(boolean canClick) {
         if (canClick) {
-            mBTEnsure.setBackgroundResource(R.drawable.style_ensure_button);
+            mBTEnsure.setBackgroundResource(R.drawable.image_selector_style_ensure_button);
             mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorWhite));
             mBTEnsure.setClickable(true);
         } else {
-            mBTEnsure.setBackgroundResource(R.drawable.style_ensure_button2);
+            mBTEnsure.setBackgroundResource(R.drawable.image_selector_style_ensure_button2);
             mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorEnsureShadow));
             mBTEnsure.setClickable(false);
         }
@@ -173,6 +175,10 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         Intent intent = getIntent();
         dataList = intent.getStringArrayListExtra("dataList");
         maxNum = intent.getIntExtra(ImageSelectActivity.MAX_NUM, 1);
+        String ori = intent.getStringExtra(ImageSelectActivity.SCREEN_DIRECTION);
+        setRequestedOrientation(TextUtils.isDigitsOnly(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
+                TextUtils.equals(ori, ImageSelectActivity.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
+
     }
 
     public void setResult(boolean complete) {

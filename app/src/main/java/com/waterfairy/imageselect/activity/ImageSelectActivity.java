@@ -82,7 +82,7 @@ public class ImageSelectActivity extends AppCompatActivity implements SelectView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getExtra();
-        setContentView(R.layout.activity_image_select);
+        setContentView(R.layout.image_selector_activity_image_select);
         mPresenter = new SelectPresenter(this);
         findView();
         initView();
@@ -156,7 +156,7 @@ public class ImageSelectActivity extends AppCompatActivity implements SelectView
             mTVPriView.setText("预览" + "(" + size + ")");
             mTVPriView.setTextColor(Color.WHITE);
             mTVPriView.setOnClickListener(this);
-            mBTEnsure.setBackgroundResource(R.drawable.style_ensure_button);
+            mBTEnsure.setBackgroundResource(R.drawable.image_selector_style_ensure_button);
             mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorWhite));
             mBTEnsure.setClickable(true);
         } else {
@@ -164,7 +164,7 @@ public class ImageSelectActivity extends AppCompatActivity implements SelectView
             mTVPriView.setText("预览");
             mTVPriView.setOnClickListener(null);
             mTVPriView.setTextColor(Color.parseColor("#88FFFFFF"));
-            mBTEnsure.setBackgroundResource(R.drawable.style_ensure_button2);
+            mBTEnsure.setBackgroundResource(R.drawable.image_selector_style_ensure_button2);
             mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorEnsureShadow));
             mBTEnsure.setClickable(false);
         }
@@ -228,6 +228,7 @@ public class ImageSelectActivity extends AppCompatActivity implements SelectView
         }
         Intent intent = new Intent(this, ImageViewPagerShowActivity.class);
         intent.putStringArrayListExtra("dataList", selectList);
+        intent.putExtra(SCREEN_DIRECTION, mScreenDir);
         intent.putExtra(MAX_NUM, mMaxNum);
         startActivityForResult(intent, 1);
     }
@@ -321,6 +322,7 @@ public class ImageSelectActivity extends AppCompatActivity implements SelectView
     public void onClickImg(String imgPath) {
         Intent intent = new Intent(this, ImageShowActivity.class);
         intent.putExtra("path", imgPath);
+        intent.putExtra(SCREEN_DIRECTION, mScreenDir);
         startActivity(intent);
     }
 

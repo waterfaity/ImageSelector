@@ -20,13 +20,13 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="@dimen/action_bar_height"
-            android:layout_height="@dimen/action_bar_height"
+            android:layout_width="@dimen/image_selector_action_bar_height"
+            android:layout_height="@dimen/image_selector_action_bar_height"
             android:clickable="true"
             android:onClick="back"
             android:padding="15dp"
             android:scaleType="fitStart"
-            android:src="@mipmap/back"/>
+            android:src="@mipmap/image_selector_back"/>
     </RelativeLayout>
 
 </RelativeLayout>

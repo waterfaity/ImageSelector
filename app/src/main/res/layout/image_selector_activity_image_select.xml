@@ -17,10 +17,10 @@
             android:id="@+id/back"
             android:layout_width="@dimen/image_selector_action_bar_height"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_pressed_style"
+            android:background="@drawable/image_selector_bg_pressed_style"
             android:clickable="true"
             android:padding="15dp"
-            android:src="@mipmap/back"/>
+            android:src="@mipmap/image_selector_back"/>
 
         <TextView
             android:layout_width="1dp"
@@ -45,9 +45,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/style_ensure_button2"
+            android:background="@drawable/image_selector_style_ensure_button2"
             android:text="完成"
-            android:textColor="@drawable/style_text_ensure_button2"/>
+            android:textColor="@drawable/image_selector_style_text_ensure_button2"/>
     </RelativeLayout>
     <!--内容区-->
 
@@ -94,7 +94,7 @@
             android:id="@+id/folder_select_button_lin"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_pressed_style"
+            android:background="@drawable/image_selector_bg_pressed_style"
             android:clickable="true"
             android:gravity="center_vertical"
             android:paddingLeft="16dp">
@@ -113,7 +113,7 @@
                 android:layout_width="@dimen/image_selector_action_bar_height"
                 android:layout_height="@dimen/image_selector_action_bar_height"
                 android:padding="17dp"
-                android:src="@mipmap/arrow_down"/>
+                android:src="@mipmap/image_selector_arrow_down"/>
         </LinearLayout>
 
         <TextView
@@ -121,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@drawable/bg_pressed_style"
+            android:background="@drawable/image_selector_bg_pressed_style"
             android:clickable="true"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
