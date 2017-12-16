@@ -20,5 +20,16 @@
             android:name=".activity.ImageViewPagerShowActivity"
             android:theme="@style/ImageSelectorFullScreen">
         </activity>
+        <activity
+            android:name=".activity.ImageSelectLandActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/ImageSelectorNoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.ImageSelectPortActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ImageSelectorNoActionBar">
+        </activity>
     </application>
+
 </manifest>

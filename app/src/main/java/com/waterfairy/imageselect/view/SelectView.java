@@ -31,4 +31,6 @@ public interface SelectView {
     void dismissDialog();
 
     boolean isDestroy();
+
+    void show(String text);
 }

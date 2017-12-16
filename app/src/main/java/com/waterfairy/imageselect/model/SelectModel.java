@@ -19,13 +19,11 @@ import java.util.List;
 
 public class SelectModel implements PictureSearchTool.OnSearchListener {
     private SelectPresenterListener mPresenter;
-    private ImageSelectActivity mActivity;
     private PictureSearchTool mPictureSearchTool;
     private ShareTool mShareTool;
 
-    public SelectModel(SelectPresenterListener listener, ImageSelectActivity activity) {
+    public SelectModel(SelectPresenterListener listener ) {
         this.mPresenter = listener;
-        mActivity = activity;
         mPictureSearchTool = PictureSearchTool.getInstance();
         mPictureSearchTool.setOnSearchListener(this);
         mShareTool = ShareTool.getInstance();

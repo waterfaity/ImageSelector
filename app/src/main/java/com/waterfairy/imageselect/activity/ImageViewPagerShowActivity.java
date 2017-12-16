@@ -2,10 +2,10 @@ package com.waterfairy.imageselect.activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.waterfairy.imageselect.R;
+import com.waterfairy.imageselect.utils.ConstantUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,30 +134,6 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         } else if (v.getId() == R.id.ensure_button) {
             setResult(true);
         }
-//        switch (v.getId()) {
-//            case R.id.select_button_lin:
-//                String path = dataList.get(currentPos);
-//                if (mCBSelect.isChecked()) {
-//                    tempDataList.remove(path);
-//                    mCBSelect.setChecked(false);
-//                } else {
-//                    tempDataList.add(path);
-//                    mCBSelect.setChecked(true);
-//                }
-//
-//                if (tempDataList.size() == 0) {
-//                    mBTEnsure.setText("完成");
-//                    setEnsureCanClick(false);
-//                } else {
-//                    mBTEnsure.setText("完成(" + tempDataList.size() + "/" + maxNum + ")");
-//                    setEnsureCanClick(true);
-//                }
-//                break;
-//            case R.id.ensure_button:
-//                setResult(true);
-//                break;
-//        }
-
     }
 
     public void setEnsureCanClick(boolean canClick) {
@@ -174,10 +151,10 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     private void getExtra() {
         Intent intent = getIntent();
         dataList = intent.getStringArrayListExtra("dataList");
-        maxNum = intent.getIntExtra(ImageSelectActivity.MAX_NUM, 1);
-        String ori = intent.getStringExtra(ImageSelectActivity.SCREEN_DIRECTION);
+        maxNum = intent.getIntExtra(ConstantUtils.MAX_NUM, 1);
+        String ori = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
         setRequestedOrientation(TextUtils.isDigitsOnly(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
-                TextUtils.equals(ori, ImageSelectActivity.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
+                TextUtils.equals(ori, ConstantUtils.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
 
     }
 

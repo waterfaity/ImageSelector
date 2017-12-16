@@ -2,14 +2,15 @@ package com.waterfairy.imageselect.activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.utils.AnimUtils;
+import com.waterfairy.imageselect.utils.ConstantUtils;
 
 import java.io.File;
 
@@ -27,9 +28,9 @@ public class ImageShowActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
         String path = intent.getStringExtra("path");
-        String ori = intent.getStringExtra(ImageSelectActivity.SCREEN_DIRECTION);
+        String ori = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
         setRequestedOrientation(TextUtils.isDigitsOnly(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
-                TextUtils.equals(ori, ImageSelectActivity.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
+                TextUtils.equals(ori, ConstantUtils.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
 
         if (!TextUtils.isEmpty(url)) {
             Glide.with(this).load(url).into(photoView);
