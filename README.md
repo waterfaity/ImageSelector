@@ -9,6 +9,6 @@ intent.putExtra(ImageSelectActivity.RESULT_STRING,"result"); //返回字段 :res
 intent.putExtra(ImageSelectActivity.GRID_NUM,6); //gridView 水平列数
 intent.putExtra(ImageSelectActivity.DEEP,3); //图片扫描深度默认 3层文件夹
 startActivityForResult(intent, 1);
-依赖
+依赖:
 compile 'com.github.waterfaity:ImageSelector:1.4'
 
