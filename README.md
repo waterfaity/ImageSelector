@@ -2,6 +2,7 @@
 防微信
 
 ### 使用:
+```java
 Intent intent = new Intent(this, ImageSelectActivity.class);
 
 intent.putExtra(ImageSelectActivity.MAX_NUM, 6); //最大选择数量
@@ -15,6 +16,7 @@ intent.putExtra(ImageSelectActivity.GRID_NUM,6); //gridView 水平列数
 intent.putExtra(ImageSelectActivity.DEEP,3); //图片扫描深度默认 3层文件夹
 
 startActivityForResult(intent, 1);
+```
 
 ### 依赖:
 compile 'com.github.waterfaity:ImageSelector:1.4'
