@@ -19,5 +19,6 @@ startActivityForResult(intent, 1);
 ```
 
 ### 依赖:
+```java
 compile 'com.github.waterfaity:ImageSelector:1.4'
-
+```
