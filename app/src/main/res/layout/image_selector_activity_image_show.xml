@@ -21,12 +21,28 @@
         <ImageView
             android:id="@+id/back"
             android:layout_width="@dimen/image_selector_action_bar_height"
-            android:layout_height="@dimen/image_selector_action_bar_height"
-            android:clickable="true"
+            android:layout_height="match_parent"
             android:onClick="back"
+            android:background="@drawable/image_selector_bg_pressed_style"
+            android:clickable="true"
             android:padding="15dp"
-            android:scaleType="fitStart"
             android:src="@mipmap/image_selector_back"/>
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/back"
+            android:background="#22FFFFFF"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/back"
+            android:textColor="@color/imageSelectorColorWhite"/>
     </RelativeLayout>
 
 </RelativeLayout>

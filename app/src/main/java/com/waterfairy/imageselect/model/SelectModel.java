@@ -50,6 +50,11 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
         mPresenter.onGetFoldersSuccess(fileList);
     }
 
+    @Override
+    public void onSearchError(String errorMsg) {
+
+    }
+
     public void queryImgS(String path) {
         List<SearchImgBean> searchImgBeans = mPictureSearchTool.searchFolder(path);
         mPresenter.onGetImgSuccess(searchImgBeans);

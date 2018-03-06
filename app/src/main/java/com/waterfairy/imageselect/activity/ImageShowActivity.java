@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.utils.AnimUtils;
 import com.waterfairy.imageselect.utils.ConstantUtils;
+import com.waterfairy.imageselect.utils.PathUtils;
 
 import java.io.File;
 
@@ -31,10 +33,12 @@ public class ImageShowActivity extends AppCompatActivity {
         String ori = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
         setRequestedOrientation(TextUtils.isDigitsOnly(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
                 TextUtils.equals(ori, ConstantUtils.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
-
+        TextView title = findViewById(R.id.title);
         if (!TextUtils.isEmpty(url)) {
+            title.setText(PathUtils.getNameFromUrl(url));
             Glide.with(this).load(url).into(photoView);
         } else if (!TextUtils.isEmpty(path)) {
+            title.setText(new File(path).getName());
             Glide.with(this).load(new File(path)).into(photoView);
         }
         final View topView = findViewById(R.id.rel_top);
