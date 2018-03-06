@@ -28,8 +28,8 @@ public class ImageShowActivity extends AppCompatActivity {
         setContentView(R.layout.image_selector_activity_image_show);
         final PhotoView photoView = findViewById(R.id.image);
         Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
-        String path = intent.getStringExtra("path");
+        String url = intent.getStringExtra(ConstantUtils.STR_URL);
+        String path = intent.getStringExtra(ConstantUtils.STR_PATH);
         String ori = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
         setRequestedOrientation(TextUtils.isDigitsOnly(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
                 TextUtils.equals(ori, ConstantUtils.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));

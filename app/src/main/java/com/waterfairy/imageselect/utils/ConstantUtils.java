@@ -24,4 +24,6 @@ public class ConstantUtils {
     public static final int DEFAULT_DEEP = 3;
     public static final int DEFAULT_GRID_NUM_MIN = 3;
     public static final int DEFAULT_GRID_NUM_MAX = 6;
+    public static final String STR_URL = "url";
+    public static final String STR_PATH = "path";
 }

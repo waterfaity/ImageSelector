@@ -16,11 +16,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.utils.ConstantUtils;
+import com.waterfairy.imageselect.utils.PathUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     private List<PhotoView> photoViews;
     private ViewPager mVPShowImg;
     private LinearLayout mLLSelect;
+    private TextView mTVTitle;
     private CheckBox mCBSelect;
     private int currentPos;
     private Button mBTEnsure;
@@ -83,6 +87,9 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
                 container.removeView(photoViews.get(position));
             }
         });
+        if (dataList != null && dataList.size() > 0) {
+            mTVTitle.setText(new File(dataList.get(0)).getName());
+        }
     }
 
     private void initView() {
@@ -107,6 +114,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         mBTEnsure = findViewById(R.id.ensure_button);
         mRLTop = findViewById(R.id.rel_top);
         mRLBottom = findViewById(R.id.rel_bottom);
+        mTVTitle = findViewById(R.id.title);
 
     }
 
@@ -193,6 +201,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     public void onPageSelected(int position) {
         currentPos = position;
         String path = dataList.get(position);
+        mTVTitle.setText(new File(path).getName());
         if (tempDataList.contains(path)) {
             mCBSelect.setChecked(true);
         } else {

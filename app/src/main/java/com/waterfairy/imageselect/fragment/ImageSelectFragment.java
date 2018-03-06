@@ -31,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.waterfairy.imageselect.R;
-import com.waterfairy.imageselect.activity.ImageSelectActivity;
 import com.waterfairy.imageselect.activity.ImageShowActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
 import com.waterfairy.imageselect.adapter.ShowFolderAdapter;
@@ -332,7 +331,7 @@ public class ImageSelectFragment extends Fragment implements
     @Override
     public void onClickImg(String imgPath) {
         Intent intent = new Intent(getActivity(), ImageShowActivity.class);
-        intent.putExtra("path", imgPath);
+        intent.putExtra(ConstantUtils.STR_PATH, imgPath);
         intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
         startActivity(intent);
     }

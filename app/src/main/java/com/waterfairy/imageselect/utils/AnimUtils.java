@@ -33,7 +33,7 @@ public class AnimUtils {
         TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, 0,
                 Animation.RELATIVE_TO_SELF, fromValue,
                 Animation.RELATIVE_TO_SELF, toValue);
-        translateAnimation.setDuration(300);
+        translateAnimation.setDuration(150);
         if (!in) {
 
             translateAnimation.setFillAfter(true);
