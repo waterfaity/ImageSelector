@@ -31,8 +31,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.waterfairy.imageselect.R;
+import com.waterfairy.imageselect.activity.ImageSelectPortActivity;
 import com.waterfairy.imageselect.activity.ImageShowActivity;
+import com.waterfairy.imageselect.activity.ImageShowLandActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
+import com.waterfairy.imageselect.activity.ImageViewPagerShowLandActivity;
 import com.waterfairy.imageselect.adapter.ShowFolderAdapter;
 import com.waterfairy.imageselect.adapter.ShowImgAdapter;
 import com.waterfairy.imageselect.bean.SearchImgBean;
@@ -78,7 +81,7 @@ public class ImageSelectFragment extends Fragment implements
     private String mResultString = "data";
     private int mGridNum = 3;
     private int mMaxNum = 9;
-    private String mScreenDir;
+    private String mScreenDir;//屏幕方向
     private int imgWidth;
     private boolean isDestroy;//横竖屏旋转时处理
     //adapter
@@ -230,19 +233,30 @@ public class ImageSelectFragment extends Fragment implements
         getActivity().finish();
     }
 
-
+    /**
+     * 预览选择的图片
+     */
     private void priView() {
         ArrayList<String> selectList = imgAdapter.getSelectList();
         if (selectList == null || selectList.size() == 0) {
             return;
         }
-        Intent intent = new Intent(getActivity(), ImageViewPagerShowActivity.class);
+        Intent intent = null;
+
+        if (TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_LAND)) {
+            intent = new Intent(getActivity(), ImageViewPagerShowLandActivity.class);
+        } else {
+            intent = new Intent(getActivity(), ImageViewPagerShowActivity.class);
+        }
         intent.putStringArrayListExtra("dataList", selectList);
         intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
         intent.putExtra(ConstantUtils.MAX_NUM, mMaxNum);
         startActivityForResult(intent, 1);
     }
 
+    /**
+     * 展示文件夹数据
+     */
     private void showFolder() {
         if (folderAdapter == null) {
             folderAdapter = new ShowFolderAdapter(getActivity(), mPresenter.getFolderData());
@@ -251,6 +265,11 @@ public class ImageSelectFragment extends Fragment implements
         }
     }
 
+    /**
+     * 显示文件夹选项
+     *
+     * @param show
+     */
     private void showFolderLin(boolean show) {
         if (show) {
             mIMArrow.setScaleY(-1);
@@ -306,6 +325,11 @@ public class ImageSelectFragment extends Fragment implements
         isFolderListVisibility = show;
     }
 
+    /**
+     * 文件夹点击
+     *
+     * @param position
+     */
     @Override
     public void onClickFolder(int position) {
         setFolderName(position);
@@ -313,6 +337,11 @@ public class ImageSelectFragment extends Fragment implements
         mPresenter.queryImg(position);
     }
 
+    /**
+     * 显示文件夹名字
+     *
+     * @param position
+     */
     @Override
     public void setFolderName(int position) {
         mTVPath.setText(PathUtils.getNameFromUrl(mPresenter.getFolderData().get(position).getPath()));
@@ -328,9 +357,17 @@ public class ImageSelectFragment extends Fragment implements
         }
     }
 
+    /**
+     * 点击单张图片
+     *
+     * @param imgPath
+     */
     @Override
     public void onClickImg(String imgPath) {
-        Intent intent = new Intent(getActivity(), ImageShowActivity.class);
+        Intent intent = null;
+        if (TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_LAND))
+            intent = new Intent(getActivity(), ImageShowLandActivity.class);
+        else intent = new Intent(getActivity(), ImageSelectPortActivity.class);
         intent.putExtra(ConstantUtils.STR_PATH, imgPath);
         intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
         startActivity(intent);
