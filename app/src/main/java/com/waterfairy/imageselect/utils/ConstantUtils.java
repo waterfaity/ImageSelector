@@ -26,4 +26,5 @@ public class ConstantUtils {
     public static final int DEFAULT_GRID_NUM_MAX = 6;
     public static final String STR_URL = "url";
     public static final String STR_PATH = "path";
+    public static final String STR_IMG_TITLE = "imgTitle";
 }

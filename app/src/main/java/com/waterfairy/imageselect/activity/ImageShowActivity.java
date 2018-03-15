@@ -31,14 +31,15 @@ public class ImageShowActivity extends AppCompatActivity {
         String url = intent.getStringExtra(ConstantUtils.STR_URL);
         String path = intent.getStringExtra(ConstantUtils.STR_PATH);
         String ori = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
+        String title = intent.getStringExtra(ConstantUtils.STR_IMG_TITLE);
         setRequestedOrientation(TextUtils.isDigitsOnly(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
                 TextUtils.equals(ori, ConstantUtils.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
-        TextView title = findViewById(R.id.title);
+        TextView tVtitle = findViewById(R.id.title);
         if (!TextUtils.isEmpty(url)) {
-            title.setText(PathUtils.getNameFromUrl(url));
+            tVtitle.setText(TextUtils.isEmpty(title) ? PathUtils.getNameFromUrl(url) : title);
             Glide.with(this).load(url).into(photoView);
         } else if (!TextUtils.isEmpty(path)) {
-            title.setText(new File(path).getName());
+            tVtitle.setText(TextUtils.isEmpty(title) ? new File(path).getName() : title);
             Glide.with(this).load(new File(path)).into(photoView);
         }
         final View topView = findViewById(R.id.rel_top);
