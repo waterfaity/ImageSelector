@@ -56,7 +56,7 @@ public class ShowFolderAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.image_selector_item_folder_list, parent, false);
-            convertView.setTag(new  ViewHolder(convertView));
+            convertView.setTag(new ViewHolder(convertView));
         }
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         SearchFolderBean searchFolderBean = mData.get(position);
@@ -64,8 +64,8 @@ public class ShowFolderAdapter extends BaseAdapter {
         Glide.with(mContext).load(searchFolderBean.getFirstImgPath()).centerCrop().into(viewHolder.imageView);
         if (lastPos == position) {
             viewHolder.radioButton.setVisibility(View.VISIBLE);
-            lastRadioButton=viewHolder.radioButton;
-        }else {
+            lastRadioButton = viewHolder.radioButton;
+        } else {
             viewHolder.radioButton.setVisibility(View.GONE);
         }
         viewHolder.rootView.setTag(viewHolder.radioButton);

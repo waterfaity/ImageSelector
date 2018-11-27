@@ -4,7 +4,8 @@
         <shape>
             <solid android:color="@color/imageSelectorColorMainPressed"/>
         </shape>
-    </item>   <item android:state_pressed="false">
+    </item>
+    <item android:state_pressed="false">
         <shape>
             <solid android:color="@color/imageSelectorColorMain"/>
         </shape>
