@@ -115,7 +115,6 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         mRLTop = findViewById(R.id.rel_top);
         mRLBottom = findViewById(R.id.rel_bottom);
         mTVTitle = findViewById(R.id.title);
-
     }
 
     @Override

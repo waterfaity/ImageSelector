@@ -75,7 +75,7 @@ public class ShowFolderAdapter extends BaseAdapter {
             public void onClick(View v) {
                 RadioButton radioButton = (RadioButton) v.getTag();
                 int position = (int) radioButton.getTag();
-                if (radioButton != lastRadioButton) {
+                if (position != lastPos) {
                     lastRadioButton.setVisibility(View.GONE);
                     lastPos = position;
                     lastRadioButton = radioButton;

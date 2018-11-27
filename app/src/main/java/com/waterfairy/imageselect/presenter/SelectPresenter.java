@@ -25,9 +25,6 @@ import java.util.List;
 public class SelectPresenter implements SelectPresenterListener {
     private SelectView mView;
     private SelectModel mModel;
-    private int mDeep = 3;//搜索深度 默认3层
-    private ArrayList<String> mIgnorePaths;//忽略的文件夹
-    private ArrayList<String> mSearchPaths;//指定搜索文件夹(必须是忽略文件夹中的文件夹)
 
     private ArrayList<SearchFolderBean> mFolderBeans;
 
@@ -36,23 +33,16 @@ public class SelectPresenter implements SelectPresenterListener {
         mModel = new SelectModel(this);
     }
 
-    public void getExtra(Intent intent) {
-        mDeep = intent.getIntExtra(ConstantUtils.SEARCH_DEEP, mDeep);
-        mIgnorePaths = intent.getStringArrayListExtra(ConstantUtils.IGNORE_PATHS);
-        mSearchPaths = intent.getStringArrayListExtra(ConstantUtils.SEARCH_PATHS);
-    }
 
     public void getExtraBundle(Bundle bundle) {
-        mDeep = bundle.getInt(ConstantUtils.SEARCH_DEEP, mDeep);
-        mIgnorePaths = bundle.getStringArrayList(ConstantUtils.IGNORE_PATHS);
-        mSearchPaths = bundle.getStringArrayList(ConstantUtils.SEARCH_PATHS);
+        mModel.initData(bundle);
     }
 
     /**
      * 查询文件夹
      */
     public void queryFolders() {
-        mModel.queryFolders(mDeep, false);
+        mModel.queryFolders();
     }
 
     @Override

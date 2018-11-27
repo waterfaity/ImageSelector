@@ -32,8 +32,8 @@ import android.widget.Toast;
 
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.activity.ImageSelectPortActivity;
-import com.waterfairy.imageselect.activity.ImageShowActivity;
 import com.waterfairy.imageselect.activity.ImageShowLandActivity;
+import com.waterfairy.imageselect.activity.ImageShowPortActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowLandActivity;
 import com.waterfairy.imageselect.adapter.ShowFolderAdapter;
@@ -367,7 +367,7 @@ public class ImageSelectFragment extends Fragment implements
         Intent intent = null;
         if (TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_LAND))
             intent = new Intent(getActivity(), ImageShowLandActivity.class);
-        else intent = new Intent(getActivity(), ImageSelectPortActivity.class);
+        else intent = new Intent(getActivity(), ImageShowPortActivity.class);
         intent.putExtra(ConstantUtils.STR_PATH, imgPath);
         intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
         startActivity(intent);

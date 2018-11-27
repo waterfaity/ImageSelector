@@ -13,6 +13,7 @@
             android:theme="@style/ImageSelectorFullScreen">
         </activity>
         <activity
+            android:screenOrientation="behind"
             android:name=".activity.ImageShowActivity"
             android:theme="@style/ImageSelectorFullScreen">
         </activity>

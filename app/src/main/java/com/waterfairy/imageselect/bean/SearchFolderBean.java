@@ -19,8 +19,17 @@ public class SearchFolderBean {
         this.num = num;
     }
 
+    /**
+     * 当前有图片的文件夹的路径
+     */
     private String path;
+    /**
+     * 第一张图片地址
+     */
     private String firstImgPath;
+    /**
+     * 图片数量
+     */
     private int num;
 
     public int getNum() {

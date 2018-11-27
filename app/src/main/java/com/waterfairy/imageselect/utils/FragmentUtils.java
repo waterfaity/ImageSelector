@@ -26,6 +26,7 @@ public class FragmentUtils {
         Bundle bundle = new Bundle();
         Intent intent = activity.getIntent();
         bundle.putString(ConstantUtils.RESULT_STRING, intent.getStringExtra(ConstantUtils.RESULT_STRING));
+        bundle.putBoolean(ConstantUtils.LOAD_CACHE, intent.getBooleanExtra(ConstantUtils.LOAD_CACHE,false));
         bundle.putStringArrayList(ConstantUtils.SEARCH_PATHS, intent.getStringArrayListExtra(ConstantUtils.SEARCH_PATHS));
         bundle.putStringArrayList(ConstantUtils.IGNORE_PATHS, intent.getStringArrayListExtra(ConstantUtils.IGNORE_PATHS));
         String screenOriFromIntent = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
