@@ -24,7 +24,6 @@ public class ShareTool {
     private SharedPreferences share;
 
     private ShareTool() {
-
     }
 
     public static ShareTool getInstance() {
