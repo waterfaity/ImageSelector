@@ -14,7 +14,6 @@ public class AnimUtils {
     public static TranslateAnimation getInAnim(boolean up, boolean in) {
         float fromValue = -1;
         float toValue = 0;
-
         if (up) {
             if (!in) {
                 fromValue = 0;
@@ -28,14 +27,12 @@ public class AnimUtils {
                 fromValue = 0;
                 toValue = 1;
             }
-
         }
         TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, 0,
                 Animation.RELATIVE_TO_SELF, fromValue,
                 Animation.RELATIVE_TO_SELF, toValue);
         translateAnimation.setDuration(150);
         if (!in) {
-
             translateAnimation.setFillAfter(true);
         }
         return translateAnimation;
