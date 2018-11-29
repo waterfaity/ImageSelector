@@ -9,7 +9,7 @@ package com.waterfairy.imageselect.utils;
 
 public class ConstantUtils {
     //constantData
-    public static final String RESULT_STRING = "resultString";
+    public static final String RESULT_STRING = "data";
     public static final String MAX_NUM = "maxNum";//最大数量
     public static final String SEARCH_DEEP = "deep";//文件夹扫描深度
     public static final String SEARCH_PATHS = "searchPaths";//搜索路径

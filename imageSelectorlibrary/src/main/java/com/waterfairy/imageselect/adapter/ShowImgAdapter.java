@@ -1,7 +1,7 @@
 package com.waterfairy.imageselect.adapter;
 
 import android.content.Context;
-import android.media.Image;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -73,9 +73,12 @@ public class ShowImgAdapter extends BaseAdapter implements View.OnClickListener 
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         SearchImgBean searchImgBean = mData.get(position);
         searchImgBean.setPos(position);
-        Glide.with(mContext).load(searchImgBean.getPath()).centerCrop().into(viewHolder.imageView);
+        Glide.with(mContext).load(searchImgBean.getPath()).into(viewHolder.imageView);
         viewHolder.rootView.setTag(searchImgBean.getPath());
         viewHolder.rootView.setOnClickListener(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            viewHolder.rootView.setTransitionName(searchImgBean.getPath());
+        }
         viewHolder.checkBox.setOnCheckedChangeListener(null);
         viewHolder.checkBox.setChecked(selectList.contains(searchImgBean.getPath()));
         viewHolder.checkBox.setTag(searchImgBean);
@@ -117,7 +120,7 @@ public class ShowImgAdapter extends BaseAdapter implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         if (onImgClickListener != null)
-            onImgClickListener.onClickImg((String) v.getTag());
+            onImgClickListener.onClickImg(v, (String) v.getTag());
     }
 
     public ArrayList<String> getSelectList() {
@@ -154,7 +157,7 @@ public class ShowImgAdapter extends BaseAdapter implements View.OnClickListener 
     }
 
     public interface OnImgClickListener {
-        void onClickImg(String imgPath);
+        void onClickImg(View view, String imgPath);
     }
 
     public void removeAllSelect() {

@@ -14,26 +14,26 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+//import com.github.chrisbanes.photoview.OnPhotoTapListener;
+//import com.github.chrisbanes.photoview.PhotoView;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.utils.ConstantUtils;
-import com.waterfairy.imageselect.utils.PathUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, PhotoViewAttacher.OnPhotoTapListener {
+public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private ArrayList<String> dataList;
     private ArrayList<String> tempDataList;
-    private List<PhotoView> photoViews;
+    private List<ImageView> photoViews;
     private ViewPager mVPShowImg;
     private LinearLayout mLLSelect;
     private TextView mTVTitle;
@@ -76,9 +76,9 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                PhotoView photoView = photoViews.get(position);
+                ImageView photoView = photoViews.get(position);
                 container.addView(photoView);
-                photoView.setOnPhotoTapListener(ImageViewPagerShowActivity.this);
+                photoView.setOnClickListener(ImageViewPagerShowActivity.this);
                 return photoView;
             }
 
@@ -98,7 +98,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         mBTEnsure.setOnClickListener(this);
         photoViews = new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
-            PhotoView photoView = new PhotoView(this);
+            ImageView photoView = new ImageView(this);
             Glide.with(this).load(dataList.get(i)).into(photoView);
             photoViews.add(photoView);
         }
@@ -140,6 +140,16 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
             }
         } else if (v.getId() == R.id.ensure_button) {
             setResult(true);
+        } else {
+            if (isVisibility) {
+                mRLTop.startAnimation(getInAnim(true, false));
+                mRLBottom.startAnimation(getInAnim(false, false));
+            } else {
+                mRLTop.startAnimation(getInAnim(true, true));
+                mRLBottom.startAnimation(getInAnim(false, true));
+            }
+            isVisibility = !isVisibility;
+            canClick = isVisibility;
         }
     }
 
@@ -214,20 +224,6 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     }
 
 
-    @Override
-    public void onPhotoTap(View view, float x, float y) {
-        if (isVisibility) {
-            mRLTop.startAnimation(getInAnim(true, false));
-            mRLBottom.startAnimation(getInAnim(false, false));
-        } else {
-            mRLTop.startAnimation(getInAnim(true, true));
-            mRLBottom.startAnimation(getInAnim(false, true));
-        }
-        isVisibility = !isVisibility;
-        canClick = isVisibility;
-    }
-
-
     private TranslateAnimation getInAnim(boolean up, boolean in) {
         float fromValue = -1;
         float toValue = 0;
@@ -260,4 +256,16 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
     private boolean canClick = true;
 
+//    @Override
+//    public void onPhotoTap(ImageView view, float x, float y) {
+//        if (isVisibility) {
+//            mRLTop.startAnimation(getInAnim(true, false));
+//            mRLBottom.startAnimation(getInAnim(false, false));
+//        } else {
+//            mRLTop.startAnimation(getInAnim(true, true));
+//            mRLBottom.startAnimation(getInAnim(false, true));
+//        }
+//        isVisibility = !isVisibility;
+//        canClick = isVisibility;
+//    }
 }

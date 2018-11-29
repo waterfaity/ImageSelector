@@ -9,7 +9,6 @@ import com.waterfairy.imageselect.bean.SearchImgBean;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -251,12 +250,14 @@ public class PictureSearchTool {
     public List<SearchImgBean> searchFolder(String path) {
         List<SearchImgBean> imgBeans = new ArrayList<>();
         File[] files = new File(path).listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                String childPath = file.getAbsolutePath();
-                for (String anExtension : extension) {
-                    if (childPath.endsWith(anExtension)) {
-                        imgBeans.add(new SearchImgBean(childPath, imgBeans.size()));
+        if (files!=null&&files.length!=0){
+            for (File file : files) {
+                if (file.isFile()) {
+                    String childPath = file.getAbsolutePath();
+                    for (String anExtension : extension) {
+                        if (childPath.endsWith(anExtension)) {
+                            imgBeans.add(new SearchImgBean(childPath, imgBeans.size()));
+                        }
                     }
                 }
             }

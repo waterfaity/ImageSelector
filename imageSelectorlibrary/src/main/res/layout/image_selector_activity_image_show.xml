@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/root_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
 
-    <uk.co.senab.photoview.PhotoView
+    <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
     <RelativeLayout
         android:id="@+id/rel_top"
@@ -22,9 +24,9 @@
             android:id="@+id/back"
             android:layout_width="@dimen/image_selector_action_bar_height"
             android:layout_height="match_parent"
-            android:onClick="back"
             android:background="@drawable/image_selector_bg_pressed_style"
             android:clickable="true"
+            android:onClick="back"
             android:padding="15dp"
             android:src="@mipmap/image_selector_back"/>
 
@@ -33,7 +35,8 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/back"
-            android:background="#22FFFFFF"/>
+            android:background="#22FFFFFF"
+            android:ellipsize="middle"/>
 
         <TextView
             android:id="@+id/title"

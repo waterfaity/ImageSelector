@@ -10,46 +10,46 @@
         android:supportsRtl="true">
         <activity
             android:name=".activity.ImageSelectActivity"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:screenOrientation="behind"
             android:name=".activity.ImageShowActivity"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:name=".activity.ImageViewPagerShowActivity"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:name=".activity.ImageSelectLandActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:name=".activity.ImageSelectPortActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:name=".activity.ImageShowLandActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:name=".activity.ImageShowPortActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:name=".activity.ImageViewPagerShowPortActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
             android:name=".activity.ImageViewPagerShowLandActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/ImageSelectorFullScreen">
+            android:theme="@style/ImageSelectorNoActionBar">
         </activity>
     </application>
 

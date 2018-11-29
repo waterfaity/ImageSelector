@@ -1,15 +1,10 @@
 package com.waterfairy.imageselect.presenter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.waterfairy.imageselect.activity.ImageSelectActivity;
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.model.SelectModel;
-import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.view.SelectView;
 
 import java.util.ArrayList;

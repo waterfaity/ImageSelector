@@ -2,7 +2,6 @@ package com.waterfairy.imageselect.model;
 
 import android.os.Bundle;
 
-import com.waterfairy.imageselect.activity.ImageSelectActivity;
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.presenter.SelectPresenterListener;

@@ -7,11 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -31,7 +34,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.waterfairy.imageselect.R;
-import com.waterfairy.imageselect.activity.ImageSelectPortActivity;
 import com.waterfairy.imageselect.activity.ImageShowLandActivity;
 import com.waterfairy.imageselect.activity.ImageShowPortActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
@@ -99,7 +101,6 @@ public class ImageSelectFragment extends Fragment implements
         if (PermissionUtils.requestPermission(getActivity(), PermissionUtils.REQUEST_STORAGE)) {
             initData();
         }
-
         return mRootView;
     }
 
@@ -221,11 +222,16 @@ public class ImageSelectFragment extends Fragment implements
     }
 
     private void ensure() {
-        if (imgAdapter.getSelectList().size() > 0) {
+        if (imgAdapter != null && imgAdapter.getSelectList().size() > 0) {
             setResult(imgAdapter.getSelectList());
         }
     }
 
+    /**
+     * 返回图片
+     *
+     * @param dataList
+     */
     private void setResult(ArrayList<String> dataList) {
         Intent intent = new Intent();
         intent.putStringArrayListExtra(mResultString, dataList);
@@ -251,6 +257,7 @@ public class ImageSelectFragment extends Fragment implements
         intent.putStringArrayListExtra("dataList", selectList);
         intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
         intent.putExtra(ConstantUtils.MAX_NUM, mMaxNum);
+
         startActivityForResult(intent, 1);
     }
 
@@ -360,17 +367,19 @@ public class ImageSelectFragment extends Fragment implements
     /**
      * 点击单张图片
      *
+     * @param view
      * @param imgPath
      */
     @Override
-    public void onClickImg(String imgPath) {
+    public void onClickImg(View view, String imgPath) {
         Intent intent = null;
         if (TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_LAND))
             intent = new Intent(getActivity(), ImageShowLandActivity.class);
         else intent = new Intent(getActivity(), ImageShowPortActivity.class);
         intent.putExtra(ConstantUtils.STR_PATH, imgPath);
         intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
-        startActivity(intent);
+        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, imgPath).toBundle();
+        ActivityCompat.startActivity(getActivity(), intent, bundle);
     }
 
     @Override
