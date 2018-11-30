@@ -36,4 +36,6 @@ public class ConstantUtils {
     public static final String IMG_PATH = "img_path";
     public static final String DEFAULT_IMG_RES = "default_img_res";
     public static final String DATA_LIST = "data_list";
+    public static final String CAN_SAVE_IMG = "can_save_img";
+    public static final String SAVE_PARENT_PATH = "parent_path";
 }

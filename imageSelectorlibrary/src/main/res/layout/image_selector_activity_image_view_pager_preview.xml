@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context="com.waterfairy.imageselect.activity.ImageViewPagerPreviewActivity">
 
     <android.support.v4.view.ViewPager
@@ -13,18 +14,18 @@
 
     <RelativeLayout
         android:id="@+id/rel_top"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/image_selector_action_bar_height"
-        android:background="@color/imageSelectorColorMain">
+        android:background="@color/imageSelectorColorMain"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/back"
             android:layout_width="@dimen/image_selector_action_bar_height"
             android:layout_height="match_parent"
-            android:onClick="back"
             android:background="@drawable/image_selector_bg_pressed_style"
             android:clickable="true"
+            android:onClick="back"
             android:padding="15dp"
             android:src="@mipmap/image_selector_back"/>
 
@@ -41,6 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/ensure_button"
             android:layout_toRightOf="@id/back"
             android:textColor="@color/imageSelectorColorWhite"/>
 
@@ -59,11 +62,11 @@
     <RelativeLayout
 
         android:id="@+id/rel_bottom"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/image_selector_action_bar_height"
         android:layout_alignParentBottom="true"
-        android:background="@color/imageSelectorColorMain">
+        android:background="@color/imageSelectorColorMain"
+        android:clickable="true">
 
         <LinearLayout
             android:id="@+id/select_button_lin"
@@ -76,9 +79,9 @@
 
             <CheckBox
                 android:id="@+id/check_box"
-                android:checked="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:clickable="false"/>
 
             <TextView

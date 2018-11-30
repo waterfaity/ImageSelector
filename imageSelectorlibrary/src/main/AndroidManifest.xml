@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name=".activity.ImageViewPagerPreviewActivity"
-            android:theme="@style/ImageSelectorNoActionBar">
+            android:theme="@style/ImageSelectorFullScreen">
         </activity>
         <activity
             android:name=".activity.ImageSelectLandActivity"
@@ -44,12 +44,12 @@
         <activity
             android:name=".activity.ImageViewPagerPreviewPortActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ImageSelectorNoActionBar">
+            android:theme="@style/ImageSelectorFullScreen">
         </activity>
         <activity
             android:name=".activity.ImageViewPagerPreviewLandActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/ImageSelectorNoActionBar">
+            android:theme="@style/ImageSelectorFullScreen">
         </activity>
         <activity
             android:name=".activity.ImageViewPagerShowActivity"

@@ -150,7 +150,6 @@ public class ImageViewPagerPreviewActivity extends AppCompatActivity implements 
                 mRLBottom.startAnimation(getInAnim(false, true));
             }
             isVisibility = !isVisibility;
-            canClick = isVisibility;
         }
     }
 

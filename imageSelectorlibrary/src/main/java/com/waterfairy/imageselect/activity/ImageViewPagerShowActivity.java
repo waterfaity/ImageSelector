@@ -1,49 +1,53 @@
 package com.waterfairy.imageselect.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.request.RequestOptions;
 import com.waterfairy.imageselect.R;
-import com.waterfairy.imageselect.listener.GlideRequestForCenterCropListener;
-import com.waterfairy.imageselect.listener.GlideRequestListener;
+import com.waterfairy.imageselect.adapter.ViewPageShowAdapter;
 import com.waterfairy.imageselect.utils.ConstantUtils;
+import com.waterfairy.imageselect.utils.ImageUtils;
+import com.waterfairy.imageselect.utils.MD5Utils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 //import com.github.chrisbanes.photoview.OnPhotoTapListener;
 //import com.github.chrisbanes.photoview.PhotoView;
 
 
-public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, ViewPageShowAdapter.OnViewClickListener {
     private ArrayList<String> dataList;
-    private List<View> linViewList;
     private ViewPager mVPShowImg;
     private TextView mTVTitle;
     private int mCurrentPos;
     private boolean isVisibility = true;
     private RelativeLayout mRLTop, mRLBottom;
-    private int mResImgDefault;
-    private TextView mTVNum;
+    private int mResImgDefault;//默认图片
+    private TextView mTVNum;//数字显示器
+    private RelativeLayout mRLSave;
+    //保存
+    private boolean mCanSaveImg;//保存图片
+    private ImageView mSaveImageView;
+    private String mSavePath;
+    private String mParentPath;
 
 
     @Override
@@ -64,67 +68,34 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mVPShowImg.setTransitionName(dataList.get(mCurrentPos));
         }
-
-        mVPShowImg.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return linViewList.size();
-            }
-
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return view == object;
-            }
-
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                View view = linViewList.get(position);
-                container.addView(view);
-                view.setOnClickListener(ImageViewPagerShowActivity.this);
-                return view;
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView(linViewList.get(position));
-            }
-        });
+        mVPShowImg.setAdapter(new ViewPageShowAdapter(this, dataList)
+                .setCurrentPos(mCurrentPos)
+                .setReferToView(findViewById(R.id.root_view))
+                .setResImgDefault(mResImgDefault)
+                .setOnClickListener(this)
+        );
         if (dataList != null && dataList.size() > 0) {
             mTVTitle.setText(new File(dataList.get(0)).getName());
         }
         mVPShowImg.setCurrentItem(mCurrentPos);
     }
 
+
     private void initView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
+        mRLSave.setVisibility(View.GONE);
         mVPShowImg.setOffscreenPageLimit(3);
-        linViewList = new ArrayList<>();
-        for (int i = 0; i < dataList.size(); i++) {
-            View rootView = LayoutInflater.from(this).inflate(R.layout.image_selector_img, null);
-            ImageView photoView = rootView.findViewById(R.id.img);
-            RequestBuilder<Drawable> load = Glide.with(this).load(dataList.get(i));
-            if (mResImgDefault != 0) {
-                load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));
-            }
-            if (mCurrentPos == i) {
-                load.listener(new GlideRequestListener(this, findViewById(R.id.root_view), photoView).setOne(true));
-            } else {
-                load.listener(new GlideRequestForCenterCropListener(photoView));
-
-            }
-            load.into(photoView);
-            photoView.setOnClickListener(this);
-            linViewList.add(rootView);
-        }
         mVPShowImg.addOnPageChangeListener(this);
         if (dataList.size() == 0) {
             mRLBottom.setVisibility(View.GONE);
         }
+        mTVNum.setText(mCurrentPos + 1 + "/" + dataList.size());
     }
 
     private void findView() {
+        mRLSave = findViewById(R.id.rel_save);
         mVPShowImg = findViewById(R.id.view_pager);
         mRLTop = findViewById(R.id.rel_top);
         mRLBottom = findViewById(R.id.rel_bottom);
@@ -136,17 +107,9 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         if (v.getId() == R.id.ensure_button) {
             closeActivity();
-        } else {
-            if (isVisibility) {
-                mRLTop.startAnimation(getInAnim(true, false));
-                if (mRLBottom.getVisibility() == View.VISIBLE)
-                    mRLBottom.startAnimation(getInAnim(false, false));
-            } else {
-                mRLTop.startAnimation(getInAnim(true, true));
-                if (mRLBottom.getVisibility() == View.VISIBLE)
-                    mRLBottom.startAnimation(getInAnim(false, true));
-            }
-            isVisibility = !isVisibility;
+        } else if (v.getId() == R.id.rel_save) {
+            mRLSave.startAnimation(getInAnim(false, false));
+            mRLSave.setClickable(false);
         }
     }
 
@@ -156,6 +119,11 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         dataList = intent.getStringArrayListExtra(ConstantUtils.DATA_LIST);
         mResImgDefault = intent.getIntExtra(ConstantUtils.DEFAULT_IMG_RES, 0);
         mCurrentPos = intent.getIntExtra(ConstantUtils.CURRENT_POS, 0);
+        mCanSaveImg = intent.getBooleanExtra(ConstantUtils.CAN_SAVE_IMG, false);
+        mParentPath = intent.getStringExtra(ConstantUtils.SAVE_PARENT_PATH);
+        if (TextUtils.isEmpty(mParentPath)) {
+            mParentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+        }
     }
 
     public void closeActivity() {
@@ -169,6 +137,59 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     public void back(View view) {
         closeActivity();
     }
+
+
+    /**
+     * 点击保存图片
+     *
+     * @param view
+     */
+    public void savePicture(View view) {
+        mRLSave.startAnimation(getInAnim(false, false));
+        mRLSave.setClickable(false);
+        saveImg();
+    }
+
+    private void saveImg() {
+        if (mSaveImageView != null && !TextUtils.isEmpty(mSavePath)) {
+            Drawable drawable = mSaveImageView.getDrawable();
+            if (drawable instanceof BitmapDrawable) {
+                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                if (bitmap != null && !bitmap.isRecycled()) {
+                    //保存
+                    String absolutePath = new File(mParentPath, new File(mSavePath).getName()).getAbsolutePath();
+                    //判断格式
+                    if (!TextUtils.isEmpty(absolutePath)) {
+                        String format = ".jpg";
+                        Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
+                        if (absolutePath.length() >= 4) {
+                            String substring = absolutePath.substring(absolutePath.length() - 4, absolutePath.length());
+                            if (substring.equals(".png") || substring.equals(".PNG")) {
+                                format = ".png";
+                                compressFormat = Bitmap.CompressFormat.PNG;
+                            }
+                        }
+                        String savePath = new File(mParentPath, MD5Utils.getMD5Code(absolutePath) + format).getAbsolutePath();
+                        boolean b = ImageUtils.saveBitmap(savePath, bitmap, compressFormat, 100);
+                        Toast.makeText(this, b ? "已保存到" + savePath : "保存失败!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
+        }
+        Toast.makeText(this, "保存失败!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onViewOnLongClick(ImageView imageView, String imgPath) {
+        //提示保存
+        mRLSave.startAnimation(getInAnim(false, true));
+        mRLSave.setOnClickListener(this);
+        mRLSave.setVisibility(View.VISIBLE);
+        mSaveImageView = imageView;
+        mSavePath = imgPath;
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -216,18 +237,29 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
                 fromValue = 0;
                 toValue = 1;
             }
-
         }
         TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, 0,
                 Animation.RELATIVE_TO_SELF, fromValue,
                 Animation.RELATIVE_TO_SELF, toValue);
         translateAnimation.setDuration(300);
         if (!in) {
-
             translateAnimation.setFillAfter(true);
         }
         return translateAnimation;
     }
 
 
+    @Override
+    public void onViewClick() {
+        if (isVisibility) {
+            mRLTop.startAnimation(getInAnim(true, false));
+            if (mRLBottom.getVisibility() == View.VISIBLE)
+                mRLBottom.startAnimation(getInAnim(false, false));
+        } else {
+            mRLTop.startAnimation(getInAnim(true, true));
+            if (mRLBottom.getVisibility() == View.VISIBLE)
+                mRLBottom.startAnimation(getInAnim(false, true));
+        }
+        isVisibility = !isVisibility;
+    }
 }
