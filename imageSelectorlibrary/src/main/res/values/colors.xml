@@ -9,5 +9,6 @@
     <color name="imageSelectorColorMainPressed">#4d4e54</color>
     <color name="imageSelectorColorWhite">#FFFFFF</color>
     <color name="imageSelector_bg_shadow">#44444444</color>
+    <color name="imageSelector_bg_shadow_deep">#88000000</color>
     <color name="imageSelectorColorEnsureShadow">#99FFFFFF</color>
 </resources>

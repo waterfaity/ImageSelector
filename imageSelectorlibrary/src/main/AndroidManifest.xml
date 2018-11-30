@@ -13,12 +13,12 @@
             android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
-            android:screenOrientation="behind"
             android:name=".activity.ImageShowActivity"
+            android:screenOrientation="behind"
             android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
-            android:name=".activity.ImageViewPagerShowActivity"
+            android:name=".activity.ImageViewPagerPreviewActivity"
             android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
@@ -42,15 +42,19 @@
             android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
-            android:name=".activity.ImageViewPagerShowPortActivity"
+            android:name=".activity.ImageViewPagerPreviewPortActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ImageSelectorNoActionBar">
         </activity>
         <activity
-            android:name=".activity.ImageViewPagerShowLandActivity"
+            android:name=".activity.ImageViewPagerPreviewLandActivity"
             android:screenOrientation="landscape"
             android:theme="@style/ImageSelectorNoActionBar">
         </activity>
+        <activity
+            android:name=".activity.ImageViewPagerShowActivity"
+            android:screenOrientation="behind"
+            android:theme="@style/ImageSelectorNoActionBar"/>
     </application>
 
 </manifest>

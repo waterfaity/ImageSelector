@@ -32,4 +32,8 @@ public class ConstantUtils {
     public static final String PATH_WX = "/storage/emulated/0/Tencent/MicroMsg/WeiXin";//4级文件
     public static final String PATH_QQ_RECV = "/storage/emulated/0/Tencent/QQfile_recv";//3级文件
     public static final String PATH_QQ_IMAGES = "/storage/emulated/0/Tencent/QQ_Images";//3级文件
+    public static final String CURRENT_POS = "current_pos";
+    public static final String IMG_PATH = "img_path";
+    public static final String DEFAULT_IMG_RES = "default_img_res";
+    public static final String DATA_LIST = "data_list";
 }

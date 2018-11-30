@@ -1,26 +1,29 @@
 package com.waterfairy.imageselect.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.RequestOptions;
 import com.waterfairy.imageselect.R;
+import com.waterfairy.imageselect.listener.GlideRequestForCenterCropListener;
+import com.waterfairy.imageselect.listener.GlideRequestListener;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
 import java.io.File;
@@ -33,17 +36,14 @@ import java.util.List;
 
 public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private ArrayList<String> dataList;
-    private ArrayList<String> tempDataList;
-    private List<ImageView> photoViews;
+    private List<View> linViewList;
     private ViewPager mVPShowImg;
-    private LinearLayout mLLSelect;
     private TextView mTVTitle;
-    private CheckBox mCBSelect;
-    private int currentPos;
-    private Button mBTEnsure;
-    private int maxNum;
+    private int mCurrentPos;
     private boolean isVisibility = true;
     private RelativeLayout mRLTop, mRLBottom;
+    private int mResImgDefault;
+    private TextView mTVNum;
 
 
     @Override
@@ -57,17 +57,18 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     }
 
     private void initData() {
-        tempDataList = new ArrayList<>();
-        tempDataList.addAll(dataList);
         setViewPager();
     }
 
     private void setViewPager() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mVPShowImg.setTransitionName(dataList.get(mCurrentPos));
+        }
 
         mVPShowImg.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
-                return photoViews.size();
+                return linViewList.size();
             }
 
             @Override
@@ -77,125 +78,102 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                ImageView photoView = photoViews.get(position);
-                container.addView(photoView);
-                photoView.setOnClickListener(ImageViewPagerShowActivity.this);
-                return photoView;
+                View view = linViewList.get(position);
+                container.addView(view);
+                view.setOnClickListener(ImageViewPagerShowActivity.this);
+                return view;
             }
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView(photoViews.get(position));
+                container.removeView(linViewList.get(position));
             }
         });
         if (dataList != null && dataList.size() > 0) {
             mTVTitle.setText(new File(dataList.get(0)).getName());
         }
+        mVPShowImg.setCurrentItem(mCurrentPos);
     }
 
     private void initView() {
-        mLLSelect.setOnClickListener(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+        }
         mVPShowImg.setOffscreenPageLimit(3);
-        mBTEnsure.setOnClickListener(this);
-        photoViews = new ArrayList<>();
+        linViewList = new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
-            ImageView photoView = new ImageView(this);
-            Glide.with(this).load(dataList.get(i)).into(photoView);
-            photoViews.add(photoView);
+            View rootView = LayoutInflater.from(this).inflate(R.layout.image_selector_img, null);
+            ImageView photoView = rootView.findViewById(R.id.img);
+            RequestBuilder<Drawable> load = Glide.with(this).load(dataList.get(i));
+            if (mResImgDefault != 0) {
+                load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));
+            }
+            if (mCurrentPos == i) {
+                load.listener(new GlideRequestListener(this, findViewById(R.id.root_view), photoView).setOne(true));
+            } else {
+                load.listener(new GlideRequestForCenterCropListener(photoView));
+
+            }
+            load.into(photoView);
+            photoView.setOnClickListener(this);
+            linViewList.add(rootView);
         }
         mVPShowImg.addOnPageChangeListener(this);
-        mBTEnsure.setText("完成(" + dataList.size() + "/" + maxNum + ")");
-
+        if (dataList.size() == 0) {
+            mRLBottom.setVisibility(View.GONE);
+        }
     }
 
     private void findView() {
         mVPShowImg = findViewById(R.id.view_pager);
-        mLLSelect = findViewById(R.id.select_button_lin);
-        mCBSelect = findViewById(R.id.check_box);
-        mBTEnsure = findViewById(R.id.ensure_button);
         mRLTop = findViewById(R.id.rel_top);
         mRLBottom = findViewById(R.id.rel_bottom);
+        mTVNum = findViewById(R.id.tv_num);
         mTVTitle = findViewById(R.id.title);
     }
 
     @Override
     public void onClick(View v) {
-        if (!canClick) return;
-
-        if (v.getId() == R.id.select_button_lin) {
-            String path = dataList.get(currentPos);
-            if (mCBSelect.isChecked()) {
-                tempDataList.remove(path);
-                mCBSelect.setChecked(false);
-            } else {
-                tempDataList.add(path);
-                mCBSelect.setChecked(true);
-            }
-
-            if (tempDataList.size() == 0) {
-                mBTEnsure.setText("完成");
-                setEnsureCanClick(false);
-            } else {
-                mBTEnsure.setText("完成(" + tempDataList.size() + "/" + maxNum + ")");
-                setEnsureCanClick(true);
-            }
-        } else if (v.getId() == R.id.ensure_button) {
-            setResult(true);
+        if (v.getId() == R.id.ensure_button) {
+            closeActivity();
         } else {
             if (isVisibility) {
                 mRLTop.startAnimation(getInAnim(true, false));
-                mRLBottom.startAnimation(getInAnim(false, false));
+                if (mRLBottom.getVisibility() == View.VISIBLE)
+                    mRLBottom.startAnimation(getInAnim(false, false));
             } else {
                 mRLTop.startAnimation(getInAnim(true, true));
-                mRLBottom.startAnimation(getInAnim(false, true));
+                if (mRLBottom.getVisibility() == View.VISIBLE)
+                    mRLBottom.startAnimation(getInAnim(false, true));
             }
             isVisibility = !isVisibility;
-            canClick = isVisibility;
         }
     }
 
-    public void setEnsureCanClick(boolean canClick) {
-        if (canClick) {
-            mBTEnsure.setBackgroundResource(R.drawable.image_selector_style_ensure_button);
-            mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorWhite));
-            mBTEnsure.setClickable(true);
-        } else {
-            mBTEnsure.setBackgroundResource(R.drawable.image_selector_style_ensure_button2);
-            mBTEnsure.setTextColor(getResources().getColor(R.color.imageSelectorColorEnsureShadow));
-            mBTEnsure.setClickable(false);
-        }
-    }
 
     private void getExtra() {
         Intent intent = getIntent();
-        dataList = intent.getStringArrayListExtra("dataList");
-        maxNum = intent.getIntExtra(ConstantUtils.MAX_NUM, 1);
-        String ori = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
-        setRequestedOrientation(TextUtils.isDigitsOnly(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
-                TextUtils.equals(ori, ConstantUtils.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
-
+        dataList = intent.getStringArrayListExtra(ConstantUtils.DATA_LIST);
+        mResImgDefault = intent.getIntExtra(ConstantUtils.DEFAULT_IMG_RES, 0);
+        mCurrentPos = intent.getIntExtra(ConstantUtils.CURRENT_POS, 0);
     }
 
-    public void setResult(boolean complete) {
-
+    public void closeActivity() {
         Intent intent = new Intent();
-        intent.putStringArrayListExtra("dataList", tempDataList);
-        if (complete) {
-            intent.putExtra("complete", true);
-        }
+        intent.putExtra(ConstantUtils.CURRENT_POS, mCurrentPos);
+        intent.putExtra(ConstantUtils.IMG_PATH, dataList.get(mCurrentPos));
         setResult(RESULT_OK, intent);
-        finish();
+        ActivityCompat.finishAfterTransition(this);
     }
 
     public void back(View view) {
-        if (!canClick) return;
-        setResult(false);
+        closeActivity();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            setResult(false);
+            closeActivity();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -209,14 +187,10 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onPageSelected(int position) {
-        currentPos = position;
+        mTVNum.setText(position + 1 + "/" + dataList.size());
+        mCurrentPos = position;
         String path = dataList.get(position);
         mTVTitle.setText(new File(path).getName());
-        if (tempDataList.contains(path)) {
-            mCBSelect.setChecked(true);
-        } else {
-            mCBSelect.setChecked(false);
-        }
     }
 
     @Override
@@ -255,18 +229,5 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         return translateAnimation;
     }
 
-    private boolean canClick = true;
 
-//    @Override
-//    public void onPhotoTap(ImageView view, float x, float y) {
-//        if (isVisibility) {
-//            mRLTop.startAnimation(getInAnim(true, false));
-//            mRLBottom.startAnimation(getInAnim(false, false));
-//        } else {
-//            mRLTop.startAnimation(getInAnim(true, true));
-//            mRLBottom.startAnimation(getInAnim(false, true));
-//        }
-//        isVisibility = !isVisibility;
-//        canClick = isVisibility;
-//    }
 }

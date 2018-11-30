@@ -35,8 +35,8 @@ import android.widget.Toast;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.activity.ImageShowLandActivity;
 import com.waterfairy.imageselect.activity.ImageShowPortActivity;
-import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
-import com.waterfairy.imageselect.activity.ImageViewPagerShowLandActivity;
+import com.waterfairy.imageselect.activity.ImageViewPagerPreviewActivity;
+import com.waterfairy.imageselect.activity.ImageViewPagerPreviewLandActivity;
 import com.waterfairy.imageselect.adapter.ShowFolderAdapter;
 import com.waterfairy.imageselect.adapter.ShowImgAdapter;
 import com.waterfairy.imageselect.bean.SearchImgBean;
@@ -249,9 +249,9 @@ public class ImageSelectFragment extends Fragment implements
         Intent intent = null;
 
         if (TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_LAND)) {
-            intent = new Intent(getActivity(), ImageViewPagerShowLandActivity.class);
+            intent = new Intent(getActivity(), ImageViewPagerPreviewLandActivity.class);
         } else {
-            intent = new Intent(getActivity(), ImageViewPagerShowActivity.class);
+            intent = new Intent(getActivity(), ImageViewPagerPreviewActivity.class);
         }
         intent.putStringArrayListExtra("dataList", selectList);
         intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
