@@ -3,34 +3,24 @@ package com.waterfairy.imageselect.activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.transition.AutoTransition;
-import android.transition.ChangeBounds;
-import android.transition.ChangeClipBounds;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-//import com.github.chrisbanes.photoview.OnPhotoTapListener;
-//import com.github.chrisbanes.photoview.PhotoView;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.utils.AnimUtils;
@@ -38,6 +28,9 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.PathUtils;
 
 import java.io.File;
+
+//import com.github.chrisbanes.photoview.OnPhotoTapListener;
+//import com.github.chrisbanes.photoview.PhotoView;
 
 
 public class ImageShowActivity extends AppCompatActivity {
@@ -73,7 +66,7 @@ public class ImageShowActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 photoView.setTransitionName(url);
             }
-            Glide.with(this).load(url) .
+            Glide.with(this).load(url).
                     transition(drawableTransitionOptions).listener(requestListener).into(photoView);
         } else if (!TextUtils.isEmpty(path)) {
             tVTitle.setText(TextUtils.isEmpty(title) ? new File(path).getName() : title);
@@ -120,12 +113,12 @@ public class ImageShowActivity extends AppCompatActivity {
 
         @Override
         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP&&resource instanceof BitmapDrawable) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && resource instanceof BitmapDrawable) {
 
                 Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
 
-                int imgWidth =bitmap.getWidth();
-                int imgHeight =bitmap.getHeight();
+                int imgWidth = bitmap.getWidth();
+                int imgHeight = bitmap.getHeight();
 
                 View rootView = findViewById(R.id.root_view);
                 int measuredHeight = rootView.getMeasuredHeight();

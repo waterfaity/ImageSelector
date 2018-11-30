@@ -20,14 +20,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-//import com.github.chrisbanes.photoview.OnPhotoTapListener;
-//import com.github.chrisbanes.photoview.PhotoView;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.github.chrisbanes.photoview.OnPhotoTapListener;
+//import com.github.chrisbanes.photoview.PhotoView;
 
 
 public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {

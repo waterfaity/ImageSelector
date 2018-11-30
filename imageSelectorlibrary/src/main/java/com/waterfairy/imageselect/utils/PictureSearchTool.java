@@ -250,7 +250,7 @@ public class PictureSearchTool {
     public List<SearchImgBean> searchFolder(String path) {
         List<SearchImgBean> imgBeans = new ArrayList<>();
         File[] files = new File(path).listFiles();
-        if (files!=null&&files.length!=0){
+        if (files != null && files.length != 0) {
             for (File file : files) {
                 if (file.isFile()) {
                     String childPath = file.getAbsolutePath();
