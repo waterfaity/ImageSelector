@@ -7,6 +7,9 @@ import android.text.TextUtils;
 
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.fragment.ImageSelectFragment;
+import com.waterfairy.imageselect.options.SelectImgOptions;
+
+import java.io.Serializable;
 
 /**
  * @author water_fairy
@@ -23,19 +26,27 @@ public class FragmentUtils {
             activity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
         fragment = new ImageSelectFragment();
+
         Bundle bundle = new Bundle();
         Intent intent = activity.getIntent();
-        bundle.putString(ConstantUtils.RESULT_STRING, intent.getStringExtra(ConstantUtils.RESULT_STRING));
-        bundle.putBoolean(ConstantUtils.LOAD_CACHE, intent.getBooleanExtra(ConstantUtils.LOAD_CACHE, false));
-        bundle.putStringArrayList(ConstantUtils.SEARCH_PATHS, intent.getStringArrayListExtra(ConstantUtils.SEARCH_PATHS));
-        bundle.putStringArrayList(ConstantUtils.IGNORE_PATHS, intent.getStringArrayListExtra(ConstantUtils.IGNORE_PATHS));
-        String screenOriFromIntent = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
-        String endDir = TextUtils.isEmpty(screenOriFromIntent) ? screenOri : screenOriFromIntent;
-        bundle.putString(ConstantUtils.SCREEN_DIRECTION, endDir);
-        bundle.putInt(ConstantUtils.MAX_NUM, intent.getIntExtra(ConstantUtils.MAX_NUM, ConstantUtils.DEFAULT_MAX_NUM));
-        bundle.putInt(ConstantUtils.SEARCH_DEEP, intent.getIntExtra(ConstantUtils.SEARCH_DEEP, ConstantUtils.DEFAULT_DEEP));
-        bundle.putInt(ConstantUtils.GRID_NUM, intent.getIntExtra(ConstantUtils.GRID_NUM,
-                TextUtils.equals(endDir, ConstantUtils.SCREEN_PORT) ? ConstantUtils.DEFAULT_GRID_NUM_MIN : ConstantUtils.DEFAULT_GRID_NUM_MAX));
+        Serializable extra = intent.getSerializableExtra(ConstantUtils.OPTIONS_BEAN);
+        SelectImgOptions options = null;
+        if (extra != null) {
+            options = (SelectImgOptions) extra;
+        } else {
+            options = new SelectImgOptions();
+            String resultString = intent.getStringExtra(ConstantUtils.RESULT_STRING);
+            if (!TextUtils.isEmpty(resultString)) {
+                options.setResultString(resultString);
+            }
+            options.setLoadCache(intent.getBooleanExtra(ConstantUtils.LOAD_CACHE, false));
+            options.setSearchPaths(intent.getStringArrayListExtra(ConstantUtils.SEARCH_PATHS));
+            options.setIgnorePaths(intent.getStringArrayListExtra(ConstantUtils.IGNORE_PATHS));
+            options.setMaxNum(intent.getIntExtra(ConstantUtils.MAX_NUM, ConstantUtils.DEFAULT_MAX_NUM));
+            options.setSearchDeep(intent.getIntExtra(ConstantUtils.SEARCH_DEEP, ConstantUtils.DEFAULT_DEEP));
+            options.setGridNum(intent.getIntExtra(ConstantUtils.GRID_NUM, ConstantUtils.DEFAULT_GRID_NUM_MIN));
+        }
+        bundle.putSerializable(ConstantUtils.OPTIONS_BEAN, options);
         fragment.setArguments(bundle);
         activity.getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, fragment).commit();
     }

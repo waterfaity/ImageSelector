@@ -23,15 +23,17 @@ import com.bumptech.glide.request.target.Target;
  */
 public class GlideRequestListener implements RequestListener<Drawable> {
     private final Activity activity;
+    private final boolean post;
     private View viewReferTo;
     private ImageView imageView;
     private boolean one;
     private boolean hasSet;
 
-    public GlideRequestListener(Activity activity, View viewReferTo, ImageView imageView) {
+    public GlideRequestListener(Activity activity, View viewReferTo, ImageView imageView, boolean post) {
         this.activity = activity;
         this.imageView = imageView;
         this.viewReferTo = viewReferTo;
+        this.post = post;
     }
 
     public GlideRequestListener setOne(boolean one) {
@@ -49,8 +51,8 @@ public class GlideRequestListener implements RequestListener<Drawable> {
 
     @Override
     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && resource instanceof BitmapDrawable&&(!one||!hasSet)) {
-            hasSet=true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && resource instanceof BitmapDrawable && (!one || !hasSet)) {
+            hasSet = true;
 
             Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
 
@@ -75,8 +77,8 @@ public class GlideRequestListener implements RequestListener<Drawable> {
                 imageView.setLayoutParams(layoutParams);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
-
-            activity.startPostponedEnterTransition();
+            if (post)
+                activity.startPostponedEnterTransition();
         }
         return false;
     }

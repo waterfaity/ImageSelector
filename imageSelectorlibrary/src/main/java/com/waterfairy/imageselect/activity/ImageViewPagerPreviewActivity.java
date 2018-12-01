@@ -168,12 +168,7 @@ public class ImageViewPagerPreviewActivity extends AppCompatActivity implements 
     private void getExtra() {
         Intent intent = getIntent();
         dataList = intent.getStringArrayListExtra("dataList");
-        maxNum = intent.getIntExtra(ConstantUtils.MAX_NUM, 1);
-        String ori = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
-        setRequestedOrientation(TextUtils.isDigitsOnly(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
-                TextUtils.equals(ori, ConstantUtils.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
-
-    }
+        maxNum = intent.getIntExtra(ConstantUtils.MAX_NUM, 1);}
 
     public void setResult(boolean complete) {
 

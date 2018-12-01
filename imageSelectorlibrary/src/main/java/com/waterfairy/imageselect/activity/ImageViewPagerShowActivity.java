@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.adapter.ViewPageShowAdapter;
+import com.waterfairy.imageselect.options.ShowImgOptions;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.ImageUtils;
 import com.waterfairy.imageselect.utils.MD5Utils;
@@ -34,20 +35,19 @@ import java.util.ArrayList;
 
 
 public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, ViewPageShowAdapter.OnViewClickListener {
-    private ArrayList<String> dataList;
     private ViewPager mVPShowImg;
     private TextView mTVTitle;
     private int mCurrentPos;
     private boolean isVisibility = true;
     private RelativeLayout mRLTop, mRLBottom;
-    private int mResImgDefault;//默认图片
     private TextView mTVNum;//数字显示器
     private RelativeLayout mRLSave;
     //保存
-    private boolean mCanSaveImg;//保存图片
     private ImageView mSaveImageView;
     private String mSavePath;
-    private String mParentPath;
+    private ShowImgOptions options;
+    //
+    private boolean isSaving;
 
 
     @Override
@@ -66,16 +66,16 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
     private void setViewPager() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mVPShowImg.setTransitionName(dataList.get(mCurrentPos));
+            mVPShowImg.setTransitionName(options.getImgList().get(mCurrentPos));
         }
-        mVPShowImg.setAdapter(new ViewPageShowAdapter(this, dataList)
+        mVPShowImg.setAdapter(new ViewPageShowAdapter(this, options.getImgList())
                 .setCurrentPos(mCurrentPos)
                 .setReferToView(findViewById(R.id.root_view))
-                .setResImgDefault(mResImgDefault)
+                .setResImgDefault(options.getImgResDefault())
                 .setOnClickListener(this)
         );
-        if (dataList != null && dataList.size() > 0) {
-            mTVTitle.setText(new File(dataList.get(0)).getName());
+        if (options.getImgList() != null && options.getImgList().size() > 0) {
+            mTVTitle.setText(new File(options.getImgList().get(0)).getName());
         }
         mVPShowImg.setCurrentItem(mCurrentPos);
     }
@@ -88,10 +88,13 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         mRLSave.setVisibility(View.GONE);
         mVPShowImg.setOffscreenPageLimit(3);
         mVPShowImg.addOnPageChangeListener(this);
-        if (dataList.size() == 0) {
+        if (options.getImgList().size() == 0) {
             mRLBottom.setVisibility(View.GONE);
         }
-        mTVNum.setText(mCurrentPos + 1 + "/" + dataList.size());
+        mTVNum.setText(mCurrentPos + 1 + "/" + options.getImgList().size());
+        if (options.isClickToDismiss()) {
+            mRLTop.setVisibility(View.GONE);
+        }
     }
 
     private void findView() {
@@ -105,9 +108,8 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.ensure_button) {
-            closeActivity();
-        } else if (v.getId() == R.id.rel_save) {
+        if (v.getId() == R.id.rel_save) {
+            isSaving = false;
             mRLSave.startAnimation(getInAnim(false, false));
             mRLSave.setClickable(false);
         }
@@ -116,20 +118,14 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
     private void getExtra() {
         Intent intent = getIntent();
-        dataList = intent.getStringArrayListExtra(ConstantUtils.DATA_LIST);
-        mResImgDefault = intent.getIntExtra(ConstantUtils.DEFAULT_IMG_RES, 0);
-        mCurrentPos = intent.getIntExtra(ConstantUtils.CURRENT_POS, 0);
-        mCanSaveImg = intent.getBooleanExtra(ConstantUtils.CAN_SAVE_IMG, false);
-        mParentPath = intent.getStringExtra(ConstantUtils.SAVE_PARENT_PATH);
-        if (TextUtils.isEmpty(mParentPath)) {
-            mParentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-        }
+        options = (ShowImgOptions) intent.getSerializableExtra(ConstantUtils.OPTIONS_BEAN);
+        mCurrentPos = options.getCurrentPos();
     }
 
     public void closeActivity() {
         Intent intent = new Intent();
         intent.putExtra(ConstantUtils.CURRENT_POS, mCurrentPos);
-        intent.putExtra(ConstantUtils.IMG_PATH, dataList.get(mCurrentPos));
+        intent.putExtra(ConstantUtils.IMG_PATH, options.getImgList().get(mCurrentPos));
         setResult(RESULT_OK, intent);
         ActivityCompat.finishAfterTransition(this);
     }
@@ -148,6 +144,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         mRLSave.startAnimation(getInAnim(false, false));
         mRLSave.setClickable(false);
         saveImg();
+        isSaving=false;
     }
 
     private void saveImg() {
@@ -157,7 +154,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
                 Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
                 if (bitmap != null && !bitmap.isRecycled()) {
                     //保存
-                    String absolutePath = new File(mParentPath, new File(mSavePath).getName()).getAbsolutePath();
+                    String absolutePath = new File(options.getSaveParentPath(), new File(mSavePath).getName()).getAbsolutePath();
                     //判断格式
                     if (!TextUtils.isEmpty(absolutePath)) {
                         String format = ".jpg";
@@ -169,7 +166,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
                                 compressFormat = Bitmap.CompressFormat.PNG;
                             }
                         }
-                        String savePath = new File(mParentPath, MD5Utils.getMD5Code(absolutePath) + format).getAbsolutePath();
+                        String savePath = new File(options.getSaveParentPath(), MD5Utils.getMD5Code(absolutePath) + format).getAbsolutePath();
                         boolean b = ImageUtils.saveBitmap(savePath, bitmap, compressFormat, 100);
                         Toast.makeText(this, b ? "已保存到" + savePath : "保存失败!", Toast.LENGTH_SHORT).show();
                         return;
@@ -183,6 +180,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     @Override
     public void onViewOnLongClick(ImageView imageView, String imgPath) {
         //提示保存
+        isSaving = true;
         mRLSave.startAnimation(getInAnim(false, true));
         mRLSave.setOnClickListener(this);
         mRLSave.setVisibility(View.VISIBLE);
@@ -208,9 +206,9 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onPageSelected(int position) {
-        mTVNum.setText(position + 1 + "/" + dataList.size());
+        mTVNum.setText(position + 1 + "/" + options.getImgList().size());
         mCurrentPos = position;
-        String path = dataList.get(position);
+        String path = options.getImgList().get(position);
         mTVTitle.setText(new File(path).getName());
     }
 
@@ -251,6 +249,11 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onViewClick() {
+        if (options.isClickToDismiss()) {
+            if (isSaving) return;
+            closeActivity();
+            return;
+        }
         if (isVisibility) {
             mRLTop.startAnimation(getInAnim(true, false));
             if (mRLBottom.getVisibility() == View.VISIBLE)

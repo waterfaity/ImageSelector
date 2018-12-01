@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.waterfairy.imageselect.R;
-import com.waterfairy.imageselect.listener.GlideRequestForCenterCropListener;
 import com.waterfairy.imageselect.listener.GlideRequestListener;
 
 import java.util.ArrayList;
@@ -85,7 +84,7 @@ public class ViewPageShowAdapter extends PagerAdapter {
             @Override
             public boolean onLongClick(View v) {
                 if (onClickListener != null) {
-                    onClickListener.onViewOnLongClick((ImageView)v, (String) v.getTag(R.id.key_glide));
+                    onClickListener.onViewOnLongClick((ImageView) v, (String) v.getTag(R.id.key_glide));
                 }
                 return false;
             }
@@ -105,10 +104,9 @@ public class ViewPageShowAdapter extends PagerAdapter {
             load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));
         }
         if (mCurrentPos == position) {
-            load.listener(new GlideRequestListener(activity, mReferToView, imageView).setOne(true));
+            load.listener(new GlideRequestListener(activity, mReferToView, imageView, true).setOne(true));
         } else {
-            load.listener(new GlideRequestForCenterCropListener(imageView));
-
+            load.listener(new GlideRequestListener(activity, mReferToView, imageView, false).setOne(true));
         }
         load.into(imageView);
     }

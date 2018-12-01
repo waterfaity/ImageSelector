@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
+import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.presenter.SelectPresenterListener;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.PictureSearchTool;
@@ -22,10 +23,8 @@ import java.util.List;
 public class SelectModel implements PictureSearchTool.OnSearchListener {
     private SelectPresenterListener mPresenter;
     private PictureSearchTool mPictureSearchTool;
-
-    private int mDeep = 3;//搜索深度 默认3层
     private ShareTool mShareTool;
-    private boolean mLoadCache;
+    private SelectImgOptions options;
 
     public SelectModel(SelectPresenterListener listener) {
         this.mPresenter = listener;
@@ -36,17 +35,17 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
 
     public void initData(Bundle bundle) {
         if (bundle != null) {
-            mLoadCache = bundle.getBoolean(ConstantUtils.LOAD_CACHE, false);
-            mPictureSearchTool.setDeep(bundle.getInt(ConstantUtils.SEARCH_DEEP, mDeep))
-                    .setPaths(bundle.getStringArrayList(ConstantUtils.SEARCH_PATHS),
-                            bundle.getStringArrayList(ConstantUtils.IGNORE_PATHS));
+            options = (SelectImgOptions) bundle.getSerializable(ConstantUtils.OPTIONS_BEAN);
+            mPictureSearchTool.setDeep(options.getSearchDeep())
+                    .setPaths(options.getSearchPaths(),
+                            options.getIgnorePaths());
         }
     }
 
     public void queryFolders() {
         //设置搜索深度  指定文件夹  忽略文件夹
         ArrayList<SearchFolderBean> folders = mShareTool.getFolders();
-        if (folders != null && folders.size() > 0 && mLoadCache) {
+        if (folders != null && folders.size() > 0 && options.isLoadCache()) {
             mPresenter.onGetFoldersSuccess(folders);
         } else {
             mPictureSearchTool.start();

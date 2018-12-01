@@ -34,8 +34,13 @@ public class ConstantUtils {
     public static final String PATH_QQ_IMAGES = "/storage/emulated/0/Tencent/QQ_Images";//3级文件
     public static final String CURRENT_POS = "current_pos";
     public static final String IMG_PATH = "img_path";
-    public static final String DEFAULT_IMG_RES = "default_img_res";
-    public static final String DATA_LIST = "data_list";
-    public static final String CAN_SAVE_IMG = "can_save_img";
-    public static final String SAVE_PARENT_PATH = "parent_path";
+
+    public static final int REQUEST_SELECT = 18121;//request 选择图片
+    public static final int REQUEST_SHOW = 18122;//展示图片
+    public static final int REQUEST_TAKE_PHOTO = 18123;//拍照
+
+    public static final int TYPE_SELECT = 1;
+    public static final int TYPE_SHOW = 2;
+    public static final int TYPE_TAKE_PHOTO = 3;
+    public static final String OPTIONS_BEAN = "options_bean";
 }

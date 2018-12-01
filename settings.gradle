@@ -1,1 +1,1 @@
-include ':imageSelectorlibrary'
+include ':imageSelectorlibrary', ':myapplication'

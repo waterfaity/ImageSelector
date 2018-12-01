@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.waterfairy.imageselect.R;
+import com.waterfairy.imageselect.activity.ImageShowActivity;
 import com.waterfairy.imageselect.activity.ImageShowLandActivity;
 import com.waterfairy.imageselect.activity.ImageShowPortActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerPreviewActivity;
@@ -40,6 +41,7 @@ import com.waterfairy.imageselect.activity.ImageViewPagerPreviewLandActivity;
 import com.waterfairy.imageselect.adapter.ShowFolderAdapter;
 import com.waterfairy.imageselect.adapter.ShowImgAdapter;
 import com.waterfairy.imageselect.bean.SearchImgBean;
+import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.presenter.SelectPresenter;
 import com.waterfairy.imageselect.utils.AnimUtils;
 import com.waterfairy.imageselect.utils.ConstantUtils;
@@ -79,12 +81,13 @@ public class ImageSelectFragment extends Fragment implements
     private View mIMArrow;
     //data
     private boolean isFolderListVisibility;
-    private String mResultString = "data";
-    private int mGridNum = 3;
-    private int mMaxNum = 9;
-    private String mScreenDir;//屏幕方向
+    //    private String mResultString = "data";
+//    private int mGridNum = 3;
+//    private int mMaxNum = 9;
+//    private String mScreenDir;//屏幕方向
     private int imgWidth;
     private boolean isDestroy;//横竖屏旋转时处理
+    private SelectImgOptions options;
     //adapter
     private ShowImgAdapter imgAdapter;
     private ShowFolderAdapter folderAdapter;
@@ -109,16 +112,7 @@ public class ImageSelectFragment extends Fragment implements
      */
     private void getExtra() {
         Bundle arguments = getArguments();
-        //方向
-        String dir = arguments.getString(ConstantUtils.SCREEN_DIRECTION);
-        this.mScreenDir = TextUtils.isEmpty(dir) ? ConstantUtils.SCREEN_PORT : dir;
-        getActivity().setRequestedOrientation(TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_PORT) ?
-                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        //列数
-        mGridNum = arguments.getInt(ConstantUtils.GRID_NUM, TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_PORT) ? 3 : 6);
-        String resultString = arguments.getString(ConstantUtils.RESULT_STRING);
-        this.mResultString = TextUtils.isEmpty(resultString) ? mResultString : resultString;
-        mMaxNum = arguments.getInt(ConstantUtils.MAX_NUM, mMaxNum);
+        options = (SelectImgOptions) arguments.getSerializable(ConstantUtils.OPTIONS_BEAN);
     }
 
     private void findView() {
@@ -135,10 +129,10 @@ public class ImageSelectFragment extends Fragment implements
 
     private void initView() {
         int dividerWidth = (int) (getResources().getDisplayMetrics().density * 5);
-        mGVShowImage.setNumColumns(mGridNum);
+        mGVShowImage.setNumColumns(options.getGridNum(getContext()));
         mGVShowImage.setHorizontalSpacing(dividerWidth);
         mGVShowImage.setVerticalSpacing(dividerWidth);
-        imgWidth = (getResources().getDisplayMetrics().widthPixels - (mGridNum - 1) * dividerWidth) / mGridNum;
+        imgWidth = (getResources().getDisplayMetrics().widthPixels - (options.getGridNum(getContext()) - 1) * dividerWidth) / options.getGridNum(getContext());
         mLLFolderSelect.setOnClickListener(this);
         mTVPriView.setOnClickListener(this);
         mIVBack.setOnClickListener(this);
@@ -165,7 +159,7 @@ public class ImageSelectFragment extends Fragment implements
     public void setEnsureCanClick(boolean canClick) {
         int size = imgAdapter.getSelectList().size();
         if (canClick) {
-            mBTEnsure.setText("完成(" + size + "/" + mMaxNum + ")");
+            mBTEnsure.setText("完成(" + size + "/" + options.getMaxNum() + ")");
             mTVPriView.setText("预览" + "(" + size + ")");
             mTVPriView.setTextColor(Color.WHITE);
             mTVPriView.setOnClickListener(this);
@@ -192,7 +186,7 @@ public class ImageSelectFragment extends Fragment implements
     @Override
     public void showImgS(List<SearchImgBean> searchImgBeans) {
         if (imgAdapter == null) {
-            imgAdapter = new ShowImgAdapter(getActivity(), searchImgBeans, imgWidth, mMaxNum);
+            imgAdapter = new ShowImgAdapter(getActivity(), searchImgBeans, imgWidth, options.getMaxNum());
             imgAdapter.setOnSelectImgListener(this);
             imgAdapter.setOnImgClickListener(this);
             mGVShowImage.setAdapter(imgAdapter);
@@ -233,7 +227,7 @@ public class ImageSelectFragment extends Fragment implements
      */
     private void setResult(ArrayList<String> dataList) {
         Intent intent = new Intent();
-        intent.putStringArrayListExtra(mResultString, dataList);
+        intent.putStringArrayListExtra(options.getResultString(), dataList);
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
     }
@@ -246,16 +240,9 @@ public class ImageSelectFragment extends Fragment implements
         if (selectList == null || selectList.size() == 0) {
             return;
         }
-        Intent intent = null;
-
-        if (TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_LAND)) {
-            intent = new Intent(getActivity(), ImageViewPagerPreviewLandActivity.class);
-        } else {
-            intent = new Intent(getActivity(), ImageViewPagerPreviewActivity.class);
-        }
+        Intent intent = new Intent(getActivity(), ImageViewPagerPreviewActivity.class);
         intent.putStringArrayListExtra("dataList", selectList);
-        intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
-        intent.putExtra(ConstantUtils.MAX_NUM, mMaxNum);
+        intent.putExtra(ConstantUtils.MAX_NUM, options.getMaxNum());
 
         startActivityForResult(intent, 1);
     }
@@ -371,12 +358,8 @@ public class ImageSelectFragment extends Fragment implements
      */
     @Override
     public void onClickImg(View view, String imgPath) {
-        Intent intent = null;
-        if (TextUtils.equals(mScreenDir, ConstantUtils.SCREEN_LAND))
-            intent = new Intent(getActivity(), ImageShowLandActivity.class);
-        else intent = new Intent(getActivity(), ImageShowPortActivity.class);
+        Intent intent = new Intent(getActivity(), ImageShowActivity.class);
         intent.putExtra(ConstantUtils.STR_PATH, imgPath);
-        intent.putExtra(ConstantUtils.SCREEN_DIRECTION, mScreenDir);
         Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, imgPath).toBundle();
         ActivityCompat.startActivity(getActivity(), intent, bundle);
     }

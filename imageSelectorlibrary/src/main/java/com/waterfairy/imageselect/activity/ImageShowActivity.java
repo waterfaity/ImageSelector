@@ -50,14 +50,8 @@ public class ImageShowActivity extends AppCompatActivity {
         String url = intent.getStringExtra(ConstantUtils.STR_URL);
         //本地地址
         String path = intent.getStringExtra(ConstantUtils.STR_PATH);
-        //方向 默认竖屏
-        String ori = intent.getStringExtra(ConstantUtils.SCREEN_DIRECTION);
-        //标题
-        String title = intent.getStringExtra(ConstantUtils.STR_IMG_TITLE);
-        //设置方向
-        setRequestedOrientation(TextUtils.isEmpty(ori) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : (
-                TextUtils.equals(ori, ConstantUtils.SCREEN_PORT) ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
-        //设置标题
+         //标题
+        String title = intent.getStringExtra(ConstantUtils.STR_IMG_TITLE);  //设置标题
         DrawableTransitionOptions drawableTransitionOptions = DrawableTransitionOptions.withCrossFade();
 
         TextView tVTitle = findViewById(R.id.title);
