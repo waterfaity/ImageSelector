@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ImageSelector.iml" filepath="$PROJECT_DIR$/ImageSelector.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ImageSelector.iml" filepath="$PROJECT_DIR$/ImageSelector.iml" />
-      <module fileurl="file://$PROJECT_DIR$/imageSelectorlibrary/imageSelectorlibrary.iml" filepath="$PROJECT_DIR$/imageSelectorlibrary/imageSelectorlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/imageSelectorlibrary/imageSelectorlibrary.iml" filepath="$PROJECT_DIR$/imageSelectorlibrary/imageSelectorlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/myapplication/myapplication.iml" filepath="$PROJECT_DIR$/myapplication/myapplication.iml" />
     </modules>

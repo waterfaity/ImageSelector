@@ -10,29 +10,37 @@
         android:supportsRtl="true">
         <activity
             android:name=".activity.ImageSelectActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
             android:theme="@style/ImageSelectorNoActionBar" />
         <activity
             android:name=".activity.ImageShowActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
             android:theme="@style/ImageSelectorNoActionBar" />
         <activity
             android:name=".activity.ImageViewPagerPreviewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
             android:theme="@style/ImageSelectorFullScreen" />
         <activity
             android:name=".activity.ImageSelectLandActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/ImageSelectorNoActionBar" />
         <activity
             android:name=".activity.ImageSelectPortActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/ImageSelectorNoActionBar" />
         <activity
             android:name=".activity.ImageViewPagerShowActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
             android:theme="@style/ImageSelectorNoActionBar" />
-        <activity android:name=".test.TestActivity">
+        <activity
+            android:name=".test.TestActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
