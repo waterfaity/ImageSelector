@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.waterfairy.imageselect.activity.ImageSelectActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
+import com.waterfairy.imageselect.activity.TakePhotoActivity;
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.Options;
 import com.waterfairy.imageselect.utils.ConstantUtils;
@@ -59,6 +60,7 @@ public class ImageSelector {
                     aClass = ImageViewPagerShowActivity.class;
                     break;
                 case ConstantUtils.TYPE_TAKE_PHOTO:
+                    aClass = TakePhotoActivity.class;
                     break;
 
             }
@@ -95,23 +97,24 @@ public class ImageSelector {
         }
     }
 
-    /**
-     * 选择图片
-     */
-    public void selectImg() {
-        if (options == null) {
-            new Exception("请添加options").printStackTrace();
-        } else {
-            selectImg(options.getRequestCode());
-        }
+
+    public ImageSelector compress(CompressOptions compressOptions) {
+        this.compressOptions = compressOptions;
+        return this;
     }
 
     /**
-     * 选择图片
-     *
-     * @param requestCode
+     * 选取图片 / 拍照
      */
-    public void selectImg(int requestCode) {
+    public void execute() {
+        if (options == null) {
+            new Exception("请添加options").printStackTrace();
+        } else {
+            execute(options.getRequestCode());
+        }
+    }
+
+    public void execute(int requestCode) {
         if (options == null) {
             new Exception("请添加options").printStackTrace();
         } else {
@@ -121,11 +124,6 @@ public class ImageSelector {
                 activity.startActivityForResult(intent(), requestCode);
             }
         }
-    }
-
-    public ImageSelector compress(CompressOptions compressOptions) {
-        this.compressOptions = compressOptions;
-        return this;
     }
 
 }

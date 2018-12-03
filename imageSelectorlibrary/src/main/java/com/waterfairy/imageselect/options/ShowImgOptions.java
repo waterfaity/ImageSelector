@@ -15,21 +15,6 @@ import java.util.ArrayList;
  */
 public class ShowImgOptions implements Options {
 
-
-//    Intent intent = getIntent();
-//    dataList =intent.getStringArrayListExtra(ConstantUtils.DATA_LIST);
-//    mResImgDefault =intent.getIntExtra(ConstantUtils.DEFAULT_IMG_RES,0);
-//    mCurrentPos =intent.getIntExtra(ConstantUtils.CURRENT_POS,0);
-//    mCanSaveImg =intent.getBooleanExtra(ConstantUtils.CAN_SAVE_IMG,false);
-//    mParentPath =intent.getStringExtra(ConstantUtils.SAVE_PARENT_PATH);
-//    mClickToDismiss =intent.getBooleanExtra(ConstantUtils.CLICK_TO_DISMISS,false);
-//        if(TextUtils.isEmpty(mParentPath))
-//
-//    {
-//        mParentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-//    }
-
-
     private ArrayList<String> imgList;
     private int imgResDefault;
     private int currentPos;

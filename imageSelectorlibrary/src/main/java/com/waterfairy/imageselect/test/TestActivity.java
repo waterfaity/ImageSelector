@@ -14,6 +14,7 @@ import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.options.ShowImgOptions;
+import com.waterfairy.imageselect.options.TakePhotoOptions;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_select_test);
         findViewById(R.id.select_img).setOnClickListener(this);
+        findViewById(R.id.take_photo).setOnClickListener(this);
         gridView = findViewById(R.id.grid_view);
         gridView.setNumColumns(3);
         gridView.setOnItemClickListener(this);
@@ -47,7 +49,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ImageSelector.with(this).options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(false)
-                .setSearchPaths(ignore)).compress(new CompressOptions().setMaxHeight(1080).setMaxWidth(1080).setMaxSize(500)).selectImg();
+                .setSearchPaths(ignore)).compress(new CompressOptions().setMaxHeight(1080).setMaxWidth(1080).setMaxSize(500)).execute();
     }
 
     @Override
@@ -75,6 +77,8 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onClick(View v) {
         if (v.getId() == R.id.select_img) {
             selectImg(v);
+        } else if (v.getId() == R.id.take_photo) {
+            ImageSelector.with(this).options(new TakePhotoOptions()).execute();
         }
     }
 }
