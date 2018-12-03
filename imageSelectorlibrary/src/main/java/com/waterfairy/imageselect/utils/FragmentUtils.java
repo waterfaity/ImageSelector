@@ -35,10 +35,6 @@ public class FragmentUtils {
             options = (SelectImgOptions) extra;
         } else {
             options = new SelectImgOptions();
-            String resultString = intent.getStringExtra(ConstantUtils.RESULT_STRING);
-            if (!TextUtils.isEmpty(resultString)) {
-                options.setResultString(resultString);
-            }
             options.setLoadCache(intent.getBooleanExtra(ConstantUtils.LOAD_CACHE, false));
             options.setSearchPaths(intent.getStringArrayListExtra(ConstantUtils.SEARCH_PATHS));
             options.setIgnorePaths(intent.getStringArrayListExtra(ConstantUtils.IGNORE_PATHS));

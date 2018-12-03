@@ -8,10 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.waterfairy.imageselect.ImageSelector;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.options.CompressOptions;
+import com.waterfairy.imageselect.options.CropImgOptions;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.options.ShowImgOptions;
 import com.waterfairy.imageselect.options.TakePhotoOptions;
@@ -43,6 +46,8 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
                 currentView = null;
             }
         });
+
+
     }
 
     public void selectImg(View view) {
@@ -62,15 +67,20 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ConstantUtils.REQUEST_SELECT && resultCode == RESULT_OK) {
+        if ((requestCode == ConstantUtils.REQUEST_SELECT || requestCode == ConstantUtils.REQUEST_TAKE_PHOTO) && resultCode == RESULT_OK) {
+            ArrayList<String> stringArrayListExtra = data.getStringArrayListExtra(ConstantUtils.RESULT_STRING);
             gridView.setAdapter(new MyAdapter(data.getStringArrayListExtra(ConstantUtils.RESULT_STRING), this));
+            Glide.with(this).load(stringArrayListExtra.get(0)).into((ImageView) findViewById(R.id.zoom_img));
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ArrayList<String> dataList = ((MyAdapter) gridView.getAdapter()).getDataList();
-        ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(position).setImgList(dataList)).showImg(view, dataList.get(position));
+//        ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(position).setImgList(dataList)).showImg(view, dataList.get(position));
+        ImageSelector.with(this).options(new CropImgOptions().setImgPath(dataList.get(0))).execute();
+
+
     }
 
     @Override

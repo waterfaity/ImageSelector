@@ -9,6 +9,16 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  * @info:
  */
 public class TakePhotoOptions implements Options {
+    private String compressPath;
+
+    public String getCompressPath() {
+        return compressPath;
+    }
+
+    public void setCompressPath(String compressPath) {
+        this.compressPath = compressPath;
+    }
+
     @Override
     public int getType() {
         return ConstantUtils.TYPE_TAKE_PHOTO;

@@ -38,10 +38,12 @@ public class ConstantUtils {
     public static final int REQUEST_SELECT = 18121;//request 选择图片
     public static final int REQUEST_SHOW = 18122;//展示图片
     public static final int REQUEST_TAKE_PHOTO = 18123;//拍照
+    public static final int REQUEST_CROP = 18124;//裁剪
 
     public static final int TYPE_SELECT = 1;
     public static final int TYPE_SHOW = 2;
     public static final int TYPE_TAKE_PHOTO = 3;
+    public static final int TYPE_CROP = 4;
     public static final String OPTIONS_BEAN = "options_bean";
     public static final String OPTIONS_COMPRESS_BEAN = "options_compress_bean";
 }

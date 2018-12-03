@@ -18,8 +18,7 @@ import java.util.ArrayList;
 public class SelectImgOptions implements Options, Serializable {
 
     private final static long serialVersionUID = 201812012107L;
-    private String resultString;//返回字段
-    private boolean loadCache;//搜索缓存
+     private boolean loadCache;//搜索缓存
     private String compressPath;//压缩路径
     private ArrayList<String> searchPaths;//指定搜索路径
     private ArrayList<String> ignorePaths;//忽略路径
@@ -32,20 +31,14 @@ public class SelectImgOptions implements Options, Serializable {
     }
 
     public SelectImgOptions() {
-        resultString = ConstantUtils.RESULT_STRING;
-        maxNum = ConstantUtils.DEFAULT_MAX_NUM;
+         maxNum = ConstantUtils.DEFAULT_MAX_NUM;
         searchDeep = ConstantUtils.DEFAULT_DEEP;
         gridNum = ConstantUtils.DEFAULT_GRID_NUM_MIN;
     }
 
-    public String getResultString() {
-        return resultString;
-    }
 
-    public SelectImgOptions setResultString(String resultString) {
-        this.resultString = resultString;
-        return this;
-    }
+
+
 
     public boolean isLoadCache() {
         return loadCache;

@@ -48,6 +48,7 @@ import com.waterfairy.imageselect.utils.PermissionUtils;
 import com.waterfairy.imageselect.utils.ShareTool;
 import com.waterfairy.imageselect.view.SelectView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -236,7 +237,7 @@ public class ImageSelectFragment extends Fragment implements
             //压缩
             String compressPath = options.getCompressPath();
             if (TextUtils.isEmpty(compressPath)) {
-                compressPath = getActivity().getExternalFilesDir("img").getAbsolutePath();
+                compressPath = new File(getActivity().getExternalCacheDir(), "img").getAbsolutePath();
             }
             CompressTool.newInstance(compressPath, compressOptions, new CompressTool.OnCompressListener() {
                 @Override
@@ -264,7 +265,7 @@ public class ImageSelectFragment extends Fragment implements
 
     private void setResult(ArrayList<String> dataList) {
         Intent intent = new Intent();
-        intent.putStringArrayListExtra(options.getResultString(), dataList);
+        intent.putStringArrayListExtra(ConstantUtils.RESULT_STRING, dataList);
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
     }
