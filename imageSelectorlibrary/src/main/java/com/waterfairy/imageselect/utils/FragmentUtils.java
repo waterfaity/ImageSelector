@@ -21,7 +21,7 @@ import java.io.Serializable;
 public class FragmentUtils {
     private static ImageSelectFragment fragment;
 
-    public static void serFragment(AppCompatActivity activity, String screenOri) {
+    public static void setFragment(AppCompatActivity activity, String screenOri) {
         if (fragment != null) {
             activity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
@@ -47,6 +47,7 @@ public class FragmentUtils {
             options.setGridNum(intent.getIntExtra(ConstantUtils.GRID_NUM, ConstantUtils.DEFAULT_GRID_NUM_MIN));
         }
         bundle.putSerializable(ConstantUtils.OPTIONS_BEAN, options);
+        bundle.putSerializable(ConstantUtils.OPTIONS_COMPRESS_BEAN, intent.getSerializableExtra(ConstantUtils.OPTIONS_COMPRESS_BEAN));
         fragment.setArguments(bundle);
         activity.getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, fragment).commit();
     }

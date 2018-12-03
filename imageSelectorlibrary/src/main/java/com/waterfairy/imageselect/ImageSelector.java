@@ -7,13 +7,9 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 
 import com.waterfairy.imageselect.activity.ImageSelectActivity;
-import com.waterfairy.imageselect.activity.ImageSelectLandActivity;
-import com.waterfairy.imageselect.activity.ImageSelectPortActivity;
-import com.waterfairy.imageselect.activity.ImageShowLandActivity;
-import com.waterfairy.imageselect.activity.ImageShowPortActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
+import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.Options;
-import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
 /**
@@ -26,6 +22,7 @@ public class ImageSelector {
 
     private Activity activity;
     private Options options;
+    private CompressOptions compressOptions;
 
     private ImageSelector() {
     }
@@ -67,6 +64,7 @@ public class ImageSelector {
             }
             Intent intent = new Intent(activity, aClass);
             intent.putExtra(ConstantUtils.OPTIONS_BEAN, options);
+            intent.putExtra(ConstantUtils.OPTIONS_COMPRESS_BEAN, compressOptions);
             return intent;
         }
     }
@@ -124,4 +122,10 @@ public class ImageSelector {
             }
         }
     }
+
+    public ImageSelector compress(CompressOptions compressOptions) {
+        this.compressOptions = compressOptions;
+        return this;
+    }
+
 }

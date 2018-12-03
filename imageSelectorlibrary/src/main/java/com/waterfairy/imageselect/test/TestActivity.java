@@ -11,6 +11,7 @@ import android.widget.GridView;
 
 import com.waterfairy.imageselect.ImageSelector;
 import com.waterfairy.imageselect.R;
+import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.options.ShowImgOptions;
 import com.waterfairy.imageselect.utils.ConstantUtils;
@@ -43,10 +44,10 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void selectImg(View view) {
-        ArrayList<String> ignore=new ArrayList<>();
+        ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
-        ImageSelector.with(this).options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(1).setLoadCache(false)
-        .setSearchPaths(ignore)).selectImg();
+        ImageSelector.with(this).options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(false)
+                .setSearchPaths(ignore)).compress(new CompressOptions().setMaxHeight(1080).setMaxWidth(1080).setMaxSize(500)).selectImg();
     }
 
     @Override
@@ -72,7 +73,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.select_img){
+        if (v.getId() == R.id.select_img) {
             selectImg(v);
         }
     }

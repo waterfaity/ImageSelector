@@ -43,4 +43,5 @@ public class ConstantUtils {
     public static final int TYPE_SHOW = 2;
     public static final int TYPE_TAKE_PHOTO = 3;
     public static final String OPTIONS_BEAN = "options_bean";
+    public static final String OPTIONS_COMPRESS_BEAN = "options_compress_bean";
 }

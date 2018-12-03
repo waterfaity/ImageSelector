@@ -1,11 +1,9 @@
 package com.waterfairy.imageselect.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,15 +33,14 @@ import android.widget.Toast;
 
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.activity.ImageShowActivity;
-import com.waterfairy.imageselect.activity.ImageShowLandActivity;
-import com.waterfairy.imageselect.activity.ImageShowPortActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerPreviewActivity;
-import com.waterfairy.imageselect.activity.ImageViewPagerPreviewLandActivity;
 import com.waterfairy.imageselect.adapter.ShowFolderAdapter;
 import com.waterfairy.imageselect.adapter.ShowImgAdapter;
 import com.waterfairy.imageselect.bean.SearchImgBean;
+import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.presenter.SelectPresenter;
+import com.waterfairy.imageselect.tool.CompressTool;
 import com.waterfairy.imageselect.utils.AnimUtils;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.PathUtils;
@@ -81,16 +79,15 @@ public class ImageSelectFragment extends Fragment implements
     private View mIMArrow;
     //data
     private boolean isFolderListVisibility;
-    //    private String mResultString = "data";
-//    private int mGridNum = 3;
-//    private int mMaxNum = 9;
-//    private String mScreenDir;//屏幕方向
     private int imgWidth;
     private boolean isDestroy;//横竖屏旋转时处理
     private SelectImgOptions options;
     //adapter
     private ShowImgAdapter imgAdapter;
     private ShowFolderAdapter folderAdapter;
+    //压缩图片
+    private CompressOptions compressOptions;
+    private android.support.v7.app.AlertDialog alertDialog;
 
     @Nullable
     @Override
@@ -113,6 +110,7 @@ public class ImageSelectFragment extends Fragment implements
     private void getExtra() {
         Bundle arguments = getArguments();
         options = (SelectImgOptions) arguments.getSerializable(ConstantUtils.OPTIONS_BEAN);
+        compressOptions = (CompressOptions) arguments.getSerializable(ConstantUtils.OPTIONS_COMPRESS_BEAN);
     }
 
     private void findView() {
@@ -216,7 +214,7 @@ public class ImageSelectFragment extends Fragment implements
 
     private void ensure() {
         if (imgAdapter != null && imgAdapter.getSelectList().size() > 0) {
-            setResult(imgAdapter.getSelectList());
+            compressAndResult(imgAdapter.getSelectList());
         }
     }
 
@@ -225,6 +223,45 @@ public class ImageSelectFragment extends Fragment implements
      *
      * @param dataList
      */
+    private void compressAndResult(ArrayList<String> dataList) {
+        if (compressOptions != null) {
+            if (alertDialog == null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("压缩");
+                builder.setMessage("图片压缩中...");
+                builder.setCancelable(false);
+                alertDialog = builder.create();
+            }
+            alertDialog.show();
+            //压缩
+            String compressPath = options.getCompressPath();
+            if (TextUtils.isEmpty(compressPath)) {
+                compressPath = getActivity().getExternalFilesDir("img").getAbsolutePath();
+            }
+            CompressTool.newInstance(compressPath, compressOptions, new CompressTool.OnCompressListener() {
+                @Override
+                public void onCompressSuccess(ArrayList<String> tempDataList) {
+                    alertDialog.dismiss();
+                    setResult(tempDataList);
+                }
+
+                @Override
+                public void onCompressing(Integer pos, int totalSize) {
+                    alertDialog.setMessage("图片压缩中(" + (pos + 1) + "/" + totalSize + ")...");
+                }
+
+                @Override
+                public void onCompressError(String msg) {
+                    if (alertDialog != null && alertDialog.isShowing()) {
+                        alertDialog.setCancelable(true);
+                    }
+                }
+            }).compress(dataList);
+        } else {
+            setResult(dataList);
+        }
+    }
+
     private void setResult(ArrayList<String> dataList) {
         Intent intent = new Intent();
         intent.putStringArrayListExtra(options.getResultString(), dataList);
@@ -243,7 +280,6 @@ public class ImageSelectFragment extends Fragment implements
         Intent intent = new Intent(getActivity(), ImageViewPagerPreviewActivity.class);
         intent.putStringArrayListExtra("dataList", selectList);
         intent.putExtra(ConstantUtils.MAX_NUM, options.getMaxNum());
-
         startActivityForResult(intent, 1);
     }
 
@@ -370,7 +406,7 @@ public class ImageSelectFragment extends Fragment implements
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             ArrayList<String> dataList = data.getStringArrayListExtra("dataList");
             if (data.getBooleanExtra("complete", false)) {
-                setResult(dataList);
+                compressAndResult(dataList);
             } else {
                 if (dataList == null || dataList.size() == 0) {
                     imgAdapter.removeAllSelect();
