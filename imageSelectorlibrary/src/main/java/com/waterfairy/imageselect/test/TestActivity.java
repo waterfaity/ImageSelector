@@ -19,14 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TestActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class TestActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
     private GridView gridView;
     private View currentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_image_select_test);
+        findViewById(R.id.select_img).setOnClickListener(this);
         gridView = findViewById(R.id.grid_view);
         gridView.setNumColumns(3);
         gridView.setOnItemClickListener(this);
@@ -67,5 +68,12 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ArrayList<String> dataList = ((MyAdapter) gridView.getAdapter()).getDataList();
         ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(position).setImgList(dataList)).showImg(view, dataList.get(position));
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId()==R.id.select_img){
+            selectImg(v);
+        }
     }
 }

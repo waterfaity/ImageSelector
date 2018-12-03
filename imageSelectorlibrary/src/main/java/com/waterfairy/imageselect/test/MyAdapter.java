@@ -46,7 +46,7 @@ public class MyAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_img, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_image_select_img, parent, false);
         }
         Glide.with(context).load(dataList.get(position)).into((ImageView) convertView);
         return convertView;

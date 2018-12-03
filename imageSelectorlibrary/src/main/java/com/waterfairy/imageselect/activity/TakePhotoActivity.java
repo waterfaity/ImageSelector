@@ -19,7 +19,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_take_photo);
+        setContentView(R.layout.activity_image_select_take_photo);
         mImg = findViewById(R.id.img);
 
     }
