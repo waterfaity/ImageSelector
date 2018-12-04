@@ -28,7 +28,7 @@ public class ImgCropActivity extends AppCompatActivity {
         File file = new File(cropImgOptions.getImgPath());
         Intent intent = new Intent("com.android.camera.action.CROP");
         Uri uri = Uri.fromFile(file);// parse(pathUri);
-        ProviderUtils.getProviderUri(this, intent, file);
+//        ProviderUtils.getProviderUri(this, intent, file);
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 2);

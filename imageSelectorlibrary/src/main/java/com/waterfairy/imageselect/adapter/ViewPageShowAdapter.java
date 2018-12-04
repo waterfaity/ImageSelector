@@ -101,12 +101,12 @@ public class ViewPageShowAdapter extends PagerAdapter {
     private void showView(ImageView imageView, int position) {
         RequestBuilder<Drawable> load = Glide.with(activity).load(dataList.get(position));
         if (mResImgDefault != 0) {
-            load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));
+            load = load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));
         }
         if (mCurrentPos == position) {
-            load.listener(new GlideRequestListener(activity, mReferToView, imageView, true).setOne(true));
+            load = load.listener(new GlideRequestListener(activity, mReferToView, imageView, true).setOne(true));
         } else {
-            load.listener(new GlideRequestListener(activity, mReferToView, imageView, false).setOne(true));
+            load = load.listener(new GlideRequestListener(activity, mReferToView, imageView, false).setOne(true));
         }
         load.into(imageView);
     }

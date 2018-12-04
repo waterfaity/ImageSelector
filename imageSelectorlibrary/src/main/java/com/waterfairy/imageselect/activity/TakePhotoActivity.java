@@ -58,9 +58,10 @@ public class TakePhotoActivity extends AppCompatActivity {
         String format = simpleDateFormat.format(new Date());
         file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "IMG_" + format + ".jpg");
         // 把文件地址转换成Uri格式
-        Uri providerUri = ProviderUtils.getProviderUri(this, intent, file);
+//        Uri providerUri = ProviderUtils.getProviderUri(this, intent, file);
+        Uri uri=Uri.fromFile(file);
         // 设置系统相机拍摄照片完成后图片文件的存放地址
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, providerUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, options.getRequestCode());
     }
 
