@@ -10,6 +10,16 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  */
 public class CropImgOptions implements Options {
     private String imgPath;
+    private String pathAuthority;
+
+    public String getPathAuthority() {
+        return pathAuthority;
+    }
+
+    public CropImgOptions setPathAuthority(String pathAuthority) {
+        this.pathAuthority = pathAuthority;
+        return this;
+    }
 
     @Override
     public int getType() {

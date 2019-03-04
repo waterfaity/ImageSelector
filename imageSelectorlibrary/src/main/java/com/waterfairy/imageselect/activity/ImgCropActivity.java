@@ -3,9 +3,8 @@ package com.waterfairy.imageselect.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.waterfairy.imageselect.R;
@@ -23,13 +22,14 @@ public class ImgCropActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_img_crop);
         cropImgOptions = (CropImgOptions) getIntent().getSerializableExtra(ConstantUtils.OPTIONS_BEAN);
+        if (cropImgOptions == null) cropImgOptions = new CropImgOptions();
 
 
         File file = new File(cropImgOptions.getImgPath());
         Intent intent = new Intent("com.android.camera.action.CROP");
-        Uri uri = Uri.fromFile(file);// parse(pathUri);
-//        ProviderUtils.getProviderUri(this, intent, file);
-        intent.setDataAndType(uri, "image/*");
+        ProviderUtils.setAuthority(cropImgOptions.getPathAuthority());
+        Uri providerUri = ProviderUtils.getProviderUri(this, intent, file);
+        intent.setDataAndType(providerUri, "image/*");
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 2);
         intent.putExtra("aspectY", 2);

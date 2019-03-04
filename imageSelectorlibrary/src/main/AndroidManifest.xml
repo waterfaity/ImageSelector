@@ -51,16 +51,7 @@
             </intent-filter>
         </activity>
 
-        <!--&lt;!&ndash; 文件访问权限 &ndash;&gt;-->
-        <!--<provider-->
-            <!--android:name=".utils.Provider"-->
-            <!--android:authorities="com.waterfairy.imageselect.fileProvider"-->
-            <!--android:exported="false"-->
-            <!--android:grantUriPermissions="true">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-                <!--android:resource="@xml/file_paths"/>-->
-        <!--</provider>-->
+
 
         <activity android:name=".activity.ImgCropActivity">
         </activity>

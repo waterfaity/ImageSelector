@@ -48,18 +48,18 @@ public class TakePhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_select_take_photo);
         mImg = findViewById(R.id.img);
         options = (TakePhotoOptions) getIntent().getSerializableExtra(ConstantUtils.OPTIONS_BEAN);
+        if (options == null) options = new TakePhotoOptions();
         Intent intent = new Intent();
         // 指定开启系统相机的Action
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         // 根据文件地址创建文件
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String format = simpleDateFormat.format(new Date());
         file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "IMG_" + format + ".jpg");
         // 把文件地址转换成Uri格式
-//        Uri providerUri = ProviderUtils.getProviderUri(this, intent, file);
-        Uri uri=Uri.fromFile(file);
+        ProviderUtils.setAuthority(options.getPathAuthority());
+        Uri uri = ProviderUtils.getProviderUri(this, intent, file);
         // 设置系统相机拍摄照片完成后图片文件的存放地址
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, options.getRequestCode());
@@ -68,7 +68,6 @@ public class TakePhotoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("test", "onActivityResult: ");
         if (resultCode == RESULT_OK) {
             Glide.with(this).load(file).listener(new RequestListener<Drawable>() {
                 @Override
