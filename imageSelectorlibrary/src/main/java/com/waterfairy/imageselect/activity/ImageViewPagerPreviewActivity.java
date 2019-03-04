@@ -1,12 +1,10 @@
 package com.waterfairy.imageselect.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,7 +166,8 @@ public class ImageViewPagerPreviewActivity extends AppCompatActivity implements 
     private void getExtra() {
         Intent intent = getIntent();
         dataList = intent.getStringArrayListExtra("dataList");
-        maxNum = intent.getIntExtra(ConstantUtils.MAX_NUM, 1);}
+        maxNum = intent.getIntExtra(ConstantUtils.MAX_NUM, 1);
+    }
 
     public void setResult(boolean complete) {
 

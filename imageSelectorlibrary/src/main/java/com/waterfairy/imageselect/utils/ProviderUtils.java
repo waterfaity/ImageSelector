@@ -16,7 +16,7 @@ import java.io.File;
  */
 
 public class ProviderUtils {
-    public static String authority="com.waterfairy.imageselect.fileProvider";
+    public static String authority = "com.waterfairy.imageselect.fileProvider";
 
     public static void setAuthority(String authority) {
         ProviderUtils.authority = authority;

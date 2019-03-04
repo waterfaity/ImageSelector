@@ -1,4 +1,4 @@
-package com.waterfairy.imageselect;
+package com.waterfairy.imageselect.widget;
 
 import android.content.Context;
 import android.graphics.Matrix;
@@ -19,7 +19,7 @@ import android.view.ViewTreeObserver;
  * @date 2018/12/3 19:01
  * @info:
  */
-public class ZoomImageView extends AppCompatImageView  implements ScaleGestureDetector.OnScaleGestureListener, View.OnTouchListener, ViewTreeObserver.OnGlobalLayoutListener{
+public class ZoomImageView extends AppCompatImageView implements ScaleGestureDetector.OnScaleGestureListener, View.OnTouchListener, ViewTreeObserver.OnGlobalLayoutListener {
 
     private static final String TAG = ZoomImageView.class.getSimpleName();
     public static final float SCALE_MAX = 3.0f;
@@ -97,6 +97,7 @@ public class ZoomImageView extends AppCompatImageView  implements ScaleGestureDe
 
     /**
      * 自动缩放的任务
+     *
      * @author zhy
      */
     private class AutoScaleRunnable implements Runnable {
@@ -113,6 +114,7 @@ public class ZoomImageView extends AppCompatImageView  implements ScaleGestureDe
 
         /**
          * 传入目标缩放值，根据目标值与当前值，判断应该放大还是缩小
+         *
          * @param targetScale
          */
         public AutoScaleRunnable(float targetScale, float x, float y) {
@@ -151,6 +153,7 @@ public class ZoomImageView extends AppCompatImageView  implements ScaleGestureDe
 
     /**
      * 对图片进行缩放的控制，首先进行缩放范围的判断，然后设置mScaleMatrix的scale值
+     *
      * @param detector
      * @return
      */
@@ -230,6 +233,7 @@ public class ZoomImageView extends AppCompatImageView  implements ScaleGestureDe
 
     /**
      * 根据当前图片的Matrix获得图片的范围
+     *
      * @return
      */
     private RectF getMatrixRectF() {
@@ -350,6 +354,7 @@ public class ZoomImageView extends AppCompatImageView  implements ScaleGestureDe
 
     /**
      * 获得当前的缩放比例
+     *
      * @return
      */
     public final float getScale() {

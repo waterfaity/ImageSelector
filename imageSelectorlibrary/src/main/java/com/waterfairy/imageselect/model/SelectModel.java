@@ -33,13 +33,11 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
         mShareTool = ShareTool.getInstance();
     }
 
-    public void initData(Bundle bundle) {
-        if (bundle != null) {
-            options = (SelectImgOptions) bundle.getSerializable(ConstantUtils.OPTIONS_BEAN);
-            mPictureSearchTool.setDeep(options.getSearchDeep())
-                    .setPaths(options.getSearchPaths(),
-                            options.getIgnorePaths());
-        }
+    public void initData(SelectImgOptions options) {
+        this.options = options;
+        mPictureSearchTool.setDeep(options.getSearchDeep())
+                .setPaths(options.getSearchPaths(),
+                        options.getIgnorePaths());
     }
 
     public void queryFolders() {

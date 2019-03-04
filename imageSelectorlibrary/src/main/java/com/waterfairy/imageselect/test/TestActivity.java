@@ -18,7 +18,6 @@ import com.waterfairy.imageselect.options.CropImgOptions;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.options.TakePhotoOptions;
 import com.waterfairy.imageselect.utils.ConstantUtils;
-import com.waterfairy.imageselect.utils.ProviderUtils;
 
 import java.util.ArrayList;
 import java.util.List;

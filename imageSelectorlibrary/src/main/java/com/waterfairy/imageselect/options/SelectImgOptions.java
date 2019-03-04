@@ -2,7 +2,6 @@ package com.waterfairy.imageselect.options;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Environment;
 
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 public class SelectImgOptions implements Options, Serializable {
 
     private final static long serialVersionUID = 201812012107L;
-     private boolean loadCache;//搜索缓存
+    private boolean loadCache;//搜索缓存
     private String compressPath;//压缩路径
     private ArrayList<String> searchPaths;//指定搜索路径
     private ArrayList<String> ignorePaths;//忽略路径
@@ -31,13 +30,10 @@ public class SelectImgOptions implements Options, Serializable {
     }
 
     public SelectImgOptions() {
-         maxNum = ConstantUtils.DEFAULT_MAX_NUM;
+        maxNum = ConstantUtils.DEFAULT_MAX_NUM;
         searchDeep = ConstantUtils.DEFAULT_DEEP;
         gridNum = ConstantUtils.DEFAULT_GRID_NUM_MIN;
     }
-
-
-
 
 
     public boolean isLoadCache() {

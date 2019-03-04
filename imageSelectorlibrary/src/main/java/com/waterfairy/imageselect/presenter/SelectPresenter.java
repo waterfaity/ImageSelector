@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.model.SelectModel;
+import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.view.SelectView;
 
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class SelectPresenter implements SelectPresenterListener {
     }
 
 
-    public void getExtraBundle(Bundle bundle) {
-        mModel.initData(bundle);
+    public void initData(SelectImgOptions options) {
+        mModel.initData(options);
     }
 
     /**

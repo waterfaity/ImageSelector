@@ -1,60 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.waterfairy.imageselect">
+    package="com.waterfairy.imageselect">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
         <activity
-            android:name=".activity.ImageSelectActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="behind"
-            android:theme="@style/ImageSelectorNoActionBar"/>
-        <activity
             android:name=".activity.ImageShowActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
-            android:theme="@style/ImageSelectorNoActionBar"/>
+            android:theme="@style/ImageSelectorNoActionBar" />
         <activity
             android:name=".activity.ImageViewPagerPreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
-            android:theme="@style/ImageSelectorFullScreen"/>
-        <activity
-            android:name=".activity.ImageSelectLandActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape"
-            android:theme="@style/ImageSelectorNoActionBar"/>
-        <activity
-            android:name=".activity.ImageSelectPortActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/ImageSelectorNoActionBar"/>
+            android:theme="@style/ImageSelectorFullScreen" />
         <activity
             android:name=".activity.ImageViewPagerShowActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
-            android:theme="@style/ImageSelectorNoActionBar"/>
+            android:theme="@style/ImageSelectorNoActionBar" />
         <activity
             android:name=".activity.TakePhotoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
-            android:theme="@style/ImageSelectorNoActionBar"/>
+            android:theme="@style/ImageSelectorNoActionBar" />
         <activity
             android:name=".test.TestActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
-
-
-        <activity android:name=".activity.ImgCropActivity">
-        </activity>
+        <activity android:name=".activity.ImgCropActivity" />
+        <activity
+            android:name=".activity.ImageSelectActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="behind"
+            android:theme="@style/ImageSelectorNoActionBar" />
     </application>
 
 </manifest>

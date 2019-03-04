@@ -18,7 +18,7 @@
         android:id="@+id/take_photo"
         android:text="拍照" />
 
-    <com.waterfairy.imageselect.ZoomImageView
+    <com.waterfairy.imageselect.widget.ZoomImageView
         android:id="@+id/zoom_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

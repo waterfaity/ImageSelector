@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +27,6 @@ import com.waterfairy.imageselect.utils.ImageUtils;
 import com.waterfairy.imageselect.utils.MD5Utils;
 
 import java.io.File;
-import java.util.ArrayList;
 
 //import com.github.chrisbanes.photoview.OnPhotoTapListener;
 //import com.github.chrisbanes.photoview.PhotoView;
@@ -144,7 +142,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         mRLSave.startAnimation(getInAnim(false, false));
         mRLSave.setClickable(false);
         saveImg();
-        isSaving=false;
+        isSaving = false;
     }
 
     private void saveImg() {

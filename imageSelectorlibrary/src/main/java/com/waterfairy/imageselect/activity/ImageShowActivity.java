@@ -1,7 +1,6 @@
 package com.waterfairy.imageselect.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -50,7 +49,7 @@ public class ImageShowActivity extends AppCompatActivity {
         String url = intent.getStringExtra(ConstantUtils.STR_URL);
         //本地地址
         String path = intent.getStringExtra(ConstantUtils.STR_PATH);
-         //标题
+        //标题
         String title = intent.getStringExtra(ConstantUtils.STR_IMG_TITLE);  //设置标题
         DrawableTransitionOptions drawableTransitionOptions = DrawableTransitionOptions.withCrossFade();
 
