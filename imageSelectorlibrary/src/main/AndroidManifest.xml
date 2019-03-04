@@ -17,7 +17,7 @@
             android:name=".activity.ImageViewPagerPreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
-            android:theme="@style/ImageSelectorFullScreen" />
+            android:theme="@style/ImageSelectorFullScreen" />mai
         <activity
             android:name=".activity.ImageViewPagerShowActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -35,7 +35,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ImgCropActivity" />
+        <activity android:name=".activity.ImgageCropActivity" />
         <activity
             android:name=".activity.ImageSelectActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

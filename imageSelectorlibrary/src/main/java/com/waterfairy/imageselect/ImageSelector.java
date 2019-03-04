@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.waterfairy.imageselect.activity.ImageSelectActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
+import com.waterfairy.imageselect.activity.ImgageCropActivity;
 import com.waterfairy.imageselect.activity.TakePhotoActivity;
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.Options;
@@ -61,6 +62,9 @@ public class ImageSelector {
                     break;
                 case ConstantUtils.TYPE_TAKE_PHOTO:
                     aClass = TakePhotoActivity.class;
+                    break;
+                case ConstantUtils.TYPE_CROP:
+                    aClass = ImgageCropActivity.class;
                     break;
 
             }
