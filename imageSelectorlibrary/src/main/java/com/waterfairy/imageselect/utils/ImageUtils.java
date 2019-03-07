@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextUtils;
 
@@ -138,12 +139,12 @@ public class ImageUtils {
      * 从文件读取bitmap 并缩放
      *
      * @param imageFile
+     * @param compressFormat
      * @param width
      * @param height
-     * @param useLittle 使用最小的缩小倍数 倍数最小为1 ,
      * @return
      */
-    public static Bitmap decodeFromFile(File imageFile, int width, int height, boolean useLittle) throws IOException {
+    public static Bitmap decodeFromFile(File imageFile, Bitmap.CompressFormat compressFormat, int width, int height) throws IOException {
         if (width <= 0 || height <= 0) {
             throw new IOException("宽或高必须大于0");
         }
@@ -169,25 +170,42 @@ public class ImageUtils {
             //height缩放倍数
             yScale = outHeight / (float) height;
         }
-        options.inPreferredConfig = Bitmap.Config.ARGB_4444;
-        int sampleSize = (int) (useLittle ? Math.min(xScale, yScale) : Math.max(xScale, yScale));
-        options.inSampleSize = sampleSize < 1 ? 1 : sampleSize;
+        options.inPreferredConfig = compressFormat == Bitmap.CompressFormat.PNG ? Bitmap.Config.ARGB_4444 : Bitmap.Config.RGB_565;
+        int sampleSize = (int) Math.max(xScale, yScale);
+        if (sampleSize > 2) sampleSize = 2;
+        else if (sampleSize < 1) sampleSize = 1;
+//        options.inSampleSize = sampleSize;
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
     }
 
-
+    /**
+     * 文件压缩
+     *
+     * @param imageFile
+     * @param maxWidth
+     * @param maxHeight
+     * @param maxSize
+     * @return
+     */
     public static Bitmap compress(File imageFile, int maxWidth, int maxHeight, int maxSize) {
         try {
             Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
             if (imageFile.getAbsolutePath().endsWith(".PNG") || imageFile.getAbsolutePath().endsWith(".png")) {
                 compressFormat = Bitmap.CompressFormat.PNG;
             }
-            Bitmap bitmap = decodeFromFile(imageFile, maxWidth, maxHeight, false);
+            //压缩尺寸
+            Bitmap bitmap = decodeFromFile(imageFile, compressFormat, maxWidth, maxHeight);
             if (compressFormat == Bitmap.CompressFormat.PNG) {
-                return compressPNG(bitmap, maxWidth, maxHeight);
+                //压缩尺寸
+                return compressMeasure(bitmap, maxWidth, maxHeight, Bitmap.Config.ARGB_4444);
             } else {
-                return compressJPG(bitmap, maxSize);
+                //压缩
+
+                Bitmap bitmapTemp = matrix(bitmap, maxWidth, maxHeight, false);
+//                Bitmap bitmapTemp = compressMeasure(bitmap, maxWidth, maxHeight, Bitmap.Config.RGB_565);
+                if (maxSize > 0) return compressQuality(bitmapTemp, maxSize);
+                else return bitmapTemp;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -195,7 +213,15 @@ public class ImageUtils {
         return null;
     }
 
-    private static Bitmap compressPNG(Bitmap bitmap, int maxWidth, int maxHeight) {
+    /**
+     * 尺寸压缩
+     *
+     * @param bitmap
+     * @param maxWidth
+     * @param maxHeight
+     * @return
+     */
+    private static Bitmap compressMeasure(Bitmap bitmap, int maxWidth, int maxHeight, Bitmap.Config config) {
         //200 80
         //200 90     100 45
         int width = bitmap.getWidth();
@@ -213,9 +239,12 @@ public class ImageUtils {
                 tempWidth = maxWidth;
                 tempHeight = (int) (maxWidth * height / (float) width);
             }
-            Bitmap bitmapTemp = Bitmap.createBitmap(tempWidth, tempHeight, Bitmap.Config.ARGB_4444);
+            Bitmap bitmapTemp = Bitmap.createBitmap(tempWidth, tempHeight, config);
             Canvas canvas = new Canvas(bitmapTemp);
-            canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(0, 0, tempWidth, tempHeight), null);
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setFilterBitmap(true);
+            canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(0, 0, tempWidth, tempHeight), paint);
             return bitmapTemp;
         }
         return bitmap;
@@ -229,17 +258,18 @@ public class ImageUtils {
      * @param maxSize KB
      * @return
      */
-    public static Bitmap compressJPG(Bitmap image, int maxSize) {
+    public static Bitmap compressQuality(Bitmap image, int maxSize) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
-        int options = 90;
+        image.compress(Bitmap.CompressFormat.JPEG, 80, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 100;
         while (baos.toByteArray().length / 1024 > maxSize && options >= 10) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
             baos.reset(); // 重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
-            options -= 10;// 每次都减少10
+            options -= 5;// 每次都减少5
         }
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
         return BitmapFactory.decodeStream(isBm, null, null);
     }
+
 
 }

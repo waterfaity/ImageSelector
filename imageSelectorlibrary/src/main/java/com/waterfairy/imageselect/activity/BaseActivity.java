@@ -17,7 +17,7 @@ public class BaseActivity extends AppCompatActivity {
     protected CompressOptions compressOptions;
     private AlertDialog alertDialog;
 
-    protected void compress(ArrayList<String> dataList, String compressPath) {
+    protected void compress(final ArrayList<String> dataList) {
         if (compressOptions != null) {
             if (alertDialog == null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -28,6 +28,7 @@ public class BaseActivity extends AppCompatActivity {
             }
             alertDialog.show();
             //压缩
+            String compressPath = compressOptions.getCompressPath();
             if (TextUtils.isEmpty(compressPath)) {
                 compressPath = new File(getExternalCacheDir(), "img").getAbsolutePath();
             }
@@ -44,10 +45,12 @@ public class BaseActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCompressError(String msg) {
+                public void onCompressError(String msg, ArrayList<String> sourceList) {
                     if (alertDialog != null && alertDialog.isShowing()) {
                         alertDialog.setCancelable(true);
+                        alertDialog.dismiss();
                     }
+                    setResult(sourceList);
                 }
             }).compress(dataList);
         } else {

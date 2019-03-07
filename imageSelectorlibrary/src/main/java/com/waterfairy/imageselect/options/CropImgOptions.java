@@ -9,16 +9,58 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  * @info:
  */
 public class CropImgOptions implements Options {
-    private String compressPath;
-    private String imgPath;
+    private String cropPath;//裁剪路径
+    private String imgPath;//图片路径
     private String pathAuthority;
 
-    public String getCompressPath() {
-        return compressPath;
+    private int width;
+    private int height;
+    private int aspectX;
+    private int aspectY;
+
+    public int getWidth() {
+        return width;
     }
 
-    public void setCompressPath(String compressPath) {
-        this.compressPath = compressPath;
+    public CropImgOptions setWidth(int width) {
+        this.width = width;
+        return this;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public CropImgOptions setHeight(int height) {
+        this.height = height;
+        return this;
+    }
+
+    public int getAspectX() {
+        return aspectX;
+    }
+
+    public CropImgOptions setAspectX(int aspectX) {
+        this.aspectX = aspectX;
+        return this;
+    }
+
+    public int getAspectY() {
+        return aspectY;
+    }
+
+    public CropImgOptions setAspectY(int aspectY) {
+        this.aspectY = aspectY;
+        return this;
+    }
+
+    public String getCropPath() {
+        return cropPath;
+    }
+
+    public CropImgOptions setCropPath(String cropPath) {
+        this.cropPath = cropPath;
+        return this;
     }
 
     public String getPathAuthority() {

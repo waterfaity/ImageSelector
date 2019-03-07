@@ -45,10 +45,10 @@ public class CompressTool {
     public void compress(ArrayList<String> dataList) {
         if (dataList == null || dataList.size() == 0) {
             if (onCompressListener != null)
-                onCompressListener.onCompressError("没有数据!");
+                onCompressListener.onCompressError("没有数据!",dataList);
         } else if (compressOptions == null) {
             if (onCompressListener != null)
-                onCompressListener.onCompressError("compressOptions为空!");
+                onCompressListener.onCompressError("compressOptions为空!", dataList);
         } else {
             //创建路径
             File rootFile = new File(cachePath);
@@ -56,7 +56,7 @@ public class CompressTool {
                 boolean mkdirs = rootFile.mkdirs();
                 if (!mkdirs) {
                     if (onCompressListener != null) {
-                        onCompressListener.onCompressError("路径创建失败!");
+                        onCompressListener.onCompressError("路径创建失败!",dataList);
                     }
                     return;
                 }
@@ -65,7 +65,7 @@ public class CompressTool {
                 compressAsync(dataList);
             } else {
                 if (onCompressListener != null) {
-                    onCompressListener.onCompressError("目标文件非路径!");
+                    onCompressListener.onCompressError("目标文件非路径!",dataList);
                 }
             }
         }
@@ -137,7 +137,7 @@ public class CompressTool {
         Bitmap bitmap = ImageUtils.compress(new File(sourcePath), compressOptions.getMaxWidth(), compressOptions.getMaxHeight(), compressOptions.getMaxSize());
         if (bitmap == null) return sourcePath;
         //保存
-        boolean b = ImageUtils.saveBitmap(targetPath, bitmap, targetPath.endsWith(".png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 100);
+        boolean b = ImageUtils.saveBitmap(targetPath, bitmap, targetPath.endsWith(".png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 85);
         if (b) return targetPath;
         return sourcePath;
     }
@@ -151,7 +151,7 @@ public class CompressTool {
 
         void onCompressing(Integer pos, int totalSize);
 
-        void onCompressError(String msg);
+        void onCompressError(String msg, ArrayList<String> sourceList);
     }
 
 }

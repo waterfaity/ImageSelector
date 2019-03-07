@@ -13,6 +13,7 @@ public class CompressOptions implements Serializable {
     private int maxWidth;
     private int maxHeight;
     private int maxSize;
+    private String compressPath;
 
     public int getMaxWidth() {
         return maxWidth;
@@ -39,6 +40,15 @@ public class CompressOptions implements Serializable {
 
     public CompressOptions setMaxSize(int maxSize) {
         this.maxSize = maxSize;
+        return this;
+    }
+
+    public String getCompressPath() {
+        return compressPath;
+    }
+
+    public CompressOptions setCompressPath(String compressPath) {
+        this.compressPath = compressPath;
         return this;
     }
 }

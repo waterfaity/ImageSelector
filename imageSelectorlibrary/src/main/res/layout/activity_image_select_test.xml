@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".test.TestActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".test.TestActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/text"
+        android:layout_height="wrap_content"
+        android:maxLines="2"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/select_img"
-        android:text="选择图片" />
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="选择图片"/>
+
+    <Button
         android:id="@+id/take_photo"
-        android:text="拍照" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拍照"/>
+
+    <Button
+        android:id="@+id/crop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="裁剪"/>
 
     <com.waterfairy.imageselect.widget.ZoomImageView
         android:id="@+id/zoom_img"
@@ -24,8 +37,8 @@
         android:layout_height="match_parent"/>
 
     <GridView
-        android:layout_gravity="center_horizontal"
         android:id="@+id/grid_view"
         android:layout_width="300dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

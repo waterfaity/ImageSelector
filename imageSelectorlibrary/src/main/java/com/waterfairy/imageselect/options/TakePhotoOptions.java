@@ -9,8 +9,7 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  * @info:
  */
 public class TakePhotoOptions implements Options {
-    private String compressPath;
-    private String pathAuthority;
+     private String pathAuthority;
 
     public String getPathAuthority() {
         return pathAuthority;
@@ -18,15 +17,6 @@ public class TakePhotoOptions implements Options {
 
     public TakePhotoOptions setPathAuthority(String pathAuthority) {
         this.pathAuthority = pathAuthority;
-        return this;
-    }
-
-    public String getCompressPath() {
-        return compressPath;
-    }
-
-    public TakePhotoOptions setCompressPath(String compressPath) {
-        this.compressPath = compressPath;
         return this;
     }
 

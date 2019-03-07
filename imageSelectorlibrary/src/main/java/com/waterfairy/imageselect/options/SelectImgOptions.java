@@ -18,16 +18,13 @@ public class SelectImgOptions implements Options, Serializable {
 
     private final static long serialVersionUID = 201812012107L;
     private boolean loadCache;//搜索缓存
-    private String compressPath;//压缩路径
-    private ArrayList<String> searchPaths;//指定搜索路径
+     private ArrayList<String> searchPaths;//指定搜索路径
     private ArrayList<String> ignorePaths;//忽略路径
     private int maxNum;//选择最大数 默认9
     private int searchDeep;//搜索文件夹深度 默认3
     private int gridNum;//展示grid数量 默认3
 
-    public String getCompressPath() {
-        return compressPath;
-    }
+
 
     public SelectImgOptions() {
         maxNum = ConstantUtils.DEFAULT_MAX_NUM;

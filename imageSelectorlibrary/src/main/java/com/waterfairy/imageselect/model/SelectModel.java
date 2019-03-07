@@ -10,7 +10,10 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.PictureSearchTool;
 import com.waterfairy.imageselect.utils.ShareTool;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -69,6 +72,17 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
 
     public void queryImgS(String path) {
         List<SearchImgBean> searchImgBeans = mPictureSearchTool.searchFolder(path);
+        Collections.sort(searchImgBeans, new Comparator<SearchImgBean>() {
+            @Override
+            public int compare(SearchImgBean o1, SearchImgBean o2) {
+
+                if (new File(o1.getPath()).lastModified() < new File(o2.getPath()).lastModified()) {
+                    return 1;// 最后修改的文件在前
+                } else {
+                    return -1;
+                }
+            }
+        });
         mPresenter.onGetImgSuccess(searchImgBeans);
     }
 

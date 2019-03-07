@@ -46,7 +46,7 @@ public class TakePhotoActivity extends BaseActivity {
         // 根据文件地址创建文件
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String format = simpleDateFormat.format(new Date());
-        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "IMG_" + format + ".jpg");
+        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Camera", "IMG_" + format + ".jpg");
         // 把文件地址转换成Uri格式
         ProviderUtils.setAuthority(options.getPathAuthority());
         Uri uri = ProviderUtils.getProviderUri(this, intent, file);
@@ -59,9 +59,9 @@ public class TakePhotoActivity extends BaseActivity {
     protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            ArrayList<String> dataList=new ArrayList<String>();
+            ArrayList<String> dataList = new ArrayList<String>();
             dataList.add(file.getAbsolutePath());
-            compress(dataList,options.getCompressPath());
+            compress(dataList);
             Glide.with(this).load(file).into(mImg);
         } else {
             finish();

@@ -165,7 +165,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
                             }
                         }
                         String savePath = new File(options.getSaveParentPath(), MD5Utils.getMD5Code(absolutePath) + format).getAbsolutePath();
-                        boolean b = ImageUtils.saveBitmap(savePath, bitmap, compressFormat, 100);
+                        boolean b = ImageUtils.saveBitmap(savePath, bitmap, compressFormat, 90);
                         Toast.makeText(this, b ? "已保存到" + savePath : "保存失败!", Toast.LENGTH_SHORT).show();
                         return;
                     }

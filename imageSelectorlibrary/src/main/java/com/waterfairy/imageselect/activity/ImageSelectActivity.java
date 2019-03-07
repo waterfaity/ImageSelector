@@ -205,7 +205,7 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
 
     private void ensure() {
         if (imgAdapter != null && imgAdapter.getSelectList().size() > 0) {
-            compress(imgAdapter.getSelectList(), options.getCompressPath());
+            compress(imgAdapter.getSelectList() );
         }
     }
 
@@ -347,7 +347,7 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             ArrayList<String> dataList = data.getStringArrayListExtra("dataList");
             if (data.getBooleanExtra("complete", false)) {
-                compress(dataList, options.getCompressPath());
+                compress(dataList);
 
             } else {
                 if (dataList == null || dataList.size() == 0) {
