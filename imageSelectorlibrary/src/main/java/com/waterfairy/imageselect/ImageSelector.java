@@ -1,6 +1,7 @@
 package com.waterfairy.imageselect;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -13,6 +14,7 @@ import com.waterfairy.imageselect.activity.TakePhotoActivity;
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.Options;
 import com.waterfairy.imageselect.utils.ConstantUtils;
+import com.waterfairy.imageselect.utils.ShareTool;
 
 /**
  * @author water_fairy
@@ -128,5 +130,16 @@ public class ImageSelector {
                 activity.startActivityForResult(intent(), requestCode);
             }
         }
+    }
+
+    /**
+     * 可使用applicationContext
+     *
+     * @param context
+     */
+    public static void clearCacheFolders(Context context) {
+        ShareTool.getInstance().initShare(context);
+        ShareTool.getInstance().clearCache();
+
     }
 }

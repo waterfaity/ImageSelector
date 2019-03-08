@@ -2,6 +2,7 @@ package com.waterfairy.imageselect.options;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.text.TextUtils;
 
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
@@ -18,12 +19,11 @@ public class SelectImgOptions implements Options, Serializable {
 
     private final static long serialVersionUID = 201812012107L;
     private boolean loadCache;//搜索缓存
-     private ArrayList<String> searchPaths;//指定搜索路径
+    private ArrayList<String> searchPaths;//指定搜索路径
     private ArrayList<String> ignorePaths;//忽略路径
     private int maxNum;//选择最大数 默认9
     private int searchDeep;//搜索文件夹深度 默认3
     private int gridNum;//展示grid数量 默认3
-
 
 
     public SelectImgOptions() {
@@ -37,6 +37,12 @@ public class SelectImgOptions implements Options, Serializable {
         return loadCache;
     }
 
+    /**
+     * 加载缓存的搜索路径
+     *
+     * @param loadCache
+     * @return
+     */
     public SelectImgOptions setLoadCache(boolean loadCache) {
         this.loadCache = loadCache;
         return this;
@@ -46,19 +52,63 @@ public class SelectImgOptions implements Options, Serializable {
         return searchPaths;
     }
 
-    public SelectImgOptions setSearchPaths(ArrayList<String> searchPaths) {
-        this.searchPaths = searchPaths;
+    /**
+     * 添加额外搜索路径
+     *
+     * @param searchPaths
+     * @return
+     */
+    public SelectImgOptions addSearchPaths(ArrayList<String> searchPaths) {
+        if (this.searchPaths == null) this.searchPaths = new ArrayList<>();
+        if (searchPaths != null) this.searchPaths.addAll(searchPaths);
         return this;
     }
+
+    /**
+     * 添加额外搜索路径
+     *
+     * @param searchPath
+     * @return
+     */
+    public SelectImgOptions addSearchPath(String searchPath) {
+        if (this.searchPaths == null) this.searchPaths = new ArrayList<>();
+        if (!TextUtils.isEmpty(searchPath)) this.searchPaths.add(searchPath);
+        return this;
+    }
+
+    /**
+     * 添加忽略路径
+     *
+     * @param ignorePaths
+     * @return
+     */
+    public SelectImgOptions addIgnorePaths(ArrayList<String> ignorePaths) {
+        if (this.ignorePaths == null) this.ignorePaths = new ArrayList<>();
+        if (ignorePaths != null) this.ignorePaths.addAll(ignorePaths);
+        return this;
+    }
+
+    /**
+     * 添加忽略路径
+     *
+     * @param ignorePath
+     * @return
+     */
+    public SelectImgOptions addIgnorePath(String ignorePath) {
+        if (this.ignorePaths == null) this.ignorePaths = new ArrayList<>();
+        if (!TextUtils.isEmpty(ignorePath)) this.ignorePaths.add(ignorePath);
+        return this;
+    }
+
 
     public ArrayList<String> getIgnorePaths() {
         return ignorePaths;
     }
 
-    public SelectImgOptions setIgnorePaths(ArrayList<String> ignorePaths) {
-        this.ignorePaths = ignorePaths;
-        return this;
-    }
+//    public SelectImgOptions addIgnorePaths(ArrayList<String> ignorePaths) {
+//        this.ignorePaths = ignorePaths;
+//        return this;
+//    }
 
 
     public int getMaxNum() {

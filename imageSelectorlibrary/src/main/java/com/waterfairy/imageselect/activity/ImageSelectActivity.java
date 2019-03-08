@@ -95,8 +95,8 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
         if (options == null) {
             options = new SelectImgOptions();
             options.setLoadCache(intent.getBooleanExtra(ConstantUtils.LOAD_CACHE, false));
-            options.setSearchPaths(intent.getStringArrayListExtra(ConstantUtils.SEARCH_PATHS));
-            options.setIgnorePaths(intent.getStringArrayListExtra(ConstantUtils.IGNORE_PATHS));
+            options.addSearchPaths(intent.getStringArrayListExtra(ConstantUtils.SEARCH_PATHS));
+            options.addIgnorePaths(intent.getStringArrayListExtra(ConstantUtils.IGNORE_PATHS));
             options.setMaxNum(intent.getIntExtra(ConstantUtils.MAX_NUM, ConstantUtils.DEFAULT_MAX_NUM));
             options.setSearchDeep(intent.getIntExtra(ConstantUtils.SEARCH_DEEP, ConstantUtils.DEFAULT_DEEP));
             options.setGridNum(intent.getIntExtra(ConstantUtils.GRID_NUM, ConstantUtils.DEFAULT_GRID_NUM_MIN));
@@ -133,6 +133,7 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
         ShareTool.getInstance().initShare(this);
         handler.sendEmptyMessageDelayed(0, 300);
     }
+
 
     Handler handler = new Handler() {
         @Override
@@ -205,7 +206,7 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
 
     private void ensure() {
         if (imgAdapter != null && imgAdapter.getSelectList().size() > 0) {
-            compress(imgAdapter.getSelectList() );
+            compress(imgAdapter.getSelectList());
         }
     }
 
@@ -419,5 +420,6 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
         super.onDestroy();
         isDestroy = true;
         dismissDialog();
+        ShareTool.getInstance().onDestroy();
     }
 }

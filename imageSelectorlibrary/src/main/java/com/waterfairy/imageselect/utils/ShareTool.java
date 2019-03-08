@@ -18,8 +18,8 @@ import java.util.ArrayList;
  */
 
 public class ShareTool {
-    private static final String SHARE_NAME = "imgSelectFolder";
-    private static final String SAVE_FOLDER = "imageBeanList";
+    public static final String SHARE_NAME = "imgSelectFolder";
+    public static final String SAVE_FOLDER = "imageBeanList";
     private static ShareTool SHARE_TOOL;
     private SharedPreferences share;
 
@@ -38,6 +38,11 @@ public class ShareTool {
             share = context.getSharedPreferences(SHARE_NAME, Context.MODE_PRIVATE);
     }
 
+    /**
+     * 缓存 搜索到的文件夹
+     *
+     * @param imageBeanList
+     */
     public void saveFolder(ArrayList<SearchFolderBean> imageBeanList) {
         if (share != null) {
             String saveString = "";
@@ -50,6 +55,11 @@ public class ShareTool {
         }
     }
 
+    /**
+     * 获取缓存
+     *
+     * @return
+     */
     public ArrayList<SearchFolderBean> getFolders() {
         if (share == null) {
             new Exception("文件选择器的SharedPreferences还未初始化").printStackTrace();
@@ -63,5 +73,19 @@ public class ShareTool {
                 }.getType());
             }
         }
+    }
+
+    /**
+     * 销毁
+     */
+    public void onDestroy() {
+        if (share != null) share = null;
+    }
+
+    /**
+     * 清楚缓存
+     */
+    public void clearCache() {
+        saveFolder(null);
     }
 }

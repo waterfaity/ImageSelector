@@ -22,8 +22,6 @@ import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.options.TakePhotoOptions;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +91,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(true).setSearchPaths(ignore))
+                .options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(true).addSearchPaths(ignore))
                 .compress(new CompressOptions().setCompressPath("/sdcard/test/img"))
                 .execute();
     }

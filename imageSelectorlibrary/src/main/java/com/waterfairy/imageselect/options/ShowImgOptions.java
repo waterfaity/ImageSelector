@@ -26,8 +26,9 @@ public class ShowImgOptions implements Options {
         return imgList;
     }
 
-    public ShowImgOptions setImgList(ArrayList<String> imgList) {
-        this.imgList = imgList;
+    public ShowImgOptions addImgList(ArrayList<String> imgList) {
+        if (this.imgList == null) this.imgList = new ArrayList<>();
+        if (imgList != null) this.imgList.addAll(imgList);
         return this;
     }
 
@@ -37,6 +38,14 @@ public class ShowImgOptions implements Options {
 
     public ShowImgOptions setImgResDefault(int imgResDefault) {
         this.imgResDefault = imgResDefault;
+        return this;
+    }
+
+    public ShowImgOptions addImg(String path) {
+        if (imgList == null) {
+            imgList = new ArrayList<>();
+        }
+        imgList.add(path);
         return this;
     }
 
