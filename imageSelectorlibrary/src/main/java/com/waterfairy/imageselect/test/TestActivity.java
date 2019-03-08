@@ -92,7 +92,10 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     public void selectImg(View view) {
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
-        ImageSelector.with(this).options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(false).setSearchPaths(ignore)).execute();
+        ImageSelector.with(this)
+                .options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(true).setSearchPaths(ignore))
+                .compress(new CompressOptions().setCompressPath("/sdcard/test/img"))
+                .execute();
     }
 
     @Override
@@ -100,12 +103,19 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         if (v.getId() == R.id.select_img) {
             selectImg(v);
         } else if (v.getId() == R.id.take_photo) {
-            ImageSelector.with(this).options(new TakePhotoOptions().setPathAuthority(pathName)).compress(new CompressOptions().setMaxHeight(1000).setMaxWidth(1000).setCompressPath("/sdcard/test/img")).execute();
+            ImageSelector.with(this)
+                    .options(new TakePhotoOptions().setPathAuthority(pathName))
+                    .compress(new CompressOptions()
+                            .setMaxWidth(2304)
+                            .setMaxHeight(2304)
+                            .setMaxSize(500)
+                            .setCompressPath("/sdcard/test/img"))
+                    .execute();
         } else if (v.getId() == R.id.crop) {
             if (TextUtils.isEmpty(url)) {
                 return;
             }
-            ImageSelector.with(this).options(new CropImgOptions().setCropPath("/sdcard/test/img").setWidth(458).setHeight(1000).setImgPath(url).setPathAuthority(pathName)).execute();
+            ImageSelector.with(this).options(new CropImgOptions().setCropPath("/sdcard/test/img").setImgPath(url).setPathAuthority(pathName)).execute();
         }
     }
 }

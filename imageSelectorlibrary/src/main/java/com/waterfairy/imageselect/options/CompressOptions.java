@@ -10,14 +10,25 @@ import java.io.Serializable;
  */
 public class CompressOptions implements Serializable {
     private static final long serialVersionUID = 20181203124520L;
-    private int maxWidth;
-    private int maxHeight;
+    private int maxWidth = -1;
+    private int maxHeight = -1;
     private int maxSize;
     private String compressPath;
 
     public int getMaxWidth() {
         return maxWidth;
     }
+
+
+
+    /**
+     * 说明:当设置了 false  width height 时 ,如果缩放比例过大 则在获取file时 降低采样率
+     * >16 取4
+     * >6 取2
+     * 其他 取1
+     *
+     */
+
 
     public CompressOptions setMaxWidth(int maxWidth) {
         this.maxWidth = maxWidth;

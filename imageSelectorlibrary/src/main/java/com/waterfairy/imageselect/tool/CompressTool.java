@@ -8,6 +8,7 @@ import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.utils.ImageUtils;
 import com.waterfairy.imageselect.utils.MD5Utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class CompressTool {
     public void compress(ArrayList<String> dataList) {
         if (dataList == null || dataList.size() == 0) {
             if (onCompressListener != null)
-                onCompressListener.onCompressError("没有数据!",dataList);
+                onCompressListener.onCompressError("没有数据!", dataList);
         } else if (compressOptions == null) {
             if (onCompressListener != null)
                 onCompressListener.onCompressError("compressOptions为空!", dataList);
@@ -56,7 +57,7 @@ public class CompressTool {
                 boolean mkdirs = rootFile.mkdirs();
                 if (!mkdirs) {
                     if (onCompressListener != null) {
-                        onCompressListener.onCompressError("路径创建失败!",dataList);
+                        onCompressListener.onCompressError("路径创建失败!", dataList);
                     }
                     return;
                 }
@@ -65,7 +66,7 @@ public class CompressTool {
                 compressAsync(dataList);
             } else {
                 if (onCompressListener != null) {
-                    onCompressListener.onCompressError("目标文件非路径!",dataList);
+                    onCompressListener.onCompressError("目标文件非路径!", dataList);
                 }
             }
         }
@@ -134,11 +135,18 @@ public class CompressTool {
      */
     private String compress(String sourcePath, String targetPath) {
         //压缩
-        Bitmap bitmap = ImageUtils.compress(new File(sourcePath), compressOptions.getMaxWidth(), compressOptions.getMaxHeight(), compressOptions.getMaxSize());
-        if (bitmap == null) return sourcePath;
+        Object object = ImageUtils.compress(new File(sourcePath), compressOptions);
+        boolean success = false;
+        if (object instanceof Bitmap) {
+            Bitmap bitmap = null;
+            bitmap = (Bitmap) object;
+            success = ImageUtils.saveBitmap(targetPath, bitmap, targetPath.endsWith(".png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 85);
+        } else if (object instanceof ByteArrayInputStream) {
+            ByteArrayInputStream byteArrayInputStream = (ByteArrayInputStream) object;
+            success = ImageUtils.saveBitmap(targetPath, byteArrayInputStream);
+        }
         //保存
-        boolean b = ImageUtils.saveBitmap(targetPath, bitmap, targetPath.endsWith(".png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 85);
-        if (b) return targetPath;
+        if (success) return targetPath;
         return sourcePath;
     }
 
