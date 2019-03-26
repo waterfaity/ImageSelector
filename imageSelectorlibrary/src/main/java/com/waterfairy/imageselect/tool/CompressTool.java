@@ -26,6 +26,12 @@ public class CompressTool {
     private CompressTool() {
     }
 
+    /**
+     * @param cachePath          缓存路径
+     * @param compressOptions    压缩选项
+     * @param onCompressListener 压缩监听
+     * @return
+     */
     public static CompressTool newInstance(String cachePath, CompressOptions compressOptions, OnCompressListener onCompressListener) {
         CompressTool compressTool = new CompressTool();
         compressTool.setOnCompressListener(onCompressListener);
@@ -43,6 +49,11 @@ public class CompressTool {
         this.onCompressListener = onCompressListener;
     }
 
+    /**
+     * 开始压缩
+     *
+     * @param dataList
+     */
     public void compress(ArrayList<String> dataList) {
         if (dataList == null || dataList.size() == 0) {
             if (onCompressListener != null)
@@ -83,12 +94,19 @@ public class CompressTool {
             protected ArrayList<String> doInBackground(ArrayList<String>... arrayLists) {
                 ArrayList<String> tempDataList = new ArrayList<>();
                 for (int i = 0; i < arrayLists[0].size(); i++) {
+                    //当前压缩进度
                     publishProgress(i);
                     String sourcePath = arrayLists[0].get(i);
+                    //判空
                     if (!TextUtils.isEmpty(sourcePath)) {
-                        String endFormat = ".jpg";
-                        if (sourcePath.endsWith(".png") || sourcePath.endsWith(".PNG")) {
-                            endFormat = ".png";
+                        //格式 后缀
+                        String endFormat = "";
+                        if (compressOptions.hasExtension()) {
+                            if (sourcePath.endsWith(".png") || sourcePath.endsWith(".PNG")) {
+                                endFormat = ".png";
+                            } else if (sourcePath.endsWith(".jpg") || sourcePath.endsWith(".JPG") || sourcePath.endsWith(".jpeg") || sourcePath.endsWith(".JPEG")) {
+                                endFormat = ".jpg";
+                            }
                         }
                         //压缩保存文件
                         File file = new File(cachePath, MD5Utils.getMD5Code(sourcePath) + endFormat);
@@ -129,17 +147,17 @@ public class CompressTool {
     /**
      * 压缩
      *
-     * @param sourcePath
-     * @param targetPath
+     * @param sourcePath 资源陆路径
+     * @param targetPath 压缩后的路径
      * @return
      */
     private String compress(String sourcePath, String targetPath) {
-        //压缩
+        //压缩 返回 bitmap / IO流
         Object object = ImageUtils.compress(new File(sourcePath), compressOptions);
+        //保存图片文件
         boolean success = false;
         if (object instanceof Bitmap) {
-            Bitmap bitmap = null;
-            bitmap = (Bitmap) object;
+            Bitmap bitmap = (Bitmap) object;
             success = ImageUtils.saveBitmap(targetPath, bitmap, targetPath.endsWith(".png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 85);
         } else if (object instanceof ByteArrayInputStream) {
             ByteArrayInputStream byteArrayInputStream = (ByteArrayInputStream) object;

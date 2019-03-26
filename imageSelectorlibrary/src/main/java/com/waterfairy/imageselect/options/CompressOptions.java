@@ -14,11 +14,19 @@ public class CompressOptions implements Serializable {
     private int maxHeight = -1;
     private int maxSize;
     private String compressPath;
+    private boolean hasExtension = true;
+
+    public boolean hasExtension() {
+        return hasExtension;
+    }
+
+    public void setHasExtension(boolean hasExtension) {
+        this.hasExtension = hasExtension;
+    }
 
     public int getMaxWidth() {
         return maxWidth;
     }
-
 
 
     /**
@@ -26,7 +34,6 @@ public class CompressOptions implements Serializable {
      * >16 取4
      * >6 取2
      * 其他 取1
-     *
      */
 
 

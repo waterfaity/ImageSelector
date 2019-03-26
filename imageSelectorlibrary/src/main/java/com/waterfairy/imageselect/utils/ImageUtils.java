@@ -47,6 +47,7 @@ public class ImageUtils {
                 }
                 fos.flush();
                 fos.close();
+                source.close();
                 canSave = true;
             } catch (IOException e) {
                 e.printStackTrace();
