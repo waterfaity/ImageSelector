@@ -104,14 +104,16 @@ public class CompressTool {
                         String cachePathName = DataTransUtils.generateFileCompressPath(compressOptions, sourcePath, MD5Utils.getMD5Code(sourcePath));
                         //压缩保存文件
                         File file = new File(cachePath, cachePathName);
+                        String compressPath = null;
                         if (file.exists() && file.length() > 0) {
                             //已经压缩
-                            tempDataList.add(file.getAbsolutePath());
+                            compressPath = file.getAbsolutePath();
                         } else {
                             //压缩
-                            tempDataList.add(compress(sourcePath, file.getAbsolutePath()));
+                            compressPath = compress(sourcePath, file.getAbsolutePath());
                         }
-
+                        tempDataList.add(compressPath);
+                        ImageSelectorShareTool.getInstance().saveSrcPath(file.getAbsolutePath(), sourcePath);
                     } else {
                         //文件名为空
                         tempDataList.add(sourcePath);
@@ -161,7 +163,6 @@ public class CompressTool {
         //保存
         if (success) {
             //保存压缩路径
-            ImageSelectorShareTool.getInstance().saveSrcPath(targetPath, sourcePath);
             return targetPath;
         }
         return sourcePath;
