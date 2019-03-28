@@ -160,9 +160,7 @@ public class CompressTool {
             ByteArrayInputStream byteArrayInputStream = (ByteArrayInputStream) object;
             success = ImageUtils.saveBitmap(targetPath, byteArrayInputStream);
         }
-        //保存
         if (success) {
-            //保存压缩路径
             return targetPath;
         }
         return sourcePath;
