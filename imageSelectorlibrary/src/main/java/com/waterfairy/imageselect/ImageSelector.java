@@ -139,12 +139,12 @@ public class ImageSelector {
         if (options == null) {
             new Exception("请添加options").printStackTrace();
         } else {
-            if (activity == null || fragment == null) {
+            if (activity == null && fragment == null) {
                 new Exception("请设置activity").printStackTrace();
             } else {
                 if (fragment != null) {
                     fragment.startActivityForResult(intent(), requestCode);
-                } else if (activity != null) {
+                } else {
                     activity.startActivityForResult(intent(), requestCode);
                 }
             }
