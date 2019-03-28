@@ -184,10 +184,11 @@ public class SelectImgOptions implements Options, Serializable {
      *
      * @param hasSelectFile
      */
-    public void addHasSelectFile(String hasSelectFile) {
+    public SelectImgOptions addHasSelectFile(String hasSelectFile) {
         if (!TextUtils.isEmpty(hasSelectFile)) {
             if (hasSelectFiles == null) hasSelectFiles = new ArrayList<>();
             this.hasSelectFiles.add(hasSelectFile);
         }
+        return this;
     }
 }

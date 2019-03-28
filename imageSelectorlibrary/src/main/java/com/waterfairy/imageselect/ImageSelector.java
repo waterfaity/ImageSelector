@@ -159,5 +159,6 @@ public class ImageSelector {
     public static void clearCacheFolders(Context context) {
         ImageSelectorShareTool.getInstance().initShare(context);
         ImageSelectorShareTool.getInstance().clearCache();
+        ImageSelectorShareTool.getInstance().onDestroy();
     }
 }

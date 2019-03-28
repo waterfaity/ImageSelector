@@ -35,8 +35,7 @@ public class ImageSelectorShareTool {
     }
 
     public void initShare(Context context) {
-        if (share == null)
-            share = context.getSharedPreferences(SHARE_NAME, Context.MODE_PRIVATE);
+        share = context.getSharedPreferences(SHARE_NAME, Context.MODE_PRIVATE);
     }
 
     /**
