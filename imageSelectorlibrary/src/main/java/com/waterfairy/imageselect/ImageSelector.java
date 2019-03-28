@@ -5,16 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.waterfairy.imageselect.activity.ImageCropActivity;
 import com.waterfairy.imageselect.activity.ImageSelectActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
-import com.waterfairy.imageselect.activity.ImageCropActivity;
 import com.waterfairy.imageselect.activity.TakePhotoActivity;
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.Options;
+import com.waterfairy.imageselect.tool.ImageSelectorShareTool;
 import com.waterfairy.imageselect.utils.ConstantUtils;
-import com.waterfairy.imageselect.utils.ShareTool;
 
 /**
  * @author water_fairy
@@ -24,6 +25,7 @@ import com.waterfairy.imageselect.utils.ShareTool;
  */
 public class ImageSelector {
 
+    private Fragment fragment;
     private Activity activity;
     private Options options;
     private CompressOptions compressOptions;
@@ -35,8 +37,17 @@ public class ImageSelector {
         this.activity = activity;
     }
 
+    public ImageSelector(Fragment fragment) {
+        this.fragment = fragment;
+        this.activity = fragment.getActivity();
+    }
+
     public static ImageSelector with(Activity activity) {
         return new ImageSelector(activity);
+    }
+
+    public static ImageSelector with(Fragment fragment) {
+        return new ImageSelector(fragment);
     }
 
     public ImageSelector options(Options options) {
@@ -85,8 +96,12 @@ public class ImageSelector {
      * @param requestCode
      */
     public void showImg(View view, String transitionName, int requestCode) {
-        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, transitionName);
-        ActivityCompat.startActivityForResult(activity, intent(), requestCode, activityOptionsCompat.toBundle());
+        if (activity != null) {
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, transitionName);
+            ActivityCompat.startActivityForResult(activity, intent(), requestCode, activityOptionsCompat.toBundle());
+        } else {
+            new Exception("showImg error. activity 为null").printStackTrace();
+        }
     }
 
     /**
@@ -124,10 +139,14 @@ public class ImageSelector {
         if (options == null) {
             new Exception("请添加options").printStackTrace();
         } else {
-            if (activity == null) {
+            if (activity == null || fragment == null) {
                 new Exception("请设置activity").printStackTrace();
             } else {
-                activity.startActivityForResult(intent(), requestCode);
+                if (fragment != null) {
+                    fragment.startActivityForResult(intent(), requestCode);
+                } else if (activity != null) {
+                    activity.startActivityForResult(intent(), requestCode);
+                }
             }
         }
     }
@@ -138,8 +157,7 @@ public class ImageSelector {
      * @param context
      */
     public static void clearCacheFolders(Context context) {
-        ShareTool.getInstance().initShare(context);
-        ShareTool.getInstance().clearCache();
-
+        ImageSelectorShareTool.getInstance().initShare(context);
+        ImageSelectorShareTool.getInstance().clearCache();
     }
 }

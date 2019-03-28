@@ -24,6 +24,7 @@ public class SelectImgOptions implements Options, Serializable {
     private int maxNum;//选择最大数 默认9
     private int searchDeep;//搜索文件夹深度 默认3
     private int gridNum;//展示grid数量 默认3
+    private ArrayList<String> hasSelectFiles;//已经选择的文件
 
 
     public SelectImgOptions() {
@@ -156,5 +157,37 @@ public class SelectImgOptions implements Options, Serializable {
     @Override
     public int getRequestCode() {
         return ConstantUtils.REQUEST_SELECT;
+    }
+
+    /**
+     * 添加已经选择的文件s
+     *
+     * @param hasSelectFiles
+     */
+    public SelectImgOptions addHasSelectFiles(ArrayList<String> hasSelectFiles) {
+        if (this.hasSelectFiles == null)
+            this.hasSelectFiles = hasSelectFiles;
+        else {
+            if (hasSelectFiles != null && hasSelectFiles.size() > 0) {
+                this.hasSelectFiles.addAll(hasSelectFiles);
+            }
+        }
+        return this;
+    }
+
+    public ArrayList<String> getHasSelectFiles() {
+        return hasSelectFiles;
+    }
+
+    /**
+     * 添加已经选择的文件
+     *
+     * @param hasSelectFile
+     */
+    public void addHasSelectFile(String hasSelectFile) {
+        if (!TextUtils.isEmpty(hasSelectFile)) {
+            if (hasSelectFiles == null) hasSelectFiles = new ArrayList<>();
+            this.hasSelectFiles.add(hasSelectFile);
+        }
     }
 }

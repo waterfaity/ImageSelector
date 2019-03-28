@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -23,6 +23,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     //glide
     implementation 'com.github.bumptech.glide:glide:4.6.1'
+//    implementation 'com.github.bumptech.glide:glide:3.7.0'
     //photoView 图片view
 //    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }

@@ -30,6 +30,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     private GridView gridView;
     private View currentView;
     String pathName;
+    private ArrayList<String> resultDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +68,14 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == ConstantUtils.REQUEST_SELECT || requestCode == ConstantUtils.REQUEST_TAKE_PHOTO || requestCode == ConstantUtils.REQUEST_CROP) && resultCode == RESULT_OK) {
-            ArrayList<String> stringArrayListExtra = data.getStringArrayListExtra(ConstantUtils.RESULT_STRING);
-            url = stringArrayListExtra.get(0);
+            resultDatas = data.getStringArrayListExtra(ConstantUtils.RESULT_STRING);
+            url = resultDatas.get(0);
             gridView.setAdapter(new MyAdapter(data.getStringArrayListExtra(ConstantUtils.RESULT_STRING), this));
-            Glide.with(this).load(stringArrayListExtra.get(0)).into((ImageView) findViewById(R.id.zoom_img));
+            Glide.with(this).load(resultDatas.get(0)).into((ImageView) findViewById(R.id.zoom_img));
             String text = "";
-            for (int i = 0; i < stringArrayListExtra.size(); i++) {
-                text += stringArrayListExtra.get(i) + ";";
-                Log.i("test", "onActivityResult: " + stringArrayListExtra.get(i));
+            for (int i = 0; i < resultDatas.size(); i++) {
+                text += resultDatas.get(i) + ";";
+                Log.i("test", "onActivityResult: " + resultDatas.get(i));
             }
             ((TextView) findViewById(R.id.text)).setText(text);
         }
@@ -91,8 +92,8 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(true).addSearchPaths(ignore))
-                .compress(new CompressOptions().setCompressPath("/sdcard/test/img"))
+                .options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(false).addSearchPaths(ignore).addHasSelectFiles(resultDatas))
+                .compress(new CompressOptions().setCompressPath("/sdcard/test/img/img2/"))
                 .execute();
     }
 

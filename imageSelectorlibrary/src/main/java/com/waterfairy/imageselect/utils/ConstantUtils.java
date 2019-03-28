@@ -15,11 +15,9 @@ public class ConstantUtils {
     public static final String SEARCH_PATHS = "searchPaths";//搜索路径
     public static final String LOAD_CACHE = "loadCache";//加载存储的搜索数据
     public static final String IGNORE_PATHS = "ignorePaths";//忽略路径
-    public static final String SCREEN_DIRECTION = "screenDirection";//屏幕方向
     public static final String GRID_NUM = "gridNum";//横排数量
+    public static final String HAS_SELECT_FILES = "has_select_files";//已经选择的文件
 
-    public static final String SCREEN_LAND = "land";//水平
-    public static final String SCREEN_PORT = "port";//垂直
 
     public static final int DEFAULT_MAX_NUM = 9;//默认最大数量
     public static final int DEFAULT_DEEP = 3;//默认深度

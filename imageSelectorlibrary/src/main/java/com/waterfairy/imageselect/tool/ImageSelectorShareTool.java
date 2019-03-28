@@ -1,4 +1,4 @@
-package com.waterfairy.imageselect.utils;
+package com.waterfairy.imageselect.tool;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.waterfairy.imageselect.bean.SearchFolderBean;
+import com.waterfairy.imageselect.utils.JsonUtils;
 
 import java.util.ArrayList;
 
@@ -17,18 +18,18 @@ import java.util.ArrayList;
  * @Description:
  */
 
-public class ShareTool {
+public class ImageSelectorShareTool {
     public static final String SHARE_NAME = "imgSelectFolder";
     public static final String SAVE_FOLDER = "imageBeanList";
-    private static ShareTool SHARE_TOOL;
+    private static ImageSelectorShareTool SHARE_TOOL;
     private SharedPreferences share;
 
-    private ShareTool() {
+    private ImageSelectorShareTool() {
     }
 
-    public static ShareTool getInstance() {
+    public static ImageSelectorShareTool getInstance() {
         if (SHARE_TOOL == null) {
-            SHARE_TOOL = new ShareTool();
+            SHARE_TOOL = new ImageSelectorShareTool();
         }
         return SHARE_TOOL;
     }
@@ -87,5 +88,34 @@ public class ShareTool {
      */
     public void clearCache() {
         saveFolder(null);
+    }
+
+    /**
+     * 保存压缩的图片 和源图片
+     *
+     * @param compressPath
+     * @param srcPath
+     */
+    public void saveSrcPath(String compressPath, String srcPath) {
+        if (share != null) {
+            share.edit().putString(compressPath, srcPath).apply();
+        } else {
+            new Exception("文件选择器的SharedPreferences还未初始化").printStackTrace();
+        }
+    }
+
+    /**
+     * 返回压缩前的文件路径 并且文件存在
+     *
+     * @param compressPath
+     * @return
+     */
+    public String getSrcPath(String compressPath) {
+        if (share != null) {
+            return share.getString(compressPath, null);
+        } else {
+            new Exception("文件选择器的SharedPreferences还未初始化").printStackTrace();
+        }
+        return null;
     }
 }

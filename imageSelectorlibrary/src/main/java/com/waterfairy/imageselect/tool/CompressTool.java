@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.waterfairy.imageselect.options.CompressOptions;
+import com.waterfairy.imageselect.utils.DataTransUtils;
 import com.waterfairy.imageselect.utils.ImageUtils;
 import com.waterfairy.imageselect.utils.MD5Utils;
 
@@ -99,17 +100,10 @@ public class CompressTool {
                     String sourcePath = arrayLists[0].get(i);
                     //判空
                     if (!TextUtils.isEmpty(sourcePath)) {
-                        //格式 后缀
-                        String endFormat = "";
-                        if (compressOptions.hasExtension()) {
-                            if (sourcePath.endsWith(".png") || sourcePath.endsWith(".PNG")) {
-                                endFormat = ".png";
-                            } else if (sourcePath.endsWith(".jpg") || sourcePath.endsWith(".JPG") || sourcePath.endsWith(".jpeg") || sourcePath.endsWith(".JPEG")) {
-                                endFormat = ".jpg";
-                            }
-                        }
+
+                        String cachePathName = DataTransUtils.generateFileCompressPath(compressOptions, sourcePath, MD5Utils.getMD5Code(sourcePath));
                         //压缩保存文件
-                        File file = new File(cachePath, MD5Utils.getMD5Code(sourcePath) + endFormat);
+                        File file = new File(cachePath, cachePathName);
                         if (file.exists() && file.length() > 0) {
                             //已经压缩
                             tempDataList.add(file.getAbsolutePath());
@@ -117,6 +111,7 @@ public class CompressTool {
                             //压缩
                             tempDataList.add(compress(sourcePath, file.getAbsolutePath()));
                         }
+
                     } else {
                         //文件名为空
                         tempDataList.add(sourcePath);
@@ -164,7 +159,11 @@ public class CompressTool {
             success = ImageUtils.saveBitmap(targetPath, byteArrayInputStream);
         }
         //保存
-        if (success) return targetPath;
+        if (success) {
+            //保存压缩路径
+            ImageSelectorShareTool.getInstance().saveSrcPath(targetPath, sourcePath);
+            return targetPath;
+        }
         return sourcePath;
     }
 

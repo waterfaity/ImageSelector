@@ -1,14 +1,11 @@
 package com.waterfairy.imageselect.model;
 
-import android.os.Bundle;
-
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.presenter.SelectPresenterListener;
-import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.PictureSearchTool;
-import com.waterfairy.imageselect.utils.ShareTool;
+import com.waterfairy.imageselect.tool.ImageSelectorShareTool;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,14 +23,14 @@ import java.util.List;
 public class SelectModel implements PictureSearchTool.OnSearchListener {
     private SelectPresenterListener mPresenter;
     private PictureSearchTool mPictureSearchTool;
-    private ShareTool mShareTool;
+    private ImageSelectorShareTool mShareTool;
     private SelectImgOptions options;
 
     public SelectModel(SelectPresenterListener listener) {
         this.mPresenter = listener;
         mPictureSearchTool = PictureSearchTool.getInstance();
         mPictureSearchTool.setOnSearchListener(this);
-        mShareTool = ShareTool.getInstance();
+        mShareTool = ImageSelectorShareTool.getInstance();
     }
 
     public void initData(SelectImgOptions options) {
