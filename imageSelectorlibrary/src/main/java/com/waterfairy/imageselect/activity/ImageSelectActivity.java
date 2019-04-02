@@ -339,7 +339,7 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
      */
     @Override
     public void setFolderName(int position) {
-        mTVPath.setText(PathUtils.getNameFromUrl(mPresenter.getFolderData().get(position).getPath()));
+        mTVPath.setText(mPresenter.getFolderData().get(position).getName());
     }
 
     @Override

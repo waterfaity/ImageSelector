@@ -53,13 +53,6 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
         }
         //否则 搜索
         mPictureSearchTool.start();
-
-//        ArrayList<SearchFolderBean> folders = mShareTool.getFolders();
-//        if (folders != null && folders.size() > 0 && options.isLoadCache()) {
-//            mPresenter.onGetFoldersSuccess(folders);
-//        } else {
-//            mPictureSearchTool.start();
-//        }
     }
 
     @Override
@@ -79,19 +72,8 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
     public void onSearchError(String errorMsg) {
     }
 
-    public void queryImgS(String path) {
-        List<SearchImgBean> searchImgBeans = mPictureSearchTool.searchFolder(path);
-        Collections.sort(searchImgBeans, new Comparator<SearchImgBean>() {
-            @Override
-            public int compare(SearchImgBean o1, SearchImgBean o2) {
-
-                if (new File(o1.getPath()).lastModified() < new File(o2.getPath()).lastModified()) {
-                    return 1;// 最后修改的文件在前
-                } else {
-                    return -1;
-                }
-            }
-        });
+    public void queryImgS(SearchFolderBean folderBean) {
+        List<SearchImgBean> searchImgBeans = mPictureSearchTool.searchFolder(folderBean);
         mPresenter.onGetImgSuccess(searchImgBeans);
     }
 

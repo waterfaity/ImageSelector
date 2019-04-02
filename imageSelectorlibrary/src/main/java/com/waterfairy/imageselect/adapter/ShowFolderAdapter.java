@@ -63,7 +63,7 @@ public class ShowFolderAdapter extends BaseAdapter {
         }
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         SearchFolderBean searchFolderBean = mData.get(position);
-        viewHolder.folderName.setText(PathUtils.getNameFromUrl(searchFolderBean.getPath()));
+        viewHolder.folderName.setText(searchFolderBean.getName());
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.centerCrop();
         DrawableTransitionOptions drawableTransitionOptions = new DrawableTransitionOptions();

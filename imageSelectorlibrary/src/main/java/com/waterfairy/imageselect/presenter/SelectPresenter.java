@@ -54,17 +54,6 @@ public class SelectPresenter implements SelectPresenterListener {
                 mView.show("没有发现图片");
                 return;
             }
-            Collections.sort(mFolderBeans, new Comparator<SearchFolderBean>() {
-                @Override
-                public int compare(SearchFolderBean o1, SearchFolderBean o2) {
-
-                    if (new File(o1.getPath()).lastModified() < new File(o2.getPath()).lastModified()) {
-                        return 1;// 最后修改的文件在前
-                    } else {
-                        return -1;
-                    }
-                }
-            });
             mView.setFolderName(0);
             queryImg(0);
         }
@@ -73,7 +62,7 @@ public class SelectPresenter implements SelectPresenterListener {
 
     public void queryImg(int folderPos) {
         if (mFolderBeans != null && mFolderBeans.size() > folderPos) {
-            mModel.queryImgS(mFolderBeans.get(folderPos).getPath());
+            mModel.queryImgS(mFolderBeans.get(folderPos));
         } else {
             onGetImgSuccess(null);
         }

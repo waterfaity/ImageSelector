@@ -9,6 +9,8 @@ import com.waterfairy.imageselect.bean.SearchImgBean;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -107,7 +109,28 @@ public class PictureSearchTool {
                 searchSpePaths(onSearchListener);
                 //移出排除的文件夹
                 removeSpePaths();
+                //排序
+                sortByTime(fileList);
+                //合并所有的文件
+                mergeFiles();
                 return fileList;
+            }
+
+            /**
+             * 合并所有文件 生成一个 全部图片  的集合
+             */
+            private void mergeFiles() {
+                //加入全部文件
+                if (fileList != null && fileList.size() > 0) {
+                    SearchFolderBean searchFolderBeanFirst = fileList.get(0);
+                    String firstImgPath = searchFolderBeanFirst.getFirstImgPath();
+                    SearchFolderBean searchImgBean = new SearchFolderBean(firstImgPath);
+                    searchImgBean.setIsAll(true);
+                    for (int i = 0; i < fileList.size(); i++) {
+                        searchImgBean.addChildImageBeans(PictureSearchTool.getInstance().searchFolder(fileList.get(i).getPath()));
+                    }
+                    fileList.add(0, searchImgBean);
+                }
             }
 
             @Override
@@ -242,7 +265,20 @@ public class PictureSearchTool {
     }
 
     /**
-     * 搜索指定文件夹 获取相应资源
+     * 搜索指定文件夹Bean 获取相应资源
+     *
+     * @param folderBean
+     * @return
+     */
+    public List<SearchImgBean> searchFolder(SearchFolderBean folderBean) {
+        List<SearchImgBean> imgList = null;
+        imgList = folderBean.getChildImgBeans();
+        sortByTime(imgList);
+        return imgList;
+    }
+
+    /**
+     * 指定文件夹路径搜索
      *
      * @param path
      * @return
@@ -262,8 +298,50 @@ public class PictureSearchTool {
                 }
             }
         }
+
         return imgBeans;
     }
+
+    /**
+     * 对搜索到的文件夹下的文件时间排序
+     *
+     * @param imgBeans
+     */
+    public void sortByTime(List<SearchImgBean> imgBeans) {
+
+        Collections.sort(imgBeans, new Comparator<SearchImgBean>() {
+            @Override
+            public int compare(SearchImgBean o1, SearchImgBean o2) {
+
+                if (new File(o1.getPath()).lastModified() < new File(o2.getPath()).lastModified()) {
+                    return 1;// 最后修改的文件在前
+                } else {
+                    return -1;
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 对搜索到的文件夹 排序
+     *
+     * @param fileList
+     */
+    private void sortByTime(ArrayList<SearchFolderBean> fileList) {
+        Collections.sort(fileList, new Comparator<SearchFolderBean>() {
+            @Override
+            public int compare(SearchFolderBean o1, SearchFolderBean o2) {
+
+                if (new File(o1.getPath()).lastModified() < new File(o2.getPath()).lastModified()) {
+                    return 1;// 最后修改的文件在前
+                } else {
+                    return -1;
+                }
+            }
+        });
+    }
+
 
     public interface OnSearchListener {
         /**
