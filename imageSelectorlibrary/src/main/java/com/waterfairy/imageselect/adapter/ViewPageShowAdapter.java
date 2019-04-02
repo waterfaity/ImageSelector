@@ -1,18 +1,13 @@
 package com.waterfairy.imageselect.adapter;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.request.RequestOptions;
 import com.waterfairy.imageselect.R;
-import com.waterfairy.imageselect.listener.GlideRequestListener;
 
 import java.util.ArrayList;
 
@@ -66,7 +61,6 @@ public class ViewPageShowAdapter extends PagerAdapter {
         final View view = LayoutInflater.from(activity).inflate(R.layout.image_selector_img, container, false);
         container.addView(view);
         ImageView imageView = (ImageView) view.findViewById(R.id.img);
-        showView(imageView, position);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,24 +86,6 @@ public class ViewPageShowAdapter extends PagerAdapter {
         return view;
     }
 
-    /**
-     * 展示单个imageView
-     *
-     * @param imageView
-     * @param position
-     */
-    private void showView(ImageView imageView, int position) {
-        RequestBuilder<Drawable> load = Glide.with(activity).load(dataList.get(position));
-        if (mResImgDefault != 0) {
-            load = load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));
-        }
-        if (mCurrentPos == position) {
-            load = load.listener(new GlideRequestListener(activity, mReferToView, imageView, true).setOne(true));
-        } else {
-            load = load.listener(new GlideRequestListener(activity, mReferToView, imageView, false).setOne(true));
-        }
-        load.into(imageView);
-    }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
