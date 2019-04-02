@@ -235,7 +235,7 @@ public class ImageUtils {
             else if (sampleSize > 8) sampleSize = 2;
             else sampleSize = 1;
             options.inSampleSize = sampleSize;
-            options.inJustDecodeBounds=false;
+            options.inJustDecodeBounds = false;
         }
         options.inPreferredConfig = compressFormat == Bitmap.CompressFormat.PNG ? Bitmap.Config.ARGB_4444 : Bitmap.Config.RGB_565;
         Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);

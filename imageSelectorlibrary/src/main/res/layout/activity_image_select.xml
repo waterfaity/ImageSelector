@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.waterfairy.imageselect.activity.ImageSelectActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context="com.waterfairy.imageselect.activity.ImageSelectActivity">
     <!--top-->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,14 +18,14 @@
             android:background="@drawable/image_selector_bg_pressed_style"
             android:clickable="true"
             android:padding="15dp"
-            android:src="@mipmap/image_selector_back" />
+            android:src="@mipmap/image_selector_back"/>
 
         <TextView
             android:layout_width="1dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/back"
-            android:background="#22FFFFFF" />
+            android:background="#22FFFFFF"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/back"
             android:text="图片选择"
-            android:textColor="@color/imageSelectorColorWhite" />
+            android:textColor="@color/imageSelectorColorWhite"/>
 
         <Button
             android:id="@+id/ensure_button"
@@ -45,7 +45,7 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/image_selector_style_ensure_button2"
             android:text="完成"
-            android:textColor="@drawable/image_selector_style_text_ensure_button2" />
+            android:textColor="@drawable/image_selector_style_text_ensure_button2"/>
     </RelativeLayout>
     <!--内容区-->
 
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/image_selector_action_bar_height"
-        android:layout_marginBottom="@dimen/image_selector_action_bar_height" />
+        android:layout_marginBottom="@dimen/image_selector_action_bar_height"/>
 
     <LinearLayout
         android:id="@+id/folder_list_lin"
@@ -71,7 +71,7 @@
         <android.support.v4.widget.Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <ListView
             android:id="@+id/list_view"
@@ -79,7 +79,7 @@
             android:layout_height="0dp"
             android:layout_weight="4"
             android:background="@color/imageSelectorColorWhite"
-            android:paddingTop="3dp" />
+            android:paddingTop="3dp"/>
     </LinearLayout>
     <!--bottom-->
     <RelativeLayout
@@ -104,14 +104,14 @@
                 android:layout_centerVertical="true"
                 android:maxWidth="200dp"
                 android:text="图片"
-                android:textColor="@color/imageSelectorColorWhite" />
+                android:textColor="@color/imageSelectorColorWhite"/>
 
             <ImageView
                 android:id="@+id/arrow"
                 android:layout_width="@dimen/image_selector_action_bar_height"
                 android:layout_height="@dimen/image_selector_action_bar_height"
                 android:padding="17dp"
-                android:src="@mipmap/image_selector_arrow_down" />
+                android:src="@mipmap/image_selector_arrow_down"/>
         </LinearLayout>
 
         <TextView
@@ -125,7 +125,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="预览"
-            android:textColor="#88FFFFFF" />
+            android:textColor="#88FFFFFF"/>
 
     </RelativeLayout>
 </RelativeLayout>

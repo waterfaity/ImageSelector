@@ -124,10 +124,12 @@ public class PictureSearchTool {
                 if (fileList != null && fileList.size() > 0) {
                     SearchFolderBean searchFolderBeanFirst = fileList.get(0);
                     String firstImgPath = searchFolderBeanFirst.getFirstImgPath();
-                    SearchFolderBean searchImgBean = new SearchFolderBean(firstImgPath);
+                    SearchFolderBean searchImgBean = new SearchFolderBean();
                     searchImgBean.setIsAll(true);
                     for (int i = 0; i < fileList.size(); i++) {
-                        searchImgBean.addChildImageBeans(PictureSearchTool.getInstance().searchFolder(fileList.get(i).getPath()));
+                        SearchFolderBean searchFolderBean = fileList.get(i);
+                        List<SearchImgBean> searchImgBeans = PictureSearchTool.getInstance().searchFolder(searchFolderBean);
+                        searchImgBean.addChildImageBeans(searchImgBeans);
                     }
                     fileList.add(0, searchImgBean);
                 }
@@ -266,14 +268,26 @@ public class PictureSearchTool {
 
     /**
      * 搜索指定文件夹Bean 获取相应资源
+     * 有排序并且设置第一张图片  和图片的总数量
      *
      * @param folderBean
      * @return
      */
     public List<SearchImgBean> searchFolder(SearchFolderBean folderBean) {
         List<SearchImgBean> imgList = null;
-        imgList = folderBean.getChildImgBeans();
+        if (folderBean.isAll()) {
+            //搜索完展示的时候会调用该方法
+            imgList = folderBean.getChildImgBeans();
+        } else {
+            //搜索合并所有数据时以及展示时候调用
+            imgList = searchFolder(folderBean.getPath());
+        }
+        //排序
         sortByTime(imgList);
+        if (imgList != null && imgList.size() > 0) {
+            folderBean.setFirstImgPath(imgList.get(0).getPath());
+            folderBean.setNum(imgList.size());
+        }
         return imgList;
     }
 
@@ -308,16 +322,12 @@ public class PictureSearchTool {
      * @param imgBeans
      */
     public void sortByTime(List<SearchImgBean> imgBeans) {
-
         Collections.sort(imgBeans, new Comparator<SearchImgBean>() {
             @Override
             public int compare(SearchImgBean o1, SearchImgBean o2) {
-
-                if (new File(o1.getPath()).lastModified() < new File(o2.getPath()).lastModified()) {
-                    return 1;// 最后修改的文件在前
-                } else {
-                    return -1;
-                }
+                long x = new File(o1.getPath()).lastModified();
+                long y = new File(o2.getPath()).lastModified();
+                return (x < y) ? 1 : ((x == y) ? 0 : -1);
             }
         });
     }
@@ -332,14 +342,12 @@ public class PictureSearchTool {
         Collections.sort(fileList, new Comparator<SearchFolderBean>() {
             @Override
             public int compare(SearchFolderBean o1, SearchFolderBean o2) {
-
-                if (new File(o1.getPath()).lastModified() < new File(o2.getPath()).lastModified()) {
-                    return 1;// 最后修改的文件在前
-                } else {
-                    return -1;
-                }
+                long x = new File(o1.getPath()).lastModified();
+                long y = new File(o2.getPath()).lastModified();
+                return (x < y) ? 1 : ((x == y) ? 0 : -1);
             }
         });
+
     }
 
 

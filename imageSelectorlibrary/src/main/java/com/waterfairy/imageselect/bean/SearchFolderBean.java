@@ -2,8 +2,6 @@ package com.waterfairy.imageselect.bean;
 
 import android.text.TextUtils;
 
-import com.waterfairy.imageselect.utils.PictureSearchTool;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +16,12 @@ import java.util.List;
 public class SearchFolderBean {
     private boolean isAll;
 
-    public SearchFolderBean(String firstImgPath) {
-        this.firstImgPath = firstImgPath;
-
+    public SearchFolderBean() {
     }
 
     public SearchFolderBean(String path, String firstImgPath) {
         this.path = path;
         this.firstImgPath = firstImgPath;
-    }
-
-    public SearchFolderBean(String path, String firstImgPath, int num) {
-        this.path = path;
-        this.firstImgPath = firstImgPath;
-        this.num = num;
     }
 
     /**
@@ -77,13 +67,17 @@ public class SearchFolderBean {
 
     public List<SearchImgBean> getChildImgBeans() {
         if (childImgBeans == null && !TextUtils.isEmpty(path)) {
-            return PictureSearchTool.getInstance().searchFolder(path);
+            return null;
         }
         return childImgBeans;
     }
 
     public int getNum() {
-        return num;
+        if (getChildImgBeans() != null) {
+            return getChildImgBeans().size();
+        } else {
+            return num;
+        }
     }
 
     public void setNum(int num) {

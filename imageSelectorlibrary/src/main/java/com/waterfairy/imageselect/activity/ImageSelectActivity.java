@@ -36,12 +36,11 @@ import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.presenter.SelectPresenter;
+import com.waterfairy.imageselect.tool.ImageSelectorShareTool;
 import com.waterfairy.imageselect.utils.AnimUtils;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.DataTransUtils;
-import com.waterfairy.imageselect.utils.PathUtils;
 import com.waterfairy.imageselect.utils.PermissionUtils;
-import com.waterfairy.imageselect.tool.ImageSelectorShareTool;
 import com.waterfairy.imageselect.view.SelectView;
 
 import java.util.ArrayList;

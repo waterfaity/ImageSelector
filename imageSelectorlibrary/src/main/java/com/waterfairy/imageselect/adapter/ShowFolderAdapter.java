@@ -15,7 +15,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.bean.SearchFolderBean;
-import com.waterfairy.imageselect.utils.PathUtils;
 
 import java.util.ArrayList;
 

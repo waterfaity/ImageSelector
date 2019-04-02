@@ -4,13 +4,10 @@ import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.presenter.SelectPresenterListener;
-import com.waterfairy.imageselect.utils.PictureSearchTool;
 import com.waterfairy.imageselect.tool.ImageSelectorShareTool;
+import com.waterfairy.imageselect.utils.PictureSearchTool;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

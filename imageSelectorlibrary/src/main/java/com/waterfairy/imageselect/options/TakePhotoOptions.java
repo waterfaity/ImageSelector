@@ -9,7 +9,7 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  * @info:
  */
 public class TakePhotoOptions implements Options {
-     private String pathAuthority;
+    private String pathAuthority;
 
     public String getPathAuthority() {
         return pathAuthority;

@@ -1,17 +1,12 @@
 package com.waterfairy.imageselect.presenter;
 
-import android.os.Bundle;
-
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.model.SelectModel;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.view.SelectView;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

@@ -1,7 +1,5 @@
 package com.waterfairy.imageselect.options;
 
-import com.waterfairy.imageselect.utils.MD5Utils;
-
 import java.io.Serializable;
 
 /**
@@ -71,7 +69,6 @@ public class CompressOptions implements Serializable {
         this.compressPath = compressPath;
         return this;
     }
-
 
 
 }
