@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context=".test.TestActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".test.TestActivity">
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="2"/>
+        android:maxLines="2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,13 +26,13 @@
                 android:id="@+id/select_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="选择图片"/>
+                android:text="选择图片" />
 
             <Button
                 android:id="@+id/take_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="拍照"/>
+                android:text="拍照" />
 
 
         </LinearLayout>
@@ -46,13 +46,13 @@
                 android:id="@+id/crop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="裁剪"/>
+                android:text="裁剪" />
 
             <Button
                 android:id="@+id/crop2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="裁剪2"/>
+                android:text="裁剪2" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,10 +61,16 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/show_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="展示" />
+
+            <Button
                 android:id="@+id/show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="展示多张"/>
+                android:text="展示多张" />
 
         </LinearLayout>
     </LinearLayout>
@@ -72,12 +78,12 @@
 
     <com.waterfairy.imageselect.widget.Zoom2ImageView
         android:id="@+id/zoom_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
     <GridView
         android:id="@+id/grid_view"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

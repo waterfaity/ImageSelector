@@ -41,6 +41,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
 
         findViewById(R.id.zoom_img).setOnClickListener(this);
         findViewById(R.id.zoom_img).setOnLongClickListener(this);
+        findViewById(R.id.show_one).setOnClickListener(this);
         findViewById(R.id.select_img).setOnClickListener(this);
         findViewById(R.id.take_photo).setOnClickListener(this);
         findViewById(R.id.crop).setOnClickListener(this);
@@ -92,8 +93,8 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ArrayList<String> dataList = ((MyAdapter) gridView.getAdapter()).getDataList();
-//        ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(position).setImgList(dataList)).showImg(view, dataList.get(position));
-        ImageSelector.with(this).options(new CropImgOptions().setImgPath(dataList.get(0))).execute();
+        ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(position).addImgList(dataList)).showImg(view, dataList.get(position));
+//        ImageSelector.with(this).options(new CropImgOptions().setImgPath(dataList.get(0))).execute();
     }
 
     public void selectImg(View view) {
@@ -133,9 +134,15 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             ImageSelector.with(this).options(new CropImgOptions().setAspectX(1).setAspectY(2).setCropPath("/sdcard/test/img").setImgPath(url).setPathAuthority(pathName).setCropType(CropImgOptions.CROP_TYPE_SElf)).compress(getCompressOptions()).execute();
         } else if (v.getId() == R.id.show) {
-            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).execute();
-        }else if (v.getId()==R.id.zoom_img){
+            if (resultDatas == null) return;
+//            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).execute();
+            ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(0).addImgList(resultDatas)).showImg(findViewById(R.id.zoom_img), resultDatas.get(0));
+
+        } else if (v.getId() == R.id.zoom_img) {
             Log.i(TAG, "onClick: zoom_img");
+        } else if (v.getId() == R.id.show_one) {
+            if (resultDatas == null) return;
+            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).showImg(findViewById(R.id.zoom_img), resultDatas.get(0));
         }
 
     }
