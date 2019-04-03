@@ -93,37 +93,6 @@ public class ImageSelector {
         }
     }
 
-    /**
-     * 展示图片
-     *
-     * @param view
-     * @param transitionName
-     * @param requestCode
-     */
-    public void showImg(View view, String transitionName, int requestCode) {
-        if (activity != null) {
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, transitionName);
-            ActivityCompat.startActivityForResult(activity, intent(), requestCode, activityOptionsCompat.toBundle());
-        } else {
-            new Exception("showImg error. activity 为null").printStackTrace();
-        }
-    }
-
-    /**
-     * 展示图片
-     *
-     * @param view
-     * @param transitionName
-     */
-    public void showImg(View view, String transitionName) {
-        if (options == null) {
-            new Exception("请添加options").printStackTrace();
-        } else {
-            showImg(view, transitionName, options.getRequestCode());
-        }
-    }
-
-
     public ImageSelector compress(CompressOptions compressOptions) {
         this.compressOptions = compressOptions;
         return this;

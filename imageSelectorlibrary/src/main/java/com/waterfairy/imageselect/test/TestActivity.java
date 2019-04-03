@@ -37,6 +37,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_image_select_test);
 
         findViewById(R.id.zoom_img).setOnClickListener(this);
@@ -48,7 +49,9 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         findViewById(R.id.show).setOnClickListener(this);
         findViewById(R.id.crop2).setOnClickListener(this);
 
-        pathName = getIntent().getStringExtra("pathName");
+        pathName = getIntent().getStringExtra("authority");
+        if (TextUtils.isEmpty(pathName))
+            pathName = getIntent().getStringExtra("pathName");
         gridView = findViewById(R.id.grid_view);
         gridView.setNumColumns(3);
         gridView.setOnItemClickListener(this);
@@ -93,7 +96,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ArrayList<String> dataList = ((MyAdapter) gridView.getAdapter()).getDataList();
-        ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(position).addImgList(dataList)).showImg(view, dataList.get(position));
+        ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(position).addImgList(dataList)).execute();
 //        ImageSelector.with(this).options(new CropImgOptions().setImgPath(dataList.get(0))).execute();
     }
 
@@ -136,13 +139,13 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         } else if (v.getId() == R.id.show) {
             if (resultDatas == null) return;
 //            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).execute();
-            ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(0).addImgList(resultDatas)).showImg(findViewById(R.id.zoom_img), resultDatas.get(0));
+            ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(0).addImgList(resultDatas)).execute();
 
         } else if (v.getId() == R.id.zoom_img) {
             Log.i(TAG, "onClick: zoom_img");
         } else if (v.getId() == R.id.show_one) {
             if (resultDatas == null) return;
-            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).showImg(findViewById(R.id.zoom_img), resultDatas.get(0));
+            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).execute();
         }
 
     }

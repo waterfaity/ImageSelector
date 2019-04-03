@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -27,10 +25,6 @@ import com.waterfairy.imageselect.utils.ImageUtils;
 import com.waterfairy.imageselect.utils.MD5Utils;
 
 import java.io.File;
-
-//import com.github.chrisbanes.photoview.OnPhotoTapListener;
-//import com.github.chrisbanes.photoview.PhotoView;
-
 
 public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, ViewPageShowAdapter.OnViewClickListener {
     private ViewPager mVPShowImg;
@@ -63,12 +57,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
     }
 
     private void setViewPager() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mVPShowImg.setTransitionName(options.getImgList().get(mCurrentPos));
-        }
         mVPShowImg.setAdapter(new ViewPageShowAdapter(this, options.getImgList())
-                .setCurrentPos(mCurrentPos)
-                .setReferToView(findViewById(R.id.root_view))
                 .setResImgDefault(options.getImgResDefault())
                 .setOnClickListener(this)
         );
@@ -80,9 +69,6 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
 
     private void initView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            postponeEnterTransition();
-        }
         mRLSave.setVisibility(View.GONE);
         mVPShowImg.setOffscreenPageLimit(3);
         mVPShowImg.addOnPageChangeListener(this);
@@ -125,7 +111,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         intent.putExtra(ConstantUtils.CURRENT_POS, mCurrentPos);
         intent.putExtra(ConstantUtils.IMG_PATH, options.getImgList().get(mCurrentPos));
         setResult(RESULT_OK, intent);
-        ActivityCompat.finishAfterTransition(this);
+        finish();
     }
 
     public void back(View view) {
