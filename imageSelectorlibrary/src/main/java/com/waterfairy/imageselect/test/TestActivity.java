@@ -19,6 +19,7 @@ import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.CropImgOptions;
 import com.waterfairy.imageselect.options.SelectImgOptions;
+import com.waterfairy.imageselect.options.ShowImgOptions;
 import com.waterfairy.imageselect.options.TakePhotoOptions;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
@@ -26,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TestActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class TestActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, View.OnLongClickListener {
+    private static final String TAG = "test";
     private GridView gridView;
     private View currentView;
     String pathName;
@@ -36,9 +38,15 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_select_test);
+
+        findViewById(R.id.zoom_img).setOnClickListener(this);
+        findViewById(R.id.zoom_img).setOnLongClickListener(this);
         findViewById(R.id.select_img).setOnClickListener(this);
         findViewById(R.id.take_photo).setOnClickListener(this);
         findViewById(R.id.crop).setOnClickListener(this);
+        findViewById(R.id.show).setOnClickListener(this);
+        findViewById(R.id.crop2).setOnClickListener(this);
+
         pathName = getIntent().getStringExtra("pathName");
         gridView = findViewById(R.id.grid_view);
         gridView.setNumColumns(3);
@@ -92,9 +100,17 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setGridNum(3).setMaxNum(12).setSearchDeep(3).setLoadCache(false).addSearchPaths(ignore).addHasSelectFiles(resultDatas))
-                .compress(new CompressOptions().setCompressPath("/sdcard/test/img/img2/"))
+                .options(new SelectImgOptions().setGridNum(4).setMaxNum(9).setSearchDeep(3).setLoadCache(false).addSearchPaths(ignore))
+//                .compress(getCompressOptions())
                 .execute();
+    }
+
+    private CompressOptions getCompressOptions() {
+        return new CompressOptions()
+                .setMaxWidth(1500)
+                .setMaxHeight(1500)
+                .setMaxSize(500)
+                .setCompressPath("/sdcard/test/img");
     }
 
     @Override
@@ -104,17 +120,29 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         } else if (v.getId() == R.id.take_photo) {
             ImageSelector.with(this)
                     .options(new TakePhotoOptions().setPathAuthority(pathName))
-                    .compress(new CompressOptions()
-                            .setMaxWidth(2304)
-                            .setMaxHeight(2304)
-                            .setMaxSize(500)
-                            .setCompressPath("/sdcard/test/img"))
+                    .compress(getCompressOptions())
                     .execute();
         } else if (v.getId() == R.id.crop) {
             if (TextUtils.isEmpty(url)) {
                 return;
             }
             ImageSelector.with(this).options(new CropImgOptions().setCropPath("/sdcard/test/img").setImgPath(url).setPathAuthority(pathName)).execute();
+        } else if (v.getId() == R.id.crop2) {
+            if (TextUtils.isEmpty(url)) {
+                return;
+            }
+            ImageSelector.with(this).options(new CropImgOptions().setAspectX(1).setAspectY(2).setCropPath("/sdcard/test/img").setImgPath(url).setPathAuthority(pathName).setCropType(CropImgOptions.CROP_TYPE_SElf)).compress(getCompressOptions()).execute();
+        } else if (v.getId() == R.id.show) {
+            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).execute();
+        }else if (v.getId()==R.id.zoom_img){
+            Log.i(TAG, "onClick: zoom_img");
         }
+
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        Log.i(TAG, "onLongClick: zoom_img");
+        return false;
     }
 }

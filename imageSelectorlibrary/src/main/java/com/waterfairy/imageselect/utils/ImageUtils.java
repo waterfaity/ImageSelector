@@ -91,6 +91,7 @@ public class ImageUtils {
         else return null;
     }
 
+
     /**
      * 保存bitmap
      *
@@ -376,5 +377,12 @@ public class ImageUtils {
         image.recycle();
         image = null;
         return new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+    }
+
+
+    public static void saveBitmap(Bitmap cropBitmap, Bitmap.CompressFormat format, File savePath) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(savePath);
+        cropBitmap.compress(format, 100, fileOutputStream);
+        fileOutputStream.close();
     }
 }

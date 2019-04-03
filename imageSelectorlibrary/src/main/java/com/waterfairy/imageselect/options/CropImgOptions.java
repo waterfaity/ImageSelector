@@ -17,6 +17,9 @@ public class CropImgOptions implements Options {
     private int height;
     private int aspectX;
     private int aspectY;
+    public static final int CROP_TYPE_SYS = 0;//系统处理或第三方
+    public static final int CROP_TYPE_SElf = 1;//自定义处理
+    private int cropType;
 
     public int getWidth() {
         return width;
@@ -26,6 +29,7 @@ public class CropImgOptions implements Options {
         this.width = width;
         return this;
     }
+
 
     public int getHeight() {
         return height;
@@ -72,6 +76,11 @@ public class CropImgOptions implements Options {
         return this;
     }
 
+    public float getRadio() {
+        if (aspectX == 0 || aspectY == 0) return 0;
+        else return aspectX / (float) aspectY;
+    }
+
     @Override
     public int getType() {
         return ConstantUtils.TYPE_CROP;
@@ -88,6 +97,15 @@ public class CropImgOptions implements Options {
 
     public CropImgOptions setImgPath(String imgPath) {
         this.imgPath = imgPath;
+        return this;
+    }
+
+    public int getCropType() {
+        return cropType;
+    }
+
+    public CropImgOptions setCropType(int cropType) {
+        this.cropType = cropType;
         return this;
     }
 }

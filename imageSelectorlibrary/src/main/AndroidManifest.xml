@@ -9,6 +9,13 @@
         android:allowBackup="true"
         android:supportsRtl="true">
         <activity
+            android:name=".test.TestActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activity.ImageShowActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
@@ -17,7 +24,7 @@
             android:name=".activity.ImageViewPagerPreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="behind"
-            android:theme="@style/ImageSelectorFullScreen"/>mai
+            android:theme="@style/ImageSelectorFullScreen"/>
         <activity
             android:name=".activity.ImageViewPagerShowActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -29,12 +36,10 @@
             android:screenOrientation="behind"
             android:theme="@style/ImageSelectorNoActionBar"/>
         <activity
-            android:name=".test.TestActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
+            android:name=".activity.ImageCropSelfActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="behind"
+            android:theme="@style/ImageSelectorNoActionBar"/>
         <activity
             android:name=".activity.ImageCropActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

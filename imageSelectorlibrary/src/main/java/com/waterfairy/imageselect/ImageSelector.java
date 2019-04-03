@@ -9,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.waterfairy.imageselect.activity.ImageCropActivity;
+import com.waterfairy.imageselect.activity.ImageCropSelfActivity;
 import com.waterfairy.imageselect.activity.ImageSelectActivity;
 import com.waterfairy.imageselect.activity.ImageViewPagerShowActivity;
 import com.waterfairy.imageselect.activity.TakePhotoActivity;
 import com.waterfairy.imageselect.options.CompressOptions;
+import com.waterfairy.imageselect.options.CropImgOptions;
 import com.waterfairy.imageselect.options.Options;
 import com.waterfairy.imageselect.tool.ImageSelectorShareTool;
 import com.waterfairy.imageselect.utils.ConstantUtils;
@@ -77,7 +79,10 @@ public class ImageSelector {
                     aClass = TakePhotoActivity.class;
                     break;
                 case ConstantUtils.TYPE_CROP:
-                    aClass = ImageCropActivity.class;
+                    if (options instanceof CropImgOptions && (((CropImgOptions) options).getCropType() == CropImgOptions.CROP_TYPE_SElf))
+                        aClass = ImageCropSelfActivity.class;
+                    else
+                        aClass = ImageCropActivity.class;
                     break;
 
             }

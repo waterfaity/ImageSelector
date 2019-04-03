@@ -2,6 +2,7 @@ package com.waterfairy.imageselect.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 public class BaseActivity extends AppCompatActivity {
     protected CompressOptions compressOptions;
@@ -19,14 +21,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void compress(final ArrayList<String> dataList) {
         if (compressOptions != null) {
-            if (alertDialog == null) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("压缩");
-                builder.setMessage("图片压缩中...");
-                builder.setCancelable(false);
-                alertDialog = builder.create();
-            }
-            alertDialog.show();
+            showDialog("压缩", "图片压缩中...");
             //压缩
             String compressPath = compressOptions.getCompressPath();
             if (TextUtils.isEmpty(compressPath)) {
@@ -35,21 +30,18 @@ public class BaseActivity extends AppCompatActivity {
             CompressTool.newInstance(compressPath, compressOptions, new CompressTool.OnCompressListener() {
                 @Override
                 public void onCompressSuccess(ArrayList<String> tempDataList) {
-                    alertDialog.dismiss();
+                    dismissDialog();
                     setResult(tempDataList);
                 }
 
                 @Override
                 public void onCompressing(Integer pos, int totalSize) {
-                    alertDialog.setMessage("图片压缩中(" + (pos + 1) + "/" + totalSize + ")...");
+                    showDialog("压缩", "图片压缩中(" + (pos + 1) + "/" + totalSize + ")...");
                 }
 
                 @Override
                 public void onCompressError(String msg, ArrayList<String> sourceList) {
-                    if (alertDialog != null && alertDialog.isShowing()) {
-                        alertDialog.setCancelable(true);
-                        alertDialog.dismiss();
-                    }
+                    dismissDialog();
                     setResult(sourceList);
                 }
             }).compress(dataList);
@@ -58,10 +50,49 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private void setResult(ArrayList<String> dataList) {
+    public void dismissDialog() {
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.setCancelable(true);
+            alertDialog.dismiss();
+        }
+    }
+
+    public void setResult(ArrayList<String> dataList) {
         Intent intent = new Intent();
         intent.putStringArrayListExtra(ConstantUtils.RESULT_STRING, dataList);
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    private android.os.Handler handler;
+
+    public void showErrorDialog(String title, String message) {
+        showDialog(title, message);
+        getHandler().removeMessages(0);
+        getHandler().sendEmptyMessageDelayed(0, 1000);
+    }
+
+    private android.os.Handler getHandler() {
+        if (handler == null) {
+            handler = new android.os.Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    dismissDialog();
+                }
+            };
+        }
+        return handler;
+    }
+
+    public void showDialog(String title, String message) {
+        if (alertDialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            alertDialog = builder.create();
+        }
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.show();
     }
 }
