@@ -361,7 +361,8 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
     public void onClickImg(View view, String imgPath) {
         Intent intent = new Intent(this, ImageShowActivity.class);
         intent.putExtra(ConstantUtils.STR_PATH, imgPath);
-        startActivity(intent);
+        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, imgPath).toBundle();
+        ActivityCompat.startActivity(this, intent, bundle);
     }
 
     @Override

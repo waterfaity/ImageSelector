@@ -10,6 +10,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 
@@ -60,7 +63,13 @@ public class ShowFolderAdapter extends BaseAdapter {
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         SearchFolderBean searchFolderBean = mData.get(position);
         viewHolder.folderName.setText(searchFolderBean.getName());
-        Glide.with(mContext).load(searchFolderBean.getFirstImgPath()).centerCrop().into(viewHolder.imageView);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.centerCrop();
+        DrawableTransitionOptions drawableTransitionOptions = new DrawableTransitionOptions();
+        DrawableCrossFadeFactory.Builder builder = new DrawableCrossFadeFactory.Builder();
+        builder.setCrossFadeEnabled(true);
+        drawableTransitionOptions.crossFade(builder.build());
+        Glide.with(mContext).load(searchFolderBean.getFirstImgPath()).apply(requestOptions).transition(drawableTransitionOptions).into(viewHolder.imageView);
         if (lastPos == position) {
             viewHolder.radioButton.setVisibility(View.VISIBLE);
             lastRadioButton = viewHolder.radioButton;
