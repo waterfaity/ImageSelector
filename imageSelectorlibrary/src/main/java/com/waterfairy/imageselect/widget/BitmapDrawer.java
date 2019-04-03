@@ -43,6 +43,7 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
         gestureDetector = new GestureDetector(imageView.getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
+                if (onDrawerChangeListener!=null)onDrawerChangeListener.onDoubleClickListener();
                 float scale = getScale();
                 initSmaller(scale);
                 if (scale < BIGGER / 4F - 0.1F) {
@@ -399,6 +400,8 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
         void onBitmapChange(BitmapDrawer bitmapDrawer);
 
         void onClickListener();
+
+        void onDoubleClickListener();
 
         boolean onLongClickListener();
     }

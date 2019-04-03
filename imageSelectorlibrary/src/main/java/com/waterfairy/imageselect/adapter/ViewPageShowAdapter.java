@@ -49,7 +49,8 @@ public class ViewPageShowAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         final View view = LayoutInflater.from(activity).inflate(R.layout.image_selector_img, container, false);
         container.addView(view);
-        ImageView imageView = (ImageView) view.findViewById(R.id.img);
+        ImageView imageView =   view.findViewById(R.id.img);
+        Glide.with(activity).load(dataList.get(position)).placeholder(mResImgDefault).error(mResImgDefault).into(imageView);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +63,6 @@ public class ViewPageShowAdapter extends PagerAdapter {
                 if (onClickListener != null) onClickListener.onViewClick();
             }
         });
-        imageView.setTag(R.id.key_glide, dataList.get(position));
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -72,7 +72,7 @@ public class ViewPageShowAdapter extends PagerAdapter {
                 return false;
             }
         });
-        Glide.with(activity).load(dataList.get(position)).placeholder(mResImgDefault).error(mResImgDefault).into(imageView);
+        imageView.setTag(R.id.key_glide, dataList.get(position));
         return view;
     }
 

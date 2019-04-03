@@ -130,7 +130,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
             if (TextUtils.isEmpty(url)) {
                 return;
             }
-            ImageSelector.with(this).options(new CropImgOptions().setCropPath("/sdcard/test/img").setImgPath(url).setPathAuthority(pathName)).execute();
+            ImageSelector.with(this).options(new CropImgOptions().setCropPath("/sdcard/test/img").setAspectX(1).setAspectY(2).setImgPath(url).setPathAuthority(pathName)).execute();
         } else if (v.getId() == R.id.crop2) {
             if (TextUtils.isEmpty(url)) {
                 return;
