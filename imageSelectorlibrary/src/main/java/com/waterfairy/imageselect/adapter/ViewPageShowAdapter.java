@@ -2,6 +2,7 @@ package com.waterfairy.imageselect.adapter;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.listener.GlideRequestListener;
+import com.waterfairy.imageselect.listener.OnDoubleClickListener;
+import com.waterfairy.imageselect.widget.Zoom2ImageView;
 
 import java.util.ArrayList;
 
@@ -65,7 +68,7 @@ public class ViewPageShowAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         final View view = LayoutInflater.from(activity).inflate(R.layout.image_selector_img, container, false);
         container.addView(view);
-        ImageView imageView = (ImageView) view.findViewById(R.id.img);
+        ImageView imageView =   view.findViewById(R.id.img);
         showView(imageView, position);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +82,6 @@ public class ViewPageShowAdapter extends PagerAdapter {
                 if (onClickListener != null) onClickListener.onViewClick();
             }
         });
-        imageView.setTag(R.id.key_glide, dataList.get(position));
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -89,6 +91,7 @@ public class ViewPageShowAdapter extends PagerAdapter {
                 return false;
             }
         });
+        imageView.setTag(R.id.key_glide, dataList.get(position));
         return view;
     }
 

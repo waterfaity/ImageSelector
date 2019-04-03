@@ -263,4 +263,9 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         }
         isVisibility = !isVisibility;
     }
+
+    @Override
+    public void postponeEnterTransition() {
+        super.postponeEnterTransition();
+    }
 }

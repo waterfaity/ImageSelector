@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.waterfairy.imageselect.listener.OnDoubleClickListener;
+
 /**
  * @author water_fairy
  * @email 995637517@qq.com
@@ -19,6 +21,7 @@ public class Zoom2ImageView extends AppCompatImageView implements BitmapDrawer.O
     private BitmapDrawer bitmapDrawer;
     private OnClickListener onClickListener;
     private OnLongClickListener onLongClickListener;
+    private OnDoubleClickListener onDoubleClickListener;
 
     public Zoom2ImageView(Context context) {
         this(context, null);
@@ -60,6 +63,11 @@ public class Zoom2ImageView extends AppCompatImageView implements BitmapDrawer.O
     }
 
     @Override
+    public void onDoubleClickListener() {
+        if (onDoubleClickListener != null) onDoubleClickListener.onDoubleClick(this);
+    }
+
+    @Override
     public boolean onLongClickListener() {
         if (onLongClickListener != null) onLongClickListener.onLongClick(this);
         return false;
@@ -69,5 +77,9 @@ public class Zoom2ImageView extends AppCompatImageView implements BitmapDrawer.O
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         bitmapDrawer.freshLineRect(new RectF(left, top, right, bottom));
+    }
+
+    public void setOnDoubleClick(OnDoubleClickListener onDoubleClickListener) {
+        this.onDoubleClickListener = onDoubleClickListener;
     }
 }
