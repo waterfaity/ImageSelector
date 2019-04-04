@@ -76,7 +76,7 @@ public class Zoom2ImageView extends AppCompatImageView implements BitmapDrawer.O
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        bitmapDrawer.freshLineRect(new RectF(left, top, right, bottom));
+//        bitmapDrawer.freshLineRect(new RectF(left, top, right, bottom));
     }
 
     public void setOnDoubleClick(OnDoubleClickListener onDoubleClickListener) {
