@@ -16,6 +16,7 @@ import com.waterfairy.imageselect.activity.TakePhotoActivity;
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.options.CropImgOptions;
 import com.waterfairy.imageselect.options.Options;
+import com.waterfairy.imageselect.options.ShowImgOptions;
 import com.waterfairy.imageselect.tool.ImageSelectorShareTool;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 
@@ -102,8 +103,13 @@ public class ImageSelector {
      */
     public void showImg(View view, String transitionName, int requestCode) {
         if (activity != null) {
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, transitionName);
-            ActivityCompat.startActivityForResult(activity, intent(), requestCode, activityOptionsCompat.toBundle());
+            ShowImgOptions showImgOptions = (ShowImgOptions) options;
+            if (showImgOptions.isHasTranslateAnim()) {
+                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, transitionName);
+                ActivityCompat.startActivityForResult(activity, intent(), requestCode, activityOptionsCompat.toBundle());
+            } else {
+                execute(requestCode);
+            }
         } else {
             new Exception("showImg error. activity 为null").printStackTrace();
         }

@@ -21,6 +21,16 @@ public class ShowImgOptions implements Options {
     private boolean canSaveImg;
     private String saveParentPath;
     private boolean clickToDismiss;
+    private boolean hasTranslateAnim = true;
+
+    public boolean isHasTranslateAnim() {
+        return hasTranslateAnim;
+    }
+
+    public ShowImgOptions setHasTranslateAnim(boolean hasTranslateAnim) {
+        this.hasTranslateAnim = hasTranslateAnim;
+        return this;
+    }
 
     public ArrayList<String> getImgList() {
         return imgList;

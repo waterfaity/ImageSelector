@@ -2,7 +2,6 @@ package com.waterfairy.imageselect.adapter;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +13,6 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.listener.GlideRequestListener;
-import com.waterfairy.imageselect.listener.OnDoubleClickListener;
-import com.waterfairy.imageselect.widget.Zoom2ImageView;
 
 import java.util.ArrayList;
 
@@ -33,6 +30,7 @@ public class ViewPageShowAdapter extends PagerAdapter {
     private int mCurrentPos;
     private View mReferToView;
     private OnViewClickListener onClickListener;
+    private boolean hasTranslateAnim;
 
     public ViewPageShowAdapter setReferToView(View view) {
         mReferToView = view;
@@ -68,7 +66,7 @@ public class ViewPageShowAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         final View view = LayoutInflater.from(activity).inflate(R.layout.image_selector_img, container, false);
         container.addView(view);
-        ImageView imageView =   view.findViewById(R.id.img);
+        ImageView imageView = view.findViewById(R.id.img);
         showView(imageView, position);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,16 +100,21 @@ public class ViewPageShowAdapter extends PagerAdapter {
      * @param position
      */
     private void showView(ImageView imageView, int position) {
-        RequestBuilder<Drawable> load = Glide.with(activity).load(dataList.get(position));
-        if (mResImgDefault != 0) {
-            load = load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));
-        }
-        if (mCurrentPos == position) {
-            load = load.listener(new GlideRequestListener(activity, mReferToView, imageView, true).setOne(true));
+        if (hasTranslateAnim) {
+
+            RequestBuilder<Drawable> load = Glide.with(activity).load(dataList.get(position));
+            if (mResImgDefault != 0) {
+                load = load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));
+            }
+            if (mCurrentPos == position) {
+                load = load.listener(new GlideRequestListener(activity, mReferToView, imageView, true).setOne(true));
+            } else {
+                load = load.listener(new GlideRequestListener(activity, mReferToView, imageView, false).setOne(true));
+            }
+            load.into(imageView);
         } else {
-            load = load.listener(new GlideRequestListener(activity, mReferToView, imageView, false).setOne(true));
+            Glide.with(activity).load(dataList.get(position)).apply(new RequestOptions().error(mResImgDefault).placeholder(mResImgDefault)).into(imageView);
         }
-        load.into(imageView);
     }
 
     @Override
@@ -122,6 +125,15 @@ public class ViewPageShowAdapter extends PagerAdapter {
     public ViewPageShowAdapter setOnClickListener(OnViewClickListener onClickListener) {
         this.onClickListener = onClickListener;
         return this;
+    }
+
+    public ViewPageShowAdapter setHasTranslateAnim(boolean hasTranslateAnim) {
+        this.hasTranslateAnim = hasTranslateAnim;
+        return this;
+    }
+
+    public boolean getHasTranslateAnim() {
+        return hasTranslateAnim;
     }
 
     public interface OnViewClickListener {

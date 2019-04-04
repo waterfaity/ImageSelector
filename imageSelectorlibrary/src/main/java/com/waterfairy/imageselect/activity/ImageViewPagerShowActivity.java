@@ -68,6 +68,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         }
         mVPShowImg.setAdapter(new ViewPageShowAdapter(this, options.getImgList())
                 .setCurrentPos(mCurrentPos)
+                .setHasTranslateAnim(options.isHasTranslateAnim())
                 .setReferToView(findViewById(R.id.root_view))
                 .setResImgDefault(options.getImgResDefault())
                 .setOnClickListener(this)
@@ -80,9 +81,10 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
 
 
     private void initView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            postponeEnterTransition();
-        }
+        if (options.isHasTranslateAnim())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                postponeEnterTransition();
+            }
         mRLSave.setVisibility(View.GONE);
         mVPShowImg.setOffscreenPageLimit(3);
         mVPShowImg.addOnPageChangeListener(this);
@@ -125,7 +127,9 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         intent.putExtra(ConstantUtils.CURRENT_POS, mCurrentPos);
         intent.putExtra(ConstantUtils.IMG_PATH, options.getImgList().get(mCurrentPos));
         setResult(RESULT_OK, intent);
-        ActivityCompat.finishAfterTransition(this);
+        if (options.isHasTranslateAnim())
+            ActivityCompat.finishAfterTransition(this);
+        else finish();
     }
 
     public void back(View view) {
@@ -264,8 +268,4 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         isVisibility = !isVisibility;
     }
 
-    @Override
-    public void postponeEnterTransition() {
-        super.postponeEnterTransition();
-    }
 }
