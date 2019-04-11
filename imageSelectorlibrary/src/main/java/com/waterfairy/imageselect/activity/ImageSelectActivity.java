@@ -418,6 +418,11 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
     }
 
     @Override
+    protected String getTag() {
+        return options.getTag();
+    }
+
+    @Override
     public boolean isDestroy() {
         return isDestroy;
     }

@@ -126,6 +126,7 @@ public class ImageViewPagerShowActivity extends AppCompatActivity implements Vie
         Intent intent = new Intent();
         intent.putExtra(ConstantUtils.CURRENT_POS, mCurrentPos);
         intent.putExtra(ConstantUtils.IMG_PATH, options.getImgList().get(mCurrentPos));
+        intent.putExtra(ConstantUtils.OPTIONS_TAG, options.getTag());
         setResult(RESULT_OK, intent);
         if (options.isHasTranslateAnim())
             ActivityCompat.finishAfterTransition(this);

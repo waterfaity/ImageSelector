@@ -8,7 +8,7 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  * @date 2018/12/1
  * @info:
  */
-public class TakePhotoOptions implements Options {
+public class TakePhotoOptions extends AOptions {
     private String pathAuthority;
 
     public String getPathAuthority() {

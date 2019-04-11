@@ -95,4 +95,9 @@ public class ImageCropActivity extends BaseActivity {
             finish();
         }
     }
+
+    @Override
+    protected String getTag() {
+        return cropImgOptions.getTag();
+    }
 }

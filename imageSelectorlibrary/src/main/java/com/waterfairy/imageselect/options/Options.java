@@ -14,4 +14,9 @@ public interface Options extends Serializable {
     int getOptionsType();
 
     int getRequestCode();
+
+    String getTag();
+
+    void setTag(String tag);
+
 }

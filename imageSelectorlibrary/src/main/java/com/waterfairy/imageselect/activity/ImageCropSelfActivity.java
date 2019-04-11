@@ -70,4 +70,9 @@ public class ImageCropSelfActivity extends BaseActivity implements View.OnClickL
             }
         });
     }
+
+    @Override
+    protected String getTag() {
+        return cropImgOptions.getTag();
+    }
 }

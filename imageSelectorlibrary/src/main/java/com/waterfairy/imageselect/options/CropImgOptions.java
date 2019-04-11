@@ -8,7 +8,8 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  * @date 2018/12/3 19:31
  * @info:
  */
-public class CropImgOptions implements Options {
+public class CropImgOptions extends AOptions {
+
     private String cropPath;//裁剪路径
     private String imgPath;//图片路径
     private String pathAuthority;
@@ -90,6 +91,7 @@ public class CropImgOptions implements Options {
     public int getRequestCode() {
         return ConstantUtils.REQUEST_CROP;
     }
+
 
     public String getImgPath() {
         return imgPath;

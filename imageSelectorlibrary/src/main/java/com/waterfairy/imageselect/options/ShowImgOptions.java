@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @date 2018/12/1
  * @info:
  */
-public class ShowImgOptions implements Options {
+public class ShowImgOptions extends AOptions {
 
     private ArrayList<String> imgList;
     private int imgResDefault;

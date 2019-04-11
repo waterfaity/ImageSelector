@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @date 2018/12/1
  * @info:
  */
-public class SelectImgOptions implements Options, Serializable {
+public class SelectImgOptions extends AOptions implements Serializable {
 
     private final static long serialVersionUID = 201812012107L;
     private boolean loadCache;//搜索缓存

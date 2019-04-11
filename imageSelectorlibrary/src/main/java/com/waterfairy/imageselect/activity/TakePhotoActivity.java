@@ -67,4 +67,9 @@ public class TakePhotoActivity extends BaseActivity {
             finish();
         }
     }
+
+    @Override
+    protected String getTag() {
+        return options.getTag();
+    }
 }
