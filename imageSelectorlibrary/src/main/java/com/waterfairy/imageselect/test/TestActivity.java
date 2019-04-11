@@ -39,7 +39,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_select_test);
+        setContentView(R.layout.image_selector_activity_image_select_test);
 
         findViewById(R.id.zoom_img).setOnClickListener(this);
         findViewById(R.id.zoom_img).setOnLongClickListener(this);
@@ -105,7 +105,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setGridNum(4).setMaxNum(9).setSearchDeep(6).setLoadCache(false).addSearchPaths(ignore).setModelType(ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR).setTag("true"))
+                .options(new SelectImgOptions().setGridNum(4).setMaxNum(9).setSearchDeep(6).setLoadCache(false).addSearchPaths(ignore).setTag("true"))
                 .compress(getCompressOptions())
                 .execute();
     }

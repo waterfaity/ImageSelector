@@ -34,7 +34,7 @@ public class TakePhotoActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_select_take_photo);
+        setContentView(R.layout.image_selector_activity_image_select_take_photo);
         mImg = findViewById(R.id.img);
         options = (TakePhotoOptions) getIntent().getSerializableExtra(ConstantUtils.OPTIONS_BEAN);
         compressOptions = (CompressOptions) getIntent().getSerializableExtra(ConstantUtils.OPTIONS_COMPRESS_BEAN);

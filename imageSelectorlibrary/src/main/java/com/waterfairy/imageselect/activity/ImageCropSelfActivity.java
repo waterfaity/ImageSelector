@@ -1,9 +1,7 @@
 package com.waterfairy.imageselect.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.waterfairy.imageselect.R;
@@ -14,7 +12,6 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.widget.ImageCropView;
 
 import java.io.File;
-import java.sql.RowId;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +24,7 @@ public class ImageCropSelfActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_img_crop);
+        setContentView(R.layout.image_selector_activity_img_crop);
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.ensure_button).setOnClickListener(this);
         imageCropView = findViewById(R.id.img);

@@ -77,7 +77,7 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_select);
+        setContentView(R.layout.image_selector_activity_image_select);
         mPresenter = new SelectPresenter(this);
         getExtra();
         findView();

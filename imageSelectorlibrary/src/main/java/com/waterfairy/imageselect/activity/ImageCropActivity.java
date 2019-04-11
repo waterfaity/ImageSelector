@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -18,9 +17,7 @@ import com.waterfairy.imageselect.utils.FileUtils;
 import com.waterfairy.imageselect.utils.ProviderUtils;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * 系统 / 第三方 处理
@@ -33,7 +30,7 @@ public class ImageCropActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_img_crop);
+        setContentView(R.layout.image_selector_activity_img_crop);
         mImg = findViewById(R.id.img);
 
         cropImgOptions = (CropImgOptions) getIntent().getSerializableExtra(ConstantUtils.OPTIONS_BEAN);
