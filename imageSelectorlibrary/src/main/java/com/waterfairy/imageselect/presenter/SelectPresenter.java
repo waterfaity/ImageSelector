@@ -2,7 +2,6 @@ package com.waterfairy.imageselect.presenter;
 
 import android.content.Context;
 
-import com.waterfairy.imageselect.activity.ImageSelectActivity;
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.model.SelectModel;
@@ -32,7 +31,7 @@ public class SelectPresenter implements SelectPresenterListener {
 
 
     public void initData(Context context, SelectImgOptions options) {
-        if (options.getType() == ConstantUtils.SELECT_IMG_TYPE_SEARCH_CURSOR)
+        if (options.getModelType() == ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR)
             mModel = new SelectModel(context, this);
         else
             mModel = new SelectModel(this);

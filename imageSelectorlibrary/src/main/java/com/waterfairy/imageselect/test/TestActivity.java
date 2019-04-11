@@ -24,7 +24,6 @@ import com.waterfairy.imageselect.options.TakePhotoOptions;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.PictureSearchTool2;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +105,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setGridNum(4).setMaxNum(9).setSearchDeep(3).setLoadCache(false).addSearchPaths(ignore).setType(ConstantUtils.SELECT_IMG_TYPE_SEARCH_CURSOR))
+                .options(new SelectImgOptions().setGridNum(4).setMaxNum(9).setSearchDeep(6).setLoadCache(false).addSearchPaths(ignore).setModelType(ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR))
                 .compress(getCompressOptions())
                 .execute();
     }
@@ -149,7 +148,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
             if (resultDatas == null) return;
             ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas).setHasTranslateAnim(hasTransAnim)).showImg(findViewById(R.id.zoom_img), resultDatas.get(0));
         } else if (v.getId() == R.id.query) {
-            ArrayList<String> ignoreList=new ArrayList<>();
+            ArrayList<String> ignoreList = new ArrayList<>();
 //            ignoreList.add(new File("/storage/emulated/0/DCIM/Camera").getAbsolutePath());
             PictureSearchTool2.newInstance(this).setPaths(ignoreList).start();
         }

@@ -30,7 +30,6 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
     public SelectModel(SelectPresenterListener listener) {
         this.mPresenter = listener;
         mPictureSearchTool = PictureSearchTool.getInstance();
-        mPictureSearchTool.setContainsGif(options.isContainsGif());
         mPictureSearchTool.setOnSearchListener(this);
         mShareTool = ImageSelectorShareTool.getInstance();
     }

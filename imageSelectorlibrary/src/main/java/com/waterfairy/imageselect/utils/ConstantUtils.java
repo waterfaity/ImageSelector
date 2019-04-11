@@ -23,7 +23,6 @@ public class ConstantUtils {
     public static final int DEFAULT_DEEP = 3;//默认深度
     public static final int DEFAULT_GRID_NUM_MIN = 3;//最小横排数量
     public static final int DEFAULT_GRID_NUM_MAX = 6;//最多
-    public static final int DEFAULT_SELECT_IMG_TYPE = 0;//图片选择类型  搜索文件夹唉
 
     public static final String STR_URL = "url";//url
     public static final String STR_PATH = "path";//本地地址
@@ -40,8 +39,7 @@ public class ConstantUtils {
     public static final int REQUEST_CROP = 18124;//裁剪
 
     //DEFAULT_SELECT_IMG_TYPE
-    public static final int SELECT_IMG_TYPE_SEARCH_FILE = 0;
-    public static final int SELECT_IMG_TYPE_SEARCH_CURSOR = 1;
+    public static final int SELECT_IMG_MODULE_TYPE_CURSOR = 1;
 
     public static final int TYPE_SELECT = 1;
     public static final int TYPE_SHOW = 2;

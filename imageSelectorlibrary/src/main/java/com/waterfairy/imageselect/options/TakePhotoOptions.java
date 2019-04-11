@@ -21,7 +21,7 @@ public class TakePhotoOptions implements Options {
     }
 
     @Override
-    public int getType() {
+    public int getOptionsType() {
         return ConstantUtils.TYPE_TAKE_PHOTO;
     }
 

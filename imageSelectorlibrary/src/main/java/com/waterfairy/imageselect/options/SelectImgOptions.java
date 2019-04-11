@@ -26,7 +26,7 @@ public class SelectImgOptions implements Options, Serializable {
     private int searchDeep;//搜索文件夹深度 默认3
     private int gridNum;//展示grid数量 默认3
     private ArrayList<String> hasSelectFiles;//已经选择的文件
-    private int type;
+    private int modelType;
 
     public boolean isContainsGif() {
         return containsGif;
@@ -42,9 +42,13 @@ public class SelectImgOptions implements Options, Serializable {
         gridNum = ConstantUtils.DEFAULT_GRID_NUM_MIN;
     }
 
-    public SelectImgOptions setType(int type) {
-        this.type = type;
+    public SelectImgOptions setModelType(int modelType) {
+        this.modelType = modelType;
         return this;
+    }
+
+    public int getModelType() {
+        return modelType;
     }
 
     public boolean isLoadCache() {
@@ -163,7 +167,7 @@ public class SelectImgOptions implements Options, Serializable {
     }
 
     @Override
-    public int getType() {
+    public int getOptionsType() {
         return ConstantUtils.TYPE_SELECT;
     }
 

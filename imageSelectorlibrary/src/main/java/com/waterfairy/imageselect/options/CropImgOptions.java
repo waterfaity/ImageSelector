@@ -82,7 +82,7 @@ public class CropImgOptions implements Options {
     }
 
     @Override
-    public int getType() {
+    public int getOptionsType() {
         return ConstantUtils.TYPE_CROP;
     }
 

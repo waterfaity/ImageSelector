@@ -69,7 +69,7 @@ public class ImageSelector {
             return new Intent();
         } else {
             Class aClass = null;
-            switch (options.getType()) {
+            switch (options.getOptionsType()) {
                 case ConstantUtils.TYPE_SELECT:
                     aClass = ImageSelectActivity.class;
                     break;

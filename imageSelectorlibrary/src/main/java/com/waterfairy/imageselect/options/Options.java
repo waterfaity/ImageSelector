@@ -11,7 +11,7 @@ import java.io.Serializable;
 public interface Options extends Serializable {
     long serialVersionUID = 201812012131L;
 
-    int getType();
+    int getOptionsType();
 
     int getRequestCode();
 }
