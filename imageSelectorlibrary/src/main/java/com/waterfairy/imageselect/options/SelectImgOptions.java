@@ -176,6 +176,13 @@ public class SelectImgOptions extends AOptions implements Serializable {
         return ConstantUtils.REQUEST_SELECT;
     }
 
+    @Override
+    public SelectImgOptions setTag(String tag) {
+        super.tag = tag;
+        return this;
+    }
+
+
     /**
      * 添加已经选择的文件s
      *

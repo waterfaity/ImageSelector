@@ -92,6 +92,12 @@ public class CropImgOptions extends AOptions {
         return ConstantUtils.REQUEST_CROP;
     }
 
+    @Override
+    public CropImgOptions setTag(String tag) {
+        super.tag = tag;
+        return this;
+    }
+
 
     public String getImgPath() {
         return imgPath;

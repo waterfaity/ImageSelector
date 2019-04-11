@@ -17,6 +17,6 @@ public interface Options extends Serializable {
 
     String getTag();
 
-    void setTag(String tag);
+    Options setTag(String tag);
 
 }

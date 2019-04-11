@@ -21,6 +21,13 @@ public class TakePhotoOptions extends AOptions {
     }
 
     @Override
+    public TakePhotoOptions setTag(String tag) {
+        super.tag = tag;
+        return this;
+    }
+
+
+    @Override
     public int getOptionsType() {
         return ConstantUtils.TYPE_TAKE_PHOTO;
     }

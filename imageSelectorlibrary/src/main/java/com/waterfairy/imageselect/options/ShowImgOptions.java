@@ -97,6 +97,12 @@ public class ShowImgOptions extends AOptions {
         this.clickToDismiss = clickToDismiss;
         return this;
     }
+    @Override
+    public ShowImgOptions setTag(String tag) {
+        super.tag = tag;
+        return this;
+    }
+
 
     @Override
     public int getOptionsType() {
