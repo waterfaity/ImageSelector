@@ -1,11 +1,14 @@
 package com.waterfairy.imageselect.model;
 
+import android.content.Context;
+
 import com.waterfairy.imageselect.bean.SearchFolderBean;
 import com.waterfairy.imageselect.bean.SearchImgBean;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.presenter.SelectPresenterListener;
 import com.waterfairy.imageselect.tool.ImageSelectorShareTool;
 import com.waterfairy.imageselect.utils.PictureSearchTool;
+import com.waterfairy.imageselect.utils.PictureSearchTool2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,24 +20,37 @@ import java.util.List;
  * @Description:
  */
 
-public class SelectModel implements PictureSearchTool.OnSearchListener {
+public class SelectModel implements PictureSearchTool.OnSearchListener, PictureSearchTool2.OnSearchListener {
     private SelectPresenterListener mPresenter;
     private PictureSearchTool mPictureSearchTool;
+    private PictureSearchTool2 mPictureSearchTool2;
     private ImageSelectorShareTool mShareTool;
     private SelectImgOptions options;
 
     public SelectModel(SelectPresenterListener listener) {
         this.mPresenter = listener;
         mPictureSearchTool = PictureSearchTool.getInstance();
+        mPictureSearchTool.setContainsGif(options.isContainsGif());
         mPictureSearchTool.setOnSearchListener(this);
+        mShareTool = ImageSelectorShareTool.getInstance();
+    }
+
+    public SelectModel(Context context, SelectPresenterListener listener) {
+        this.mPresenter = listener;
+        mPictureSearchTool2 = PictureSearchTool2.newInstance(context);
+        mPictureSearchTool2.setOnSearchListener(this);
         mShareTool = ImageSelectorShareTool.getInstance();
     }
 
     public void initData(SelectImgOptions options) {
         this.options = options;
-        mPictureSearchTool.setDeep(options.getSearchDeep())
-                .setPaths(options.getSearchPaths(),
-                        options.getIgnorePaths());
+        if (mPictureSearchTool != null)
+            mPictureSearchTool.setDeep(options.getSearchDeep())
+                    .setPaths(options.getSearchPaths(),
+                            options.getIgnorePaths()).setContainsGif(options.isContainsGif());
+
+        if (mPictureSearchTool2 != null)
+            mPictureSearchTool2.setPaths(options.getIgnorePaths()).setContainsGif(options.isContainsGif());
     }
 
     public void queryFolders() {
@@ -49,7 +65,10 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
             }
         }
         //否则 搜索
-        mPictureSearchTool.start();
+        if (mPictureSearchTool != null)
+            mPictureSearchTool.start();
+        else if (mPictureSearchTool2 != null)
+            mPictureSearchTool2.start();
     }
 
     @Override
@@ -70,12 +89,16 @@ public class SelectModel implements PictureSearchTool.OnSearchListener {
     }
 
     public void queryImgS(SearchFolderBean folderBean) {
-        List<SearchImgBean> searchImgBeans = mPictureSearchTool.searchFolder(folderBean);
+        List<SearchImgBean> searchImgBeans =
+                mPictureSearchTool != null ? mPictureSearchTool.searchFolder(folderBean) : (mPictureSearchTool2 != null ? mPictureSearchTool2.searchFolder(folderBean) : null);
         mPresenter.onGetImgSuccess(searchImgBeans);
     }
 
     public void stopSearch() {
-        mPictureSearchTool.stop();
+        if (mPictureSearchTool != null)
+            mPictureSearchTool.stop();
+        if (mPictureSearchTool2 != null)
+            mPictureSearchTool2.stop();
     }
 
 }

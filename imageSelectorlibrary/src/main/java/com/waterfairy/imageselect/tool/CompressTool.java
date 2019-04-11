@@ -100,17 +100,23 @@ public class CompressTool {
                     String sourcePath = arrayLists[0].get(i);
                     //判空
                     if (!TextUtils.isEmpty(sourcePath)) {
-
-                        String cachePathName = DataTransUtils.generateFileCompressPath(compressOptions, sourcePath, MD5Utils.getMD5Code(sourcePath));
-                        //压缩保存文件
-                        File file = new File(cachePath, cachePathName);
                         String compressPath = null;
-                        if (file.exists() && file.length() > 0) {
-                            //已经压缩
-                            compressPath = file.getAbsolutePath();
+                        File file = null;
+                        if (sourcePath.endsWith(".gif") || sourcePath.endsWith(".GIF")) {
+                            //gif  GIF 不压缩
+                            compressPath = sourcePath;
+                            file = new File(compressPath, sourcePath);
                         } else {
-                            //压缩
-                            compressPath = compress(sourcePath, file.getAbsolutePath());
+                            String cachePathName = DataTransUtils.generateFileCompressPath(compressOptions, sourcePath, MD5Utils.getMD5Code(sourcePath));
+                            //压缩保存文件
+                            file = new File(cachePath, cachePathName);
+                            if (file.exists() && file.length() > 0) {
+                                //已经压缩
+                                compressPath = file.getAbsolutePath();
+                            } else {
+                                //压缩
+                                compressPath = compress(sourcePath, file.getAbsolutePath());
+                            }
                         }
                         tempDataList.add(compressPath);
                         ImageSelectorShareTool.getInstance().saveSrcPath(file.getAbsolutePath(), sourcePath);

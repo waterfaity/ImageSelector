@@ -9,12 +9,10 @@ package com.waterfairy.imageselect.bean;
 
 public class SearchImgBean {
     private String path;
-    private int pos;
 
-    public SearchImgBean(String path, int pos) {
+    public SearchImgBean(String path) {
         this.path = path;
-        this.pos = pos;
-    }
+     }
 
     public String getPath() {
         return path;
@@ -24,11 +22,5 @@ public class SearchImgBean {
         this.path = path;
     }
 
-    public int getPos() {
-        return pos;
-    }
 
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
 }

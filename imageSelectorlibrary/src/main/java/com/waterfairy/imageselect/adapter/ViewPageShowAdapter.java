@@ -13,6 +13,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.listener.GlideRequestListener;
+import com.waterfairy.imageselect.widget.ZoomImageView;
 
 import java.util.ArrayList;
 
@@ -66,7 +67,8 @@ public class ViewPageShowAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         final View view = LayoutInflater.from(activity).inflate(R.layout.image_selector_img, container, false);
         container.addView(view);
-        ImageView imageView = view.findViewById(R.id.img);
+        ZoomImageView imageView = view.findViewById(R.id.img);
+        imageView.setCanZoom(!hasTranslateAnim);
         showView(imageView, position);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +103,6 @@ public class ViewPageShowAdapter extends PagerAdapter {
      */
     private void showView(ImageView imageView, int position) {
         if (hasTranslateAnim) {
-
             RequestBuilder<Drawable> load = Glide.with(activity).load(dataList.get(position));
             if (mResImgDefault != 0) {
                 load = load.apply(new RequestOptions().placeholder(mResImgDefault).error(mResImgDefault));

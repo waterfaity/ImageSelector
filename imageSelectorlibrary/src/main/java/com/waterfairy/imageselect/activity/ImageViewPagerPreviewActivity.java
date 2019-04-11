@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.utils.ConstantUtils;
-import com.waterfairy.imageselect.widget.Zoom2ImageView;
+import com.waterfairy.imageselect.widget.ZoomImageView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -98,7 +98,7 @@ public class ImageViewPagerPreviewActivity extends AppCompatActivity implements 
         mBTEnsure.setOnClickListener(this);
         photoViews = new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
-            ImageView photoView = new Zoom2ImageView(this);
+            ImageView photoView = new ZoomImageView(this);
             Glide.with(this).load(dataList.get(i)).into(photoView);
             photoViews.add(photoView);
         }

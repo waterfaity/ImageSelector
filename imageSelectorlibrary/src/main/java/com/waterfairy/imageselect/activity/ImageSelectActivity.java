@@ -134,14 +134,14 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
 
     private void initData() {
         ImageSelectorShareTool.getInstance().initShare(this);
-        handler.sendEmptyMessageDelayed(0, 300);
+        handler.sendEmptyMessageDelayed(0, 0);
     }
 
 
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            mPresenter.initData(options);
+            mPresenter.initData(ImageSelectActivity.this, options);
             showSearchDialog();
             mPresenter.queryFolders();
         }

@@ -70,7 +70,6 @@ public class ShowImgAdapter extends BaseAdapter implements View.OnClickListener 
         }
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         SearchImgBean searchImgBean = mData.get(position);
-        searchImgBean.setPos(position);
         Glide.with(mContext).load(searchImgBean.getPath()).into(viewHolder.imageView);
         viewHolder.rootView.setTag(searchImgBean.getPath());
         viewHolder.rootView.setOnClickListener(this);

@@ -21,11 +21,20 @@ public class SelectImgOptions implements Options, Serializable {
     private boolean loadCache;//搜索缓存
     private ArrayList<String> searchPaths;//指定搜索路径
     private ArrayList<String> ignorePaths;//忽略路径
+    private boolean containsGif;
     private int maxNum;//选择最大数 默认9
     private int searchDeep;//搜索文件夹深度 默认3
     private int gridNum;//展示grid数量 默认3
     private ArrayList<String> hasSelectFiles;//已经选择的文件
+    private int type;
 
+    public boolean isContainsGif() {
+        return containsGif;
+    }
+
+    public void setContainsGif(boolean containsGif) {
+        this.containsGif = containsGif;
+    }
 
     public SelectImgOptions() {
         maxNum = ConstantUtils.DEFAULT_MAX_NUM;
@@ -33,6 +42,10 @@ public class SelectImgOptions implements Options, Serializable {
         gridNum = ConstantUtils.DEFAULT_GRID_NUM_MIN;
     }
 
+    public SelectImgOptions setType(int type) {
+        this.type = type;
+        return this;
+    }
 
     public boolean isLoadCache() {
         return loadCache;

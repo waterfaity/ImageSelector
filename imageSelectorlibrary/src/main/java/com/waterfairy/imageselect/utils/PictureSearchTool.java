@@ -27,13 +27,14 @@ public class PictureSearchTool {
     private static final String TAG = "pictureSearchTool";
     private ArrayList<SearchFolderBean> fileList = new ArrayList<>();
     //    private String extension[] = new String[]{".png", ".jpg", ".jpeg", ".PNG", ".JPEG", ".JPG"};
-    private String extension[] = new String[]{".png", ".jpg"};
+    private String extension[] = new String[]{".jpg", ".png"};
     private boolean running;
     private int deep = 3;
     private ArrayList<String> mSearchPaths;
     private ArrayList<String> mIgnorePaths;
     private static final PictureSearchTool PICTURE_SEARCH_TOOL = new PictureSearchTool();
     private OnSearchListener onSearchListener;
+    private boolean containsGif;
 
 
     private PictureSearchTool() {
@@ -306,7 +307,7 @@ public class PictureSearchTool {
                     String childPath = file.getAbsolutePath();
                     for (String anExtension : extension) {
                         if (childPath.endsWith(anExtension)) {
-                            imgBeans.add(new SearchImgBean(childPath, imgBeans.size()));
+                            imgBeans.add(new SearchImgBean(childPath));
                         }
                     }
                 }
@@ -348,6 +349,18 @@ public class PictureSearchTool {
             }
         });
 
+    }
+
+    public PictureSearchTool setContainsGif(boolean containsGif) {
+        this.containsGif = containsGif;
+        if (containsGif) {
+            extension = new String[]{".jpg", ".png", ".gif"};
+        }
+        return this;
+    }
+
+    public boolean getContainsGif() {
+        return containsGif;
     }
 
 

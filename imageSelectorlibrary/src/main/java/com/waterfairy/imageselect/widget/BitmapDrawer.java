@@ -36,6 +36,7 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
     private RectF lineRect;//剪切线rect
     private RectF oriRect;
     private boolean canTouchArriveEdge = true;
+    private boolean enable = true;
 
 
     public BitmapDrawer(ImageView imageView) {
@@ -43,7 +44,7 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
         gestureDetector = new GestureDetector(imageView.getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                if (onDrawerChangeListener!=null)onDrawerChangeListener.onDoubleClickListener();
+                if (onDrawerChangeListener != null) onDrawerChangeListener.onDoubleClickListener();
                 float scale = getScale();
                 initSmaller(scale);
                 if (scale < BIGGER / 4F - 0.1F) {
@@ -120,7 +121,8 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
     private OnDrawerChangeListener onDrawerChangeListener;
 
     public boolean isCanMove(MotionEvent event) {
-        //双击事件进行关联
+        if (!enable) return false;
+        //双击事件进行关联   /  单击
         if (gestureDetector.onTouchEvent(event)) {
             //如果是双击的话就直接不向下执行了
             return true;
@@ -263,14 +265,6 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
     }
 
     /**
-     * 贴着 剪切线的边缘
-     */
-    private void checkBorderAndAlignLine() {
-        RectF matrixRectF = getMatrixRectF();
-
-    }
-
-    /**
      * 在缩放时，进行图片显示范围的控制
      */
     private void checkBorderAndCenterWhenScale() {
@@ -394,6 +388,14 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
 
     public boolean getCanTouchArriveEdge() {
         return canTouchArriveEdge;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    public boolean getEnable() {
+        return enable;
     }
 
     public interface OnDrawerChangeListener {
