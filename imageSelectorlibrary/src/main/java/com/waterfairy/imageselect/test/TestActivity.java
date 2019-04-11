@@ -105,7 +105,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setGridNum(4).setMaxNum(9).setSearchDeep(6).setLoadCache(false).addSearchPaths(ignore).setModelType(ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR).setTag("jj"))
+                .options(new SelectImgOptions().setGridNum(4).setMaxNum(9).setSearchDeep(6).setLoadCache(false).addSearchPaths(ignore).setModelType(ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR).setTag("true"))
                 .compress(getCompressOptions())
                 .execute();
     }
