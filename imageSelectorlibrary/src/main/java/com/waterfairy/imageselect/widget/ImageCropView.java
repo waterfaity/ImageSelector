@@ -3,8 +3,6 @@ package com.waterfairy.imageselect.widget;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -24,7 +22,7 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
     private static final String TAG = "imageCropView";
     private LineDrawer mLineDrawer;//框
     private BitmapDrawer mBitmapDrawer;//图片
-    private Paint mPaint;//画笔
+    //    private Paint mPaint;//画笔
     private boolean isImgMove;//图片是否移动中
     private CropImgOptions cropImgOptions;
     private OnLongClickListener onLongClickListener;
@@ -38,18 +36,18 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
 
     public ImageCropView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        test();
+//        test();
         mLineDrawer = new LineDrawer(context.getResources().getDisplayMetrics().density);
         mLineDrawer.setOnLineChangeListener(this);
         mBitmapDrawer = new BitmapDrawer(this);
         mBitmapDrawer.setOnDrawerChangeListener(this);
     }
 
-    private void test() {
-        mPaint = new Paint();
-        mPaint.setTextSize(30);
-        mPaint.setColor(Color.RED);
-    }
+//    private void test() {
+//        mPaint = new Paint();
+//        mPaint.setTextSize(30);
+//        mPaint.setColor(Color.RED);
+//    }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -82,7 +80,7 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mLineDrawer.draw(canvas);
-        canvas.drawText(mLineDrawer.toString(), 10, 25, mPaint);
+//        canvas.drawText(mLineDrawer.toString(), 10, 25, mPaint);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class SearchImgBean {
 
     public SearchImgBean(String path) {
         this.path = path;
-     }
+    }
 
     public String getPath() {
         return path;

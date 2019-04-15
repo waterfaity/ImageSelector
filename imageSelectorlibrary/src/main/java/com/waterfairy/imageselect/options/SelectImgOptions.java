@@ -32,8 +32,9 @@ public class SelectImgOptions extends AOptions implements Serializable {
         return containsGif;
     }
 
-    public void setContainsGif(boolean containsGif) {
+    public SelectImgOptions setContainsGif(boolean containsGif) {
         this.containsGif = containsGif;
+        return this;
     }
 
     public SelectImgOptions() {

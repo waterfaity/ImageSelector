@@ -13,7 +13,6 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected CompressOptions compressOptions;
