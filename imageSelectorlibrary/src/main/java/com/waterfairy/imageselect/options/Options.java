@@ -15,8 +15,12 @@ public interface Options extends Serializable {
 
     int getRequestCode();
 
+    int getScreenOrientation();
+
     String getTag();
 
     Options setTag(String tag);
+
+    Options setScreenOrientation(int screenOrientation);
 
 }

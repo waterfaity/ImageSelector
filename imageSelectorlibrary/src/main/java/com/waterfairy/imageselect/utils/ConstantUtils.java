@@ -39,7 +39,7 @@ public class ConstantUtils {
     public static final int REQUEST_CROP = 18124;//裁剪
 
     //DEFAULT_SELECT_IMG_TYPE
-    public static final int SELECT_IMG_MODULE_TYPE_CURSOR = 1;
+    public static final int SELECT_IMG_MODULE_TYPE_CURSOR = 1;//调用内容提供者获取图片
 
     public static final int TYPE_SELECT = 1;
     public static final int TYPE_SHOW = 2;
@@ -48,4 +48,9 @@ public class ConstantUtils {
     public static final String OPTIONS_BEAN = "options_bean";
     public static final String OPTIONS_TAG = "options_tag";
     public static final String OPTIONS_COMPRESS_BEAN = "options_compress_bean";
+
+    public static final String SCREEN_ORIENTATION = "screen_orientation";
+    public static final int ORIENTATION_PORT = 1;
+    public static final int ORIENTATION_LAND = 2;
+
 }

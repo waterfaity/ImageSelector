@@ -98,6 +98,12 @@ public class CropImgOptions extends AOptions {
         return this;
     }
 
+    @Override
+    public CropImgOptions setScreenOrientation(int screenOrientation) {
+        super.screenOrientation = screenOrientation;
+        return this;
+    }
+
 
     public String getImgPath() {
         return imgPath;

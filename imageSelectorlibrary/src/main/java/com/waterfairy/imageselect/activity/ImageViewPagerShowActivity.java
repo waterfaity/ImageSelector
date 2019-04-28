@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,7 +31,7 @@ import java.io.File;
 //import com.github.chrisbanes.photoview.PhotoView;
 
 
-public class ImageViewPagerShowActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, ViewPageShowAdapter.OnViewClickListener {
+public class ImageViewPagerShowActivity extends RootActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, ViewPageShowAdapter.OnViewClickListener {
     private ViewPager mVPShowImg;
     private TextView mTVTitle;
     private int mCurrentPos;

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.waterfairy.imageselect.options.CompressOptions;
@@ -14,7 +13,7 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
 import java.io.File;
 import java.util.ArrayList;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RootActivity {
     protected CompressOptions compressOptions;
     private AlertDialog alertDialog;
 

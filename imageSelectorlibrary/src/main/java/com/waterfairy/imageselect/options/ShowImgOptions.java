@@ -114,4 +114,11 @@ public class ShowImgOptions extends AOptions {
     public int getRequestCode() {
         return ConstantUtils.REQUEST_SHOW;
     }
+
+    @Override
+    public ShowImgOptions setScreenOrientation(int screenOrientation) {
+        super.screenOrientation = screenOrientation;
+        return this;
+    }
+
 }

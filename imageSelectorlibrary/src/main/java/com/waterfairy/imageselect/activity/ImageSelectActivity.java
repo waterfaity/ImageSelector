@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -124,7 +126,12 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
         mGVShowImage.setNumColumns(options.getGridNum(this));
         mGVShowImage.setHorizontalSpacing(dividerWidth);
         mGVShowImage.setVerticalSpacing(dividerWidth);
-        imgWidth = (getResources().getDisplayMetrics().widthPixels - (options.getGridNum(this) - 1) * dividerWidth) / options.getGridNum(this);
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels);
+        int height = Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels);
+
+        int screenWidth = getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ? width : height;
+        imgWidth = (screenWidth - (options.getGridNum(this) - 1) * dividerWidth) / options.getGridNum(this);
         mLLFolderSelect.setOnClickListener(this);
         mTVPriView.setOnClickListener(this);
         mIVBack.setOnClickListener(this);
@@ -361,6 +368,7 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
     public void onClickImg(View view, String imgPath) {
         Intent intent = new Intent(this, ImageShowActivity.class);
         intent.putExtra(ConstantUtils.STR_PATH, imgPath);
+        intent.putExtra(ConstantUtils.SCREEN_ORIENTATION, getIntent().getIntExtra(ConstantUtils.SCREEN_ORIENTATION, ConstantUtils.ORIENTATION_PORT));
         Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, imgPath).toBundle();
         ActivityCompat.startActivity(this, intent, bundle);
     }

@@ -10,7 +10,8 @@
         android:supportsRtl="true">
         <activity
             android:name=".test.TestActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>

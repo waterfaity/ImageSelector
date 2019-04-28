@@ -26,6 +26,12 @@ public class TakePhotoOptions extends AOptions {
         return this;
     }
 
+    @Override
+    public TakePhotoOptions setScreenOrientation(int screenOrientation) {
+        super.screenOrientation = screenOrientation;
+        return this;
+    }
+
 
     @Override
     public int getOptionsType() {

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ import java.util.List;
 //import com.github.chrisbanes.photoview.PhotoView;
 
 
-public class ImageViewPagerPreviewActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class ImageViewPagerPreviewActivity extends RootActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private ArrayList<String> dataList;
     private ArrayList<String> tempDataList;
     private List<ImageView> photoViews;
