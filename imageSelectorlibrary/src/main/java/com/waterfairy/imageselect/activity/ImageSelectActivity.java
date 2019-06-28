@@ -454,6 +454,9 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
     @Override
     public void onDestroy() {
         super.onDestroy();
+        handler.removeMessages(0);
+        handler = null;
+        mPresenter.onDestroy();
         isDestroy = true;
         dismissDialog();
         ImageSelectorShareTool.getInstance().onDestroy();

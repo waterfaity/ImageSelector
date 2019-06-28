@@ -26,13 +26,11 @@ import java.util.List;
 
 
 public class PictureSearchTool2 {
-    private static final String TAG = "pictureSearchTool";
     private ArrayList<SearchFolderBean> fileList = new ArrayList<>();
     //    private String extension[] = new String[]{".png", ".jpg", ".jpeg", ".PNG", ".JPEG", ".JPG"};
     private String extension[] = new String[]{".jpg", ".png", "gif"};
     private boolean running;
     private ArrayList<String> mIgnorePaths;
-    private static PictureSearchTool2 PICTURE_SEARCH_TOOL;
     private OnSearchListener onSearchListener;
     private Context context;
     private final String[] projection = new String[]{
@@ -45,8 +43,7 @@ public class PictureSearchTool2 {
     }
 
     public static PictureSearchTool2 newInstance(Context context) {
-        if (PICTURE_SEARCH_TOOL == null) PICTURE_SEARCH_TOOL = new PictureSearchTool2(context);
-        return PICTURE_SEARCH_TOOL;
+        return new PictureSearchTool2(context);
     }
 
 
@@ -88,45 +85,48 @@ public class PictureSearchTool2 {
                     select = "(" + select.substring(0, select.length() - 4) + ")";
                 }
                 //媒体cursor
-                Cursor cursor = context.getApplicationContext().getContentResolver()
-                        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                projection, select, null,
-                                MediaStore.Images.Media.DATE_MODIFIED);
-                //添加路径
-                ArrayList<String> tempImageParentPathList = new ArrayList<>();
-                ArrayList<SearchImgBean> allImageList = new ArrayList<>();
-                if (cursor.moveToLast()) {
-                    do {
-                        String image = cursor.getString(cursor.getColumnIndex(projection[0]));
-                        if (!TextUtils.isEmpty(image)) {
-                            File file = new File(image);
-                            String parentPath = file.getParent();
-                            if (new File(image).exists()) {
-                                //文件存在
-                                if (!tempImageParentPathList.contains(parentPath)) {
-                                    publishProgress(parentPath);
+                if (context != null) {
+                    Cursor cursor = context.getApplicationContext().getContentResolver()
+                            .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                    projection, select, null,
+                                    MediaStore.Images.Media.DATE_MODIFIED);
+                    //添加路径
+                    ArrayList<String> tempImageParentPathList = new ArrayList<>();
+                    ArrayList<SearchImgBean> allImageList = new ArrayList<>();
+                    if (cursor.moveToLast()) {
+                        do {
+                            String image = cursor.getString(cursor.getColumnIndex(projection[0]));
+                            if (!TextUtils.isEmpty(image)) {
+                                File file = new File(image);
+                                String parentPath = file.getParent();
+                                if (new File(image).exists()) {
+                                    //文件存在
+                                    if (!tempImageParentPathList.contains(parentPath)) {
+                                        publishProgress(parentPath);
+                                        //文件合并
+                                        //文件件已经添加
+                                        tempImageParentPathList.add(file.getParent());
+                                        SearchFolderBean searchFolderBean = new SearchFolderBean(parentPath, file.getAbsolutePath());
+                                        fileList.add(searchFolderBean);
+                                    }
                                     //文件合并
-                                    //文件件已经添加
-                                    tempImageParentPathList.add(file.getParent());
-                                    SearchFolderBean searchFolderBean = new SearchFolderBean(parentPath, file.getAbsolutePath());
-                                    fileList.add(searchFolderBean);
+                                    allImageList.add(new SearchImgBean(image));
                                 }
-                                //文件合并
-                                allImageList.add(new SearchImgBean(image));
                             }
-                        }
-                    } while (cursor.moveToPrevious());
+                        } while (cursor.moveToPrevious());
 
-                }
-                //合并为全部图片
-                SearchFolderBean searchImgBeanAll = new SearchFolderBean();
-                searchImgBeanAll.setIsAll(true);
-                searchImgBeanAll.addChildImageBeans(allImageList);
-                if (allImageList.size() != 0) {
-                    searchImgBeanAll.setFirstImgPath(allImageList.get(0).getPath());
+                    }
+                    //合并为全部图片
+                    SearchFolderBean searchImgBeanAll = new SearchFolderBean();
+                    searchImgBeanAll.setIsAll(true);
+                    searchImgBeanAll.addChildImageBeans(allImageList);
+                    if (allImageList.size() != 0) {
+                        searchImgBeanAll.setFirstImgPath(allImageList.get(0).getPath());
+                    }
+
+                    fileList.add(0, searchImgBeanAll);
                 }
 
-                fileList.add(0, searchImgBeanAll);
                 return fileList;
             }
 
@@ -269,6 +269,11 @@ public class PictureSearchTool2 {
 
     public boolean getContainsGif() {
         return containsGif;
+    }
+
+    public void release() {
+        onSearchListener = null;
+        context = null;
     }
 
 

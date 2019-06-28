@@ -24,7 +24,6 @@ import java.util.List;
 
 
 public class PictureSearchTool {
-    private static final String TAG = "pictureSearchTool";
     private ArrayList<SearchFolderBean> fileList = new ArrayList<>();
     //    private String extension[] = new String[]{".png", ".jpg", ".jpeg", ".PNG", ".JPEG", ".JPG"};
     private String extension[] = new String[]{".jpg", ".png"};
@@ -32,7 +31,6 @@ public class PictureSearchTool {
     private int deep = 3;
     private ArrayList<String> mSearchPaths;
     private ArrayList<String> mIgnorePaths;
-    private static final PictureSearchTool PICTURE_SEARCH_TOOL = new PictureSearchTool();
     private OnSearchListener onSearchListener;
     private boolean containsGif;
 
@@ -41,8 +39,8 @@ public class PictureSearchTool {
 
     }
 
-    public static PictureSearchTool getInstance() {
-        return PICTURE_SEARCH_TOOL;
+    public static PictureSearchTool newInstance() {
+        return new PictureSearchTool();
     }
 
     //设置搜索深度
@@ -129,7 +127,7 @@ public class PictureSearchTool {
                     searchImgBean.setIsAll(true);
                     for (int i = 0; i < fileList.size(); i++) {
                         SearchFolderBean searchFolderBean = fileList.get(i);
-                        List<SearchImgBean> searchImgBeans = PictureSearchTool.getInstance().searchFolder(searchFolderBean);
+                        List<SearchImgBean> searchImgBeans = PictureSearchTool.newInstance().searchFolder(searchFolderBean);
                         searchImgBean.addChildImageBeans(searchImgBeans);
                     }
                     fileList.add(0, searchImgBean);
@@ -361,6 +359,10 @@ public class PictureSearchTool {
 
     public boolean getContainsGif() {
         return containsGif;
+    }
+
+    public void release() {
+        onSearchListener = null;
     }
 
 

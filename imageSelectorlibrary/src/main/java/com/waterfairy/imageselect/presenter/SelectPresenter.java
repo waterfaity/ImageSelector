@@ -86,4 +86,8 @@ public class SelectPresenter implements SelectPresenterListener {
     public void stopSearch() {
         mModel.stopSearch();
     }
+
+    public void onDestroy() {
+        if (mModel != null) mModel.onDestroy();
+    }
 }

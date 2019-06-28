@@ -10,11 +10,11 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  */
 public abstract class AOptions implements Options {
     protected String tag;
-    protected int screenOrientation;
+    protected int screenOrientation    ;
 
     @Override
     public int getScreenOrientation() {
-        if (screenOrientation == 0) return ConstantUtils.ORIENTATION_PORT;
+//        if (screenOrientation == 0) return ConstantUtils.ORIENTATION_PORT;
         return screenOrientation;
     }
 

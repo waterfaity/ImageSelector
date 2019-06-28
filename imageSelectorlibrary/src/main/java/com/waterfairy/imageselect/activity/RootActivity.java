@@ -26,7 +26,7 @@ public class RootActivity extends AppCompatActivity {
         int intExtra = getIntent().getIntExtra(ConstantUtils.SCREEN_ORIENTATION, ConstantUtils.ORIENTATION_PORT);
         if (intExtra == ConstantUtils.ORIENTATION_LAND) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
+        } else if (intExtra == ConstantUtils.ORIENTATION_PORT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }

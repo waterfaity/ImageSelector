@@ -29,7 +29,7 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
 
     public SelectModel(SelectPresenterListener listener) {
         this.mPresenter = listener;
-        mPictureSearchTool = PictureSearchTool.getInstance();
+        mPictureSearchTool = PictureSearchTool.newInstance();
         mPictureSearchTool.setOnSearchListener(this);
         mShareTool = ImageSelectorShareTool.getInstance();
     }
@@ -59,7 +59,8 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
         if (options.isLoadCache()) {
             ArrayList<SearchFolderBean> folders = mShareTool.getFolders();
             if (folders != null && folders.size() > 0) {
-                mPresenter.onGetFoldersSuccess(folders);
+                if (mPresenter != null)
+                    mPresenter.onGetFoldersSuccess(folders);
                 return;
             }
         }
@@ -72,7 +73,8 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
 
     @Override
     public void onSearch(String path) {
-        mPresenter.onSearching(path);
+        if (mPresenter != null)
+            mPresenter.onSearching(path);
     }
 
     @Override
@@ -80,7 +82,8 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
         //保存搜索路径
         mShareTool.saveFolder(fileList);
         //搜搜成功
-        mPresenter.onGetFoldersSuccess(fileList);
+        if (mPresenter != null)
+            mPresenter.onGetFoldersSuccess(fileList);
     }
 
     @Override
@@ -90,7 +93,8 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
     public void queryImgS(SearchFolderBean folderBean) {
         List<SearchImgBean> searchImgBeans =
                 mPictureSearchTool != null ? mPictureSearchTool.searchFolder(folderBean) : (mPictureSearchTool2 != null ? mPictureSearchTool2.searchFolder(folderBean) : null);
-        mPresenter.onGetImgSuccess(searchImgBeans);
+        if (mPresenter != null)
+            mPresenter.onGetImgSuccess(searchImgBeans);
     }
 
     public void stopSearch() {
@@ -98,6 +102,13 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
             mPictureSearchTool.stop();
         if (mPictureSearchTool2 != null)
             mPictureSearchTool2.stop();
+    }
+
+    public void onDestroy() {
+        if (mPictureSearchTool != null)
+            mPictureSearchTool.release();
+        if (mPictureSearchTool2 != null)
+            mPictureSearchTool2.release();
     }
 
 }
