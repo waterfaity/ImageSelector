@@ -28,7 +28,7 @@ import java.util.List;
 public class PictureSearchTool2 {
     private ArrayList<SearchFolderBean> fileList = new ArrayList<>();
     //    private String extension[] = new String[]{".png", ".jpg", ".jpeg", ".PNG", ".JPEG", ".JPG"};
-    private String extension[] = new String[]{".jpg", ".png", "gif"};
+    private String extension[] = new String[]{".jpg", ".png"};
     private boolean running;
     private ArrayList<String> mIgnorePaths;
     private OnSearchListener onSearchListener;
