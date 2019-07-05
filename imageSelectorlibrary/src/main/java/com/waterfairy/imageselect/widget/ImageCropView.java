@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.waterfairy.imageselect.async.CropBitmapAsync;
 import com.waterfairy.imageselect.listener.OnCropBitmapListener;
@@ -27,7 +28,7 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
     private CropImgOptions cropImgOptions;
     private OnLongClickListener onLongClickListener;
     private OnClickListener onClickListener;
-    private ZoomImageView.OnDoubleClickListener onDoubleClickListener;
+    private OnDoubleClickListener onDoubleClickListener;
 
 
     public ImageCropView(Context context) {
@@ -155,7 +156,11 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
         if (onDoubleClickListener != null) onDoubleClickListener.onDoubleClick(this);
     }
 
-    public void setOnDoubleClickListener(ZoomImageView.OnDoubleClickListener onDoubleClickListener) {
+    public interface OnDoubleClickListener {
+        void onDoubleClick(View view);
+    }
+
+    public void setOnDoubleClickListener(OnDoubleClickListener onDoubleClickListener) {
         this.onDoubleClickListener = onDoubleClickListener;
     }
 

@@ -162,6 +162,10 @@ public class CompressTool {
         if (object instanceof Bitmap) {
             Bitmap bitmap = (Bitmap) object;
             success = ImageUtils.saveBitmap(targetPath, bitmap, targetPath.endsWith(".png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG, 85);
+            if (bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+                bitmap = null;
+            }
         } else if (object instanceof ByteArrayInputStream) {
             ByteArrayInputStream byteArrayInputStream = (ByteArrayInputStream) object;
             success = ImageUtils.saveBitmap(targetPath, byteArrayInputStream);

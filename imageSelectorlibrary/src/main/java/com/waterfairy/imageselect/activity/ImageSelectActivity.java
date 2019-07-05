@@ -183,6 +183,11 @@ public class ImageSelectActivity extends BaseActivity implements SelectView,
             mTVDialog.setText(path);
     }
 
+    /**
+     * 展示图片
+     *
+     * @param searchImgBeans
+     */
     @Override
     public void showImgS(List<SearchImgBean> searchImgBeans) {
         if (imgAdapter == null) {

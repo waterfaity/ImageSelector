@@ -24,6 +24,7 @@ import com.waterfairy.imageselect.R;
 import com.waterfairy.imageselect.utils.AnimUtils;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.PathUtils;
+import com.waterfairy.imageselect.widget.ZoomImageView;
 
 import java.io.File;
 
@@ -33,7 +34,7 @@ import java.io.File;
 
 public class ImageShowActivity extends RootActivity {
     private boolean isVisibility = true;
-    private ImageView photoView;
+    private ZoomImageView photoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class ImageShowActivity extends RootActivity {
             postponeEnterTransition();
         }
         photoView = findViewById(R.id.image);
+        photoView.setCanZoom(false);
         Intent intent = getIntent();
         //url
         String url = intent.getStringExtra(ConstantUtils.STR_URL);
@@ -80,18 +82,7 @@ public class ImageShowActivity extends RootActivity {
                 isVisibility = !isVisibility;
             }
         });
-        scheduleStartPostponedTransition(photoView);
-//        photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
-//            @Override
-//            public void onPhotoTap(ImageView view, float x, float y) {
-//                if (isVisibility) {
-//                    topView.startAnimation(AnimUtils.getInAnim(true, false));
-//                } else {
-//                    topView.startAnimation(AnimUtils.getInAnim(true, true));
-//                }
-//                isVisibility = !isVisibility;
-//            }
-//        });
+//        scheduleStartPostponedTransition(photoView);
     }
 
     private RequestListener<Drawable> requestListener = new RequestListener<Drawable>() {

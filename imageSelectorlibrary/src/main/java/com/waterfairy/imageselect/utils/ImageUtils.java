@@ -355,13 +355,13 @@ public class ImageUtils {
     /**
      * 质量压缩方法
      *
-     * @param image
+     * @param bitmap
      * @param maxSize KB
      * @return
      */
-    public static ByteArrayInputStream compressQualityOutIS(Bitmap image, int maxSize) {
+    public static ByteArrayInputStream compressQualityOutIS(Bitmap bitmap, int maxSize) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 86, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 86, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         Log.i(TAG, "compress quality: " + 86 + ";size: " + baos.toByteArray().length);
 
         if (maxSize > 0) {
@@ -371,11 +371,11 @@ public class ImageUtils {
                 options -= 8;// 每次都减少5
                 Log.i(TAG, "compress quality: " + options + ";size: " + length);
                 baos.reset(); // 重置baos即清空baos
-                image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+                bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
             }
         }
-        image.recycle();
-        image = null;
+        bitmap.recycle();
+        bitmap = null;
         return new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
     }
 
