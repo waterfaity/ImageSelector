@@ -21,9 +21,12 @@ import com.waterfairy.imageselect.options.CropImgOptions;
 import com.waterfairy.imageselect.options.SelectImgOptions;
 import com.waterfairy.imageselect.options.ShowImgOptions;
 import com.waterfairy.imageselect.options.TakePhotoOptions;
+import com.waterfairy.imageselect.tool.BinaryTool;
 import com.waterfairy.imageselect.utils.ConstantUtils;
 import com.waterfairy.imageselect.utils.PictureSearchTool2;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,7 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         findViewById(R.id.show).setOnClickListener(this);
         findViewById(R.id.crop2).setOnClickListener(this);
         findViewById(R.id.query).setOnClickListener(this);
+        findViewById(R.id.toBinary).setOnClickListener(this);
 
         pathName = getIntent().getStringExtra("pathName");
         hasTransAnim = getIntent().getBooleanExtra("hasTransAnim", true);
@@ -105,8 +109,8 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setModelType(ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR).setGridNum(4).setMaxNum(9).setSearchDeep(4).setLoadCache(false).addSearchPaths(ignore).setTag("true"))
-                .compress(getCompressOptions())
+                .options(new SelectImgOptions().setContainsGif(true).setModelType(0).setGridNum(4).setMaxNum(9).setSearchDeep(5).setLoadCache(false).addSearchPaths(ignore).setTag("true"))
+//                .compress(getCompressOptions())
                 .execute();
     }
 
@@ -151,6 +155,31 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
             ArrayList<String> ignoreList = new ArrayList<>();
 //            ignoreList.add(new File("/storage/emulated/0/DCIM/Camera").getAbsolutePath());
             PictureSearchTool2.newInstance(this).setPaths(ignoreList).start();
+        } else if (v.getId() == R.id.toBinary) {
+            if (resultDatas != null && resultDatas.size() > 0) {
+
+                try {
+                    List<Byte> binaryList = new BinaryTool().getBinaryList(new File(resultDatas.get(0)));
+                    String aa = "";
+                    String bb = "";
+                    String cc = "";
+                    for (int i = 0; i < 100; i++) {
+                        byte hight = binaryList.get(i);
+                        String s = new Byte(hight).toString();
+                        Character aChar = (char) hight;
+                        Integer aInt = (int) hight;
+
+                        aa += s + " ";
+                        bb += aChar + " ";
+                        cc += aInt + " ";
+
+
+                    }
+                    Log.i(TAG, "onClick: " + aa + "\n" + bb + " \n " + cc);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
     }
