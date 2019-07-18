@@ -393,9 +393,9 @@ public class ImageUtils {
     }
 
 
-    public static void saveBitmap(Bitmap cropBitmap, Bitmap.CompressFormat format, File savePath) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(savePath);
-        cropBitmap.compress(format, 100, fileOutputStream);
-        fileOutputStream.close();
-    }
+//    public static void saveBitmap(Bitmap cropBitmap, Bitmap.CompressFormat format, File savePath) throws IOException {
+//        FileOutputStream fileOutputStream = new FileOutputStream(savePath);
+//        cropBitmap.compress(format, 100, fileOutputStream);
+//        fileOutputStream.close();
+//    }
 }
