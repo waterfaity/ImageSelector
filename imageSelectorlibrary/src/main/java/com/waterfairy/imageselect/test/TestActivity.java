@@ -108,9 +108,11 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
     public void selectImg(View view) {
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
+        ignore.add(ConstantUtils.PATH_QQ_RECV);
+        ignore.add(ConstantUtils.PATH_QQ_IMAGES);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setContainsGif(true).setModelType(0).setGridNum(4).setMaxNum(9).setSearchDeep(5).setLoadCache(false).addSearchPaths(ignore).setTag("true"))
-//                .compress(getCompressOptions())
+                .options(new SelectImgOptions().setContainsGif(false).setModelType(ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR).setGridNum(3).setMaxNum(9).setSearchDeep(4).setLoadCache(false).addSearchPaths(ignore).setTag("true"))
+                .compress(getCompressOptions())
                 .execute();
     }
 
@@ -145,7 +147,6 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
             if (resultDatas == null) return;
 //            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).execute();
             ImageSelector.with(this).options(new ShowImgOptions().setClickToDismiss(true).setCurrentPos(0).addImgList(resultDatas).setHasTranslateAnim(hasTransAnim)).showImg(findViewById(R.id.zoom_img), resultDatas.get(0));
-
         } else if (v.getId() == R.id.zoom_img) {
             Log.i(TAG, "onClick: zoom_img");
         } else if (v.getId() == R.id.show_one) {
@@ -156,32 +157,40 @@ public class TestActivity extends AppCompatActivity implements AdapterView.OnIte
 //            ignoreList.add(new File("/storage/emulated/0/DCIM/Camera").getAbsolutePath());
             PictureSearchTool2.newInstance(this).setPaths(ignoreList).start();
         } else if (v.getId() == R.id.toBinary) {
+            BinaryTool binaryTool = new BinaryTool();
             if (resultDatas != null && resultDatas.size() > 0) {
 
                 try {
-                    List<Byte> binaryList = new BinaryTool().getBinaryList(new File(resultDatas.get(0)));
+                    List[] binaryList = binaryTool.getBinaryList(new File(resultDatas.get(0)));
                     String aa = "";
                     String bb = "";
                     String cc = "";
-                    for (int i = 0; i < 100; i++) {
-                        byte hight = binaryList.get(i);
+
+                    List<Byte> byteList = binaryList[0];
+                    List<String> hexList = binaryList[1];
+
+
+                    for (int i = 0; i < 20; i++) {
+
+
+                        byte hight = byteList.get(i);
                         String s = new Byte(hight).toString();
                         Character aChar = (char) hight;
                         Integer aInt = (int) hight;
 
                         aa += s + " ";
                         bb += aChar + " ";
-                        cc += aInt + " ";
-
+                        cc += hexList.get(i).toUpperCase() + " ";
 
                     }
-                    Log.i(TAG, "onClick: " + aa + "\n" + bb + " \n " + cc);
+                    Log.i(TAG, "onClick: aa:" + aa);
+                    Log.i(TAG, "onClick: bb:" + bb);
+                    Log.i(TAG, "onClick: cc:" + cc);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-
     }
 
     @Override

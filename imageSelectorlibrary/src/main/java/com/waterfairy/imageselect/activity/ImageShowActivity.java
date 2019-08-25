@@ -34,7 +34,7 @@ import java.io.File;
 
 public class ImageShowActivity extends RootActivity {
     private boolean isVisibility = true;
-    private ZoomImageView photoView;
+    private ZoomImageView zoomImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,8 @@ public class ImageShowActivity extends RootActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
-        photoView = findViewById(R.id.image);
-        photoView.setCanZoom(false);
+        zoomImageView = findViewById(R.id.image);
+        zoomImageView.setCanZoom(false);
         Intent intent = getIntent();
         //url
         String url = intent.getStringExtra(ConstantUtils.STR_URL);
@@ -58,20 +58,20 @@ public class ImageShowActivity extends RootActivity {
         if (!TextUtils.isEmpty(url)) {
             tVTitle.setText(TextUtils.isEmpty(title) ? PathUtils.getNameFromUrl(url) : title);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                photoView.setTransitionName(url);
+                zoomImageView.setTransitionName(url);
             }
             Glide.with(this).load(url).
-                    transition(drawableTransitionOptions).listener(requestListener).into(photoView);
+                    transition(drawableTransitionOptions).listener(requestListener).into(zoomImageView);
         } else if (!TextUtils.isEmpty(path)) {
             tVTitle.setText(TextUtils.isEmpty(title) ? new File(path).getName() : title);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                photoView.setTransitionName(path);
+                zoomImageView.setTransitionName(path);
             }
             Glide.with(this).load(new File(path)).
-                    transition(drawableTransitionOptions).listener(requestListener).into(photoView);
+                    transition(drawableTransitionOptions).listener(requestListener).into(zoomImageView);
         }
         final View topView = findViewById(R.id.rel_top);
-        photoView.setOnClickListener(new View.OnClickListener() {
+        zoomImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isVisibility) {
@@ -82,7 +82,7 @@ public class ImageShowActivity extends RootActivity {
                 isVisibility = !isVisibility;
             }
         });
-//        scheduleStartPostponedTransition(photoView);
+//        scheduleStartPostponedTransition(zoomImageView);
     }
 
     private RequestListener<Drawable> requestListener = new RequestListener<Drawable>() {
@@ -108,7 +108,7 @@ public class ImageShowActivity extends RootActivity {
                 int measuredWidth = rootView.getMeasuredWidth();
 
                 if (imgWidth != 0 && imgHeight != 0 && measuredHeight != 0 && measuredWidth != 0) {
-                    ViewGroup.LayoutParams layoutParams = photoView.getLayoutParams();
+                    ViewGroup.LayoutParams layoutParams = zoomImageView.getLayoutParams();
                     if (imgWidth / (float) (imgHeight) > measuredWidth / (float) measuredHeight) {
                         //图片宽`
                         //水平为标准
@@ -119,8 +119,8 @@ public class ImageShowActivity extends RootActivity {
                         layoutParams.height = measuredHeight;
                         layoutParams.width = (int) (measuredHeight * (imgWidth / (float) imgHeight));
                     }
-                    photoView.setLayoutParams(layoutParams);
-                    photoView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    zoomImageView.setLayoutParams(layoutParams);
+                    zoomImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
 
                 startPostponedEnterTransition();

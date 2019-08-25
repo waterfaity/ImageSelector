@@ -238,8 +238,10 @@ public class PictureSearchTool {
                 //遍历该文件夹下的所有文件及文件夹
                 for (File childFile : list) {
                     if (childFile.isDirectory()) {
-                        //是文件夹->继续扫描下一级文件夹
-                        search(childFile, deep + 1, onSearchListener);
+                        if (childFile.getName().startsWith(".")) continue;
+                        else
+                            //是文件夹->继续扫描下一级文件夹
+                            search(childFile, deep + 1, onSearchListener);
                     } else if (!jump) {
                         //是文件 并且不跳过
                         String childAbsolutePath = childFile.getAbsolutePath();

@@ -12,16 +12,18 @@ public class BinaryTool {
     public BinaryTool() {
     }
 
-    public List<Byte> getBinaryList(File file) throws IOException {
+    public List[] getBinaryList(File file) throws IOException {
         InputStream inputStream = new FileInputStream(file);
         byte[] bytes = new byte[1024 * 1024];
-        List<Byte> arrayList = new ArrayList<>();
+        List<Byte> byteList = new ArrayList<>();
+        List<String> hexList = new ArrayList<>();
         while (inputStream.read(bytes) != -1) {
             for (byte aByte : bytes) {
-                arrayList.add(aByte);
+                byteList.add(aByte);
+                hexList.add(toHex(aByte));
             }
         }
-        return arrayList;
+        return new List[]{byteList, hexList};
     }
 
     /**
@@ -57,7 +59,32 @@ public class BinaryTool {
         //1000 0000  0000 0000
 
         return (char) ((heightByte << 8) | lowByte);
-     }
+    }
+
+    public String toHex(byte aByte) {
+        String hex = "";
+        if (aByte < 0) {
+            int v = (int) Math.pow(2, 8) + aByte;
+            hex = Integer.toHexString(v);
+        } else {
+            hex = Integer.toHexString(aByte);
+        }
+        if (hex.length() == 1) return "0" + hex;
+        return hex;
+    }
+
+    public String toHex2(byte aByte) {
+        String hex = "";
+        if (aByte < 0) {
+            int v = (int) Math.pow(2, 8) + aByte;
+            hex = Integer.toHexString(v);
+        } else {
+            hex = Integer.toHexString(aByte);
+        }
+        if (hex.length() == 1) return "0" + hex;
+        return hex;
+    }
+
 
 //    /**
 //     * 十六进制
