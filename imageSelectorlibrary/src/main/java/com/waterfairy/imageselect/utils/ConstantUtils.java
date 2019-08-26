@@ -53,4 +53,5 @@ public class ConstantUtils {
     public static final int ORIENTATION_PORT = 1;
     public static final int ORIENTATION_LAND = 2;
 
+    public static final String TRANSITION_RES = "transition_res";
 }

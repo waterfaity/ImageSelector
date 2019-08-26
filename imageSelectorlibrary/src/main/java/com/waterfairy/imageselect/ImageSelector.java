@@ -89,6 +89,7 @@ public class ImageSelector {
             }
             Intent intent = new Intent(activity, aClass);
             intent.putExtra(ConstantUtils.SCREEN_ORIENTATION, options.getScreenOrientation());
+            intent.putExtra(ConstantUtils.TRANSITION_RES, options.getTransitionAnimRes());
             intent.putExtra(ConstantUtils.OPTIONS_BEAN, options);
             intent.putExtra(ConstantUtils.OPTIONS_COMPRESS_BEAN, compressOptions);
             return intent;

@@ -30,7 +30,7 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
     private int mLastPointCount;
     private float[] matrixValues = new float[9];
 
-    private float BIGGER = 6;//最大缩放倍数
+    private float BIGGER = 4;//最大缩放倍数
     private float SMALLER;//默认是加载图片时的缩放大小
     private float currentSmallScale;
     private float currentScale;//当前缩放

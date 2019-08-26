@@ -122,4 +122,10 @@ public class CropImgOptions extends AOptions {
         this.cropType = cropType;
         return this;
     }
+
+    @Override
+    public CropImgOptions setTransitionAnimRes(int[] transitionAnimRes) {
+        this.transitionAnimRes = transitionAnimRes;
+        return this;
+    }
 }

@@ -228,5 +228,10 @@ public class SelectImgOptions extends AOptions implements Serializable {
         super.screenOrientation = screenOrientation;
         return this;
     }
+    @Override
+    public SelectImgOptions setTransitionAnimRes(int[] transitionAnimRes) {
+        this.transitionAnimRes = transitionAnimRes;
+        return this;
+    }
 
 }

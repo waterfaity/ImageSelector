@@ -21,6 +21,10 @@ public interface Options extends Serializable {
 
     Options setTag(String tag);
 
+    int[] getTransitionAnimRes();
+
+    Options setTransitionAnimRes(int[] res);
+
     Options setScreenOrientation(int screenOrientation);
 
 }

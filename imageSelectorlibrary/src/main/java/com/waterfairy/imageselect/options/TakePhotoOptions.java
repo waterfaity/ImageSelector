@@ -32,6 +32,11 @@ public class TakePhotoOptions extends AOptions {
         return this;
     }
 
+    @Override
+    public TakePhotoOptions setTransitionAnimRes(int[] res) {
+        this.transitionAnimRes = res;
+        return this;
+    }
 
     @Override
     public int getOptionsType() {

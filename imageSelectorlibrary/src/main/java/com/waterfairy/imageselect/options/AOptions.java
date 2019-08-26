@@ -9,8 +9,9 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  * @info:
  */
 public abstract class AOptions implements Options {
-    protected String tag;
-    protected int screenOrientation;
+    protected String tag;//tag
+    protected int screenOrientation;//屏幕方向
+    protected int[] transitionAnimRes;//进场动画/出场动画
 
     @Override
     public int getScreenOrientation() {
@@ -18,6 +19,10 @@ public abstract class AOptions implements Options {
         return screenOrientation;
     }
 
+    @Override
+    public int[] getTransitionAnimRes() {
+        return transitionAnimRes;
+    }
 
     @Override
     public String getTag() {

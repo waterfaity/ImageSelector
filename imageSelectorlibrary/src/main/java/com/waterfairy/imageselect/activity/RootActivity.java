@@ -15,10 +15,11 @@ import com.waterfairy.imageselect.utils.ConstantUtils;
  * @info:
  */
 public class RootActivity extends AppCompatActivity {
+    private int[] transitionAnimRes;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         initScreen();
     }
 
@@ -29,6 +30,7 @@ public class RootActivity extends AppCompatActivity {
         } else if (intExtra == ConstantUtils.ORIENTATION_PORT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+        transitionAnimRes = getIntent().getIntArrayExtra(ConstantUtils.TRANSITION_RES);
     }
 
     @Override
@@ -37,6 +39,9 @@ public class RootActivity extends AppCompatActivity {
             intent.putExtra(ConstantUtils.SCREEN_ORIENTATION, getIntent().getIntExtra(ConstantUtils.SCREEN_ORIENTATION, ConstantUtils.ORIENTATION_PORT));
         }
         super.startActivityForResult(intent, requestCode);
+        if (transitionAnimRes != null) {
+            overridePendingTransition(transitionAnimRes[0], transitionAnimRes[1]);
+        }
     }
 
     @Override
@@ -45,5 +50,16 @@ public class RootActivity extends AppCompatActivity {
             intent.putExtra(ConstantUtils.SCREEN_ORIENTATION, getIntent().getIntExtra(ConstantUtils.SCREEN_ORIENTATION, ConstantUtils.ORIENTATION_PORT));
         }
         super.startActivity(intent);
+        if (transitionAnimRes != null) {
+            overridePendingTransition(transitionAnimRes[0], transitionAnimRes[1]);
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        if (transitionAnimRes != null) {
+            overridePendingTransition(transitionAnimRes[2], transitionAnimRes[3]);
+        }
     }
 }

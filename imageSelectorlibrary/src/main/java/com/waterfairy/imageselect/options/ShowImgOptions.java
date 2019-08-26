@@ -121,4 +121,9 @@ public class ShowImgOptions extends AOptions {
         return this;
     }
 
+    @Override
+    public ShowImgOptions setTransitionAnimRes(int[] res) {
+        this.transitionAnimRes = res;
+        return this;
+    }
 }
