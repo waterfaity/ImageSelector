@@ -18,7 +18,7 @@ import android.widget.ImageView;
  * @date 2019/1/21 11:32
  * @info:
  */
-public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener {
+public class BitmapDrawer {
     private static final String TAG = "BitmapDrawer";
     private float lastX, lastY;
     private ImageView imageView;
@@ -34,19 +34,36 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
     private float SMALLER;//默认是加载图片时的缩放大小
     private float currentSmallScale;
     private float currentScale;//当前缩放
-    private RectF lineRect;//剪切线rect
+    //    private RectF lineRect;//剪切线rect
     private RectF oriRect;
-    private boolean canTouchArriveEdge = true;
-    private boolean enable = true;
+    private boolean canTouchArriveEdge = true;//移动到边界是否可以继续使用
+    private boolean enable = true;//是否可用 开关
     private GestureFlingTool gestureFlingTool;//自动滑动衰减
 
 
     public BitmapDrawer(ImageView imageView) {
         this.imageView = imageView;
-        gestureDetector = new GestureDetector(imageView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+        //手势
+        gestureDetector = new GestureDetector(imageView.getContext(), getGestureListener());
+        //缩放手势
+        scaleGestureDetector = new ScaleGestureDetector(imageView.getContext(), getScaleGestureListener());
+    }
+
+    /**
+     * 触摸监听
+     *
+     * @return
+     */
+    private GestureDetector.OnGestureListener getGestureListener() {
+        return new GestureDetector.SimpleOnGestureListener() {
+            /**
+             * 双击
+             * @param e
+             * @return
+             */
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                if (onDrawerChangeListener != null) onDrawerChangeListener.onDoubleClickListener();
+                if (onDrawerChangeListener != null) onDrawerChangeListener.onDoubleClick();
                 float scale = getScale();
                 initSmaller(scale);
                 if (scale < BIGGER / 4F - 0.1F) {
@@ -62,31 +79,47 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
                 return true;
             }
 
+            /**
+             * 长按
+             * @param e
+             */
             @Override
             public void onLongPress(MotionEvent e) {
                 super.onLongPress(e);
-                if (onDrawerChangeListener != null) onDrawerChangeListener.onLongClickListener();
+                if (onDrawerChangeListener != null) onDrawerChangeListener.onLongClick();
             }
 
+            /**
+             * 单点
+             * @param e
+             * @return
+             */
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                if (onDrawerChangeListener != null) onDrawerChangeListener.onClickListener();
-                return super.onSingleTapConfirmed(e);
+                if (onDrawerChangeListener != null) {
+                    onDrawerChangeListener.onClick();
+                }
+                return true;
             }
 
+            /**
+             * 脱离手指  飞滚
+             * @param e1
+             * @param e2
+             * @param velocityX
+             * @param velocityY
+             * @return
+             */
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 isFling = true;
-                Log.i(TAG, "onFling: " + velocityX + "," + velocityY + " -- " + e1.getX() + "," + e1.getY() + "  --  " + e2.getX() + "," + e2.getY());
+//                Log.i(TAG, "onFling: " + velocityX + "," + velocityY + " -- " + e1.getX() + "," + e1.getY() + "  --  " + e2.getX() + "," + e2.getY());
                 if (gestureFlingTool == null) {
                     gestureFlingTool = new GestureFlingTool();
                     gestureFlingTool.setOnFlingListener(new GestureFlingTool.OnFlingListener() {
                         @Override
                         public void onFling(int x, int y) {
-                            boolean move = move(x, y);
-//                            if (!move) {
-//                                gestureFlingTool.stop();
-//                            }
+                            move(x, y);
                         }
 
                         @Override
@@ -99,8 +132,66 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
 
                 return super.onFling(e1, e2, velocityX, velocityY);
             }
-        });
-        scaleGestureDetector = new ScaleGestureDetector(imageView.getContext(), this);
+        };
+    }
+
+    /**
+     * 双指缩放监听
+     *
+     * @return
+     */
+    private ScaleGestureDetector.OnScaleGestureListener getScaleGestureListener() {
+        return new ScaleGestureDetector.OnScaleGestureListener() {
+            /**
+             * 根据手势缩放中
+             *
+             * @param detector
+             * @return
+             */
+            @Override
+            public boolean onScale(ScaleGestureDetector detector) {
+
+                Matrix matrix = imageView.getImageMatrix();
+                currentScale = getScale();
+                initSmaller(currentScale);
+                float scaleFactor = detector.getScaleFactor();
+                //缩小  放大
+                if ((currentScale > getSmallScale() && scaleFactor < 1.0F) || (currentScale < BIGGER && scaleFactor > 1.0F)) {
+                    if (currentScale * scaleFactor < getSmallScale()) {
+                        scaleFactor = getSmallScale() / currentScale;
+                    }
+                    if (currentScale * scaleFactor > BIGGER) {
+                        scaleFactor = BIGGER / currentScale;
+                    }
+                    matrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
+                    checkBorderAndCenterWhenScale();
+                    onDrawerChangeListener.onBitmapChange();
+                }
+                return true;
+            }
+
+            /**
+             * 缩放开始
+             *
+             * @param detector
+             * @return
+             */
+            @Override
+            public boolean onScaleBegin(ScaleGestureDetector detector) {
+                isZoom = true;
+                return true;
+            }
+
+            /**
+             * 缩放结束
+             *
+             * @param detector
+             */
+            @Override
+            public void onScaleEnd(ScaleGestureDetector detector) {
+                isZoom = false;
+            }
+        };
     }
 
     /**
@@ -116,7 +207,7 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
     }
 
     private void startAnim(final float fromScale, final float targetScale, final float x, final float y) {
-        Log.i(TAG, "startAnim: " + isZoom + "   " + isDrag + "    " + fromScale + " " + targetScale);
+//        Log.i(TAG, "startAnim: " + isZoom + "   " + isDrag + "    " + fromScale + " " + targetScale);
         if (isZoom || isDrag) return;
         ValueAnimator valueAnimator = new ValueAnimator();
         valueAnimator.setFloatValues(1F);
@@ -128,11 +219,11 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
                 Matrix matrix = imageView.getImageMatrix();
                 float targetScaleTemp = (targetScale - fromScale) * value + fromScale;
                 targetScaleTemp = targetScaleTemp / getScale();
-                Log.i(TAG, "onAnimationUpdate: " + targetScaleTemp + "   " + targetScaleTemp + "   " + x + "   " + y);
+//                Log.i(TAG, "onAnimationUpdate: " + targetScaleTemp + "   " + targetScaleTemp + "   " + x + "   " + y);
 
                 matrix.postScale(targetScaleTemp, targetScaleTemp, x, y);
                 checkBorderAndCenterWhenScale();
-                onDrawerChangeListener.onBitmapChange(BitmapDrawer.this);
+                onDrawerChangeListener.onBitmapChange();
             }
         });
         valueAnimator.addListener(new AnimatorListenerAdapter() {
@@ -191,7 +282,6 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
                 break;
             case MotionEvent.ACTION_MOVE:
                 boolean move = move(x, y);
-
                 if (!canTouchArriveEdge && !move) {
                     //校验是否低达边缘
                     lastX = x;
@@ -199,13 +289,19 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
                     return false;
                 }
                 break;
-
         }
         lastX = x;
         lastY = y;
         return isDrag || isZoom;
     }
 
+    /**
+     * 移动 (触摸移动/飞滚)
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     private boolean move(int x, int y) {
         boolean move = true;
         if ((isDrag || isFling) && !isZoom) {
@@ -213,7 +309,6 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
 
             float dx = x - lastX;
             float dy = y - lastY;
-
 
             boolean isHorMove = Math.abs(dx) > Math.abs(dy);//水平移动
 
@@ -258,9 +353,12 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
                 }
             }
             //单指移动
+            if (dx == 0 && dy == 0) {
+                move = false;
+            }
             Matrix imageMatrix = imageView.getImageMatrix();
             imageMatrix.postTranslate(dx, dy);
-            onDrawerChangeListener.onBitmapChange(this);
+            onDrawerChangeListener.onBitmapChange();
         }
         return move;
     }
@@ -275,33 +373,6 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
         return Math.max(SMALLER, currentSmallScale);
     }
 
-    /**
-     * 根据手势缩放中
-     *
-     * @param detector
-     * @return
-     */
-    @Override
-    public boolean onScale(ScaleGestureDetector detector) {
-
-        Matrix matrix = imageView.getImageMatrix();
-        currentScale = getScale();
-        initSmaller(currentScale);
-        float scaleFactor = detector.getScaleFactor();
-        //缩小  放大
-        if ((currentScale > getSmallScale() && scaleFactor < 1.0F) || (currentScale < BIGGER && scaleFactor > 1.0F)) {
-            if (currentScale * scaleFactor < getSmallScale()) {
-                scaleFactor = getSmallScale() / currentScale;
-            }
-            if (currentScale * scaleFactor > BIGGER) {
-                scaleFactor = BIGGER / currentScale;
-            }
-            matrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
-            checkBorderAndCenterWhenScale();
-            onDrawerChangeListener.onBitmapChange(this);
-        }
-        return true;
-    }
 
     /**
      * 在缩放时，进行图片显示范围的控制
@@ -350,50 +421,27 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
      *
      * @return
      */
-    private RectF getMatrixRectF() {
+    public RectF getMatrixRectF() {
+        //改变后的图片 位移/缩放  等指标
         Matrix matrix = imageView.getImageMatrix();
         RectF rect = new RectF();
-        Drawable d = imageView.getDrawable();
-        if (null != d) {
-            rect.set(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+        Drawable drawable = imageView.getDrawable();
+        if (null != drawable) {
+            //原始图片尺寸大小
+            rect.set(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            //获取到当前实际图片中的坐标
             matrix.mapRect(rect);
         }
         return rect;
     }
 
-    public RectF getBitmapRect() {
-        return getMatrixRectF();
-    }
-
     /**
-     * 缩放开始
+     * 刷新限制边界
      *
-     * @param detector
-     * @return
+     * @param lineRect
      */
-    @Override
-    public boolean onScaleBegin(ScaleGestureDetector detector) {
-        isZoom = true;
-        return true;
-    }
-
-    /**
-     * 缩放结束
-     *
-     * @param detector
-     */
-    @Override
-    public void onScaleEnd(ScaleGestureDetector detector) {
-        isZoom = false;
-    }
-
     public void freshLineRect(RectF lineRect) {
-        this.lineRect = lineRect;
         //计算最小缩放大小
-        calcMinScale();
-    }
-
-    private void calcMinScale() {
         if (lineRect != null && SMALLER != 0 && oriRect != null) {
             float centerX = oriRect.centerX();
             float centerY = oriRect.centerY();
@@ -438,13 +486,25 @@ public class BitmapDrawer implements ScaleGestureDetector.OnScaleGestureListener
     }
 
     public interface OnDrawerChangeListener {
-        void onBitmapChange(BitmapDrawer bitmapDrawer);
+        /**
+         * 图片有改变
+         */
+        void onBitmapChange();
 
-        void onClickListener();
+        /**
+         * 单击
+         */
+        void onClick();
 
-        void onDoubleClickListener();
+        /**
+         * 双击
+         */
+        void onDoubleClick();
 
-        boolean onLongClickListener();
+        /**
+         * 长按
+         */
+        void onLongClick();
     }
 
     /**

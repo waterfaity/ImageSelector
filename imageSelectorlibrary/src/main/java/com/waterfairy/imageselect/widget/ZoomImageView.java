@@ -45,7 +45,7 @@ public class ZoomImageView extends AppCompatImageView implements BitmapDrawer.On
     }
 
     @Override
-    public void onBitmapChange(BitmapDrawer bitmapDrawer) {
+    public void onBitmapChange(   ) {
         invalidate();
     }
 
@@ -68,19 +68,18 @@ public class ZoomImageView extends AppCompatImageView implements BitmapDrawer.On
     }
 
     @Override
-    public void onClickListener() {
+    public void onClick() {
         if (onClickListener != null) onClickListener.onClick(this);
-    }
+     }
 
     @Override
-    public void onDoubleClickListener() {
+    public void onDoubleClick() {
         if (onDoubleClickListener != null) onDoubleClickListener.onDoubleClick(this);
     }
 
     @Override
-    public boolean onLongClickListener() {
+    public void onLongClick() {
         if (onLongClickListener != null) onLongClickListener.onLongClick(this);
-        return false;
     }
 
     public void setOnDoubleClick(OnDoubleClickListener onDoubleClickListener) {

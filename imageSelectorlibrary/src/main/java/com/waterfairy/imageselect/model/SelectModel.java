@@ -24,21 +24,18 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
     private SelectPresenterListener mPresenter;
     private PictureSearchTool mPictureSearchTool;
     private PictureSearchTool2 mPictureSearchTool2;
-    private ImageSelectorShareTool mShareTool;
     private SelectImgOptions options;
 
     public SelectModel(SelectPresenterListener listener) {
         this.mPresenter = listener;
         mPictureSearchTool = PictureSearchTool.newInstance();
         mPictureSearchTool.setOnSearchListener(this);
-        mShareTool = ImageSelectorShareTool.getInstance();
     }
 
     public SelectModel(Context context, SelectPresenterListener listener) {
         this.mPresenter = listener;
         mPictureSearchTool2 = PictureSearchTool2.newInstance(context);
         mPictureSearchTool2.setOnSearchListener(this);
-        mShareTool = ImageSelectorShareTool.getInstance();
     }
 
     public void initData(SelectImgOptions options) {
@@ -57,7 +54,7 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
 
         //加载缓存并且缓存有存储
         if (options.isLoadCache()) {
-            ArrayList<SearchFolderBean> folders = mShareTool.getFolders();
+            ArrayList<SearchFolderBean> folders = ImageSelectorShareTool.getInstance().getFolders();
             if (folders != null && folders.size() > 0) {
                 if (mPresenter != null)
                     mPresenter.onGetFoldersSuccess(folders);
@@ -80,7 +77,7 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
     @Override
     public void onSearchSuccess(ArrayList<SearchFolderBean> fileList) {
         //保存搜索路径
-        mShareTool.saveFolder(fileList);
+        ImageSelectorShareTool.getInstance().saveFolder(fileList);
         //搜搜成功
         if (mPresenter != null)
             mPresenter.onGetFoldersSuccess(fileList);

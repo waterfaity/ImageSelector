@@ -97,12 +97,33 @@ public class LineDrawer {
         touchRadius = (int) (mDensity * 13);
     }
 
+    /**
+     * 当前边界
+     *
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     */
     public void setBounds(float left, float top, float right, float bottom) {
         if (mRectF == null) {
             mRectF = new RectF(left, top, right, bottom);
         } else {
             mRectF.set(left, top, right, bottom);
         }
+    }
+
+    /**
+     * view的边界 最大边界
+     *
+     * @param width
+     * @param height
+     */
+    public void setMaxRect(int width, int height) {
+        if (mMaxRect == null) {
+            mMaxRect = new RectF();
+        }
+        mMaxRect.set(0, 0, width, height);
     }
 
     public void draw(Canvas canvas) {
@@ -147,7 +168,6 @@ public class LineDrawer {
         mShadowPath.lineTo(0, mRectF.top);
         mShadowPath.lineTo(0, 0);
         canvas.drawPath(mShadowPath, mShadowPaint);
-
     }
 
     /**
@@ -562,18 +582,6 @@ public class LineDrawer {
         return xTemp >= (x - touchRadius) && xTemp <= (x + touchRadius) && yTemp >= (y - touchRadius) && yTemp <= (y + touchRadius);
     }
 
-    /**
-     * view的边界
-     *
-     * @param width
-     * @param height
-     */
-    public void setMaxRect(int width, int height) {
-        if (mMaxRect == null) {
-            mMaxRect = new RectF();
-        }
-        mMaxRect.set(0, 0, width, height);
-    }
 
     public void freshBitmapRect(RectF bitmapRect) {
         this.bitmapRect = bitmapRect;

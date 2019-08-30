@@ -92,7 +92,7 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
         if (!isImgMove) {
             //刷新图片边距
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                mLineDrawer.freshBitmapRect(mBitmapDrawer.getBitmapRect());
+                mLineDrawer.freshBitmapRect(mBitmapDrawer.getMatrixRectF());
             }
             isLineMove = mLineDrawer.isCanMove(event);
         }
@@ -109,7 +109,7 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
 
     public void startCrop(String cropPath, String absolutePath, OnCropBitmapListener onCropBitmapListener) {
         new CropBitmapAsync()
-                .initData(cropPath, absolutePath, Bitmap.CompressFormat.JPEG, getDrawable(), mLineDrawer.getLineRect(), mBitmapDrawer.getBitmapRect(), onCropBitmapListener)
+                .initData(cropPath, absolutePath, Bitmap.CompressFormat.JPEG, getDrawable(), mLineDrawer.getLineRect(), mBitmapDrawer.getMatrixRectF(), onCropBitmapListener)
                 .start();
     }
 
@@ -124,7 +124,7 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
     }
 
     @Override
-    public void onBitmapChange(BitmapDrawer bitmapDrawer) {
+    public void onBitmapChange() {
         invalidate();
     }
 
@@ -147,12 +147,12 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
     }
 
     @Override
-    public void onClickListener() {
+    public void onClick() {
         if (onClickListener != null) onClickListener.onClick(this);
     }
 
     @Override
-    public void onDoubleClickListener() {
+    public void onDoubleClick() {
         if (onDoubleClickListener != null) onDoubleClickListener.onDoubleClick(this);
     }
 
@@ -165,8 +165,7 @@ public class ImageCropView extends AppCompatImageView implements LineDrawer.OnLi
     }
 
     @Override
-    public boolean onLongClickListener() {
+    public void onLongClick() {
         if (onLongClickListener != null) onLongClickListener.onLongClick(this);
-        return false;
     }
 }
