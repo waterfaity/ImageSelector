@@ -105,7 +105,7 @@ new CompressOptions()
     //文件最大 (kb)
     .setMaxSize(500)
     //转换格式为jpg
-    .setFormatToJpg
+    .setFormatToJpg(true)
     //压缩路径
     .setCompressPath("/sdcard/test/img");
 ``` 
