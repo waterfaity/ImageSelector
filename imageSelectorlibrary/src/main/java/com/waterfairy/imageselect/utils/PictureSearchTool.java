@@ -323,6 +323,7 @@ public class PictureSearchTool {
      * @param imgBeans
      */
     public void sortByTime(List<SearchImgBean> imgBeans) {
+        if (imgBeans == null || imgBeans.size() == 0) return;
         Collections.sort(imgBeans, new Comparator<SearchImgBean>() {
             @Override
             public int compare(SearchImgBean o1, SearchImgBean o2) {

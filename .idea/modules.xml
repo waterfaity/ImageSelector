@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ImageSelector.iml" filepath="$PROJECT_DIR$/ImageSelector.iml" />
       <module fileurl="file://$PROJECT_DIR$/imageSelectorlibrary/imageSelectorlibrary.iml" filepath="$PROJECT_DIR$/imageSelectorlibrary/imageSelectorlibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/myapplication2/myapplication2.iml" filepath="$PROJECT_DIR$/myapplication2/myapplication2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myapplication/myapplication.iml" filepath="$PROJECT_DIR$/myapplication/myapplication.iml" />
     </modules>
   </component>
 </project>

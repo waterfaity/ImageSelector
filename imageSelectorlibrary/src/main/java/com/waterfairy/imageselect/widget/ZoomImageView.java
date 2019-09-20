@@ -38,14 +38,18 @@ public class ZoomImageView extends AppCompatImageView implements BitmapDrawer.On
         if (canZoom) {
             boolean canMove = bitmapDrawer.isCanMove(event);
             getParent().requestDisallowInterceptTouchEvent(canMove);
-            return canMove;
+            if (!canMove) {
+                return super.onTouchEvent(event);
+            } else {
+                return true;
+            }
         } else {
             return super.onTouchEvent(event);
         }
     }
 
     @Override
-    public void onBitmapChange(   ) {
+    public void onBitmapChange() {
         invalidate();
     }
 
@@ -70,7 +74,7 @@ public class ZoomImageView extends AppCompatImageView implements BitmapDrawer.On
     @Override
     public void onClick() {
         if (onClickListener != null) onClickListener.onClick(this);
-     }
+    }
 
     @Override
     public void onDoubleClick() {

@@ -8,7 +8,7 @@
     android:background="@android:color/black"
     tools:context="com.waterfairy.imageselect.activity.ImageViewPagerShowActivity">
 
-    <android.support.v4.view.ViewPager
+    <com.waterfairy.imageselect.widget.MyViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
