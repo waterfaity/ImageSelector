@@ -253,9 +253,13 @@ public class ImageUtils {
      * @return
      */
     public static Object compress(File imageFile, int maxWidth, int maxHeight, int maxSize) {
+        return compress(imageFile, maxWidth, maxHeight, maxSize, false);
+    }
+
+    public static Object compress(File imageFile, int maxWidth, int maxHeight, int maxSize, boolean formatToJpg) {
         try {
             Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
-            if (imageFile.getAbsolutePath().endsWith(".PNG") || imageFile.getAbsolutePath().endsWith(".png")) {
+            if (!formatToJpg && (imageFile.getAbsolutePath().endsWith(".PNG") || imageFile.getAbsolutePath().endsWith(".png"))) {
                 compressFormat = Bitmap.CompressFormat.PNG;
             }
             //从文件解码

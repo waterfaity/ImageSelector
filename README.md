@@ -104,6 +104,8 @@ new CompressOptions()
     .setMaxHeight(1500)
     //文件最大 (kb)
     .setMaxSize(500)
+    //转换格式为jpg
+    .setFormatToJpg
     //压缩路径
     .setCompressPath("/sdcard/test/img");
 ``` 
@@ -117,8 +119,11 @@ CompressTool.newInstance(compressPath,compressOptions,progressListener).compress
 采样率压缩:设置`BitmapFactory.Options.inSampleSize`大小  
 第二步-->  
 PNG:尺寸压缩(`Config:ARGB_4444`,工具:`Canvas`);  
-JPG:尺寸压缩(`Config:ARGB_565` ,工具:`Canvas`)+压缩质量(`bitmap.compress()`)
-
+JPG:尺寸压缩(`Config:ARGB_565` ,工具:`Canvas`)+压缩质量(`bitmap.compress()`)  
+`注`:  
+1.GIF不做压缩处理  
+2.尺寸压缩:改变宽高(png,jpg)  
+3.压缩质量:改变文件大小(适用jpg,png无效)  
 
 
 

@@ -17,7 +17,7 @@ public class DataTransUtils {
         //格式 后缀
         String endFormat = "";
         if (compressOptions.hasExtension()) {
-            if (sourcePath.endsWith(".png") || sourcePath.endsWith(".PNG")) {
+            if (!compressOptions.isFormatToJpg() && (sourcePath.endsWith(".png") || sourcePath.endsWith(".PNG"))) {
                 endFormat = ".png";
             } else if (sourcePath.endsWith(".jpg") || sourcePath.endsWith(".JPG") || sourcePath.endsWith(".jpeg") || sourcePath.endsWith(".JPEG")) {
                 endFormat = ".jpg";

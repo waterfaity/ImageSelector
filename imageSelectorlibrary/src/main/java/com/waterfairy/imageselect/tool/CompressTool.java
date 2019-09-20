@@ -156,7 +156,7 @@ public class CompressTool {
      */
     private String compress(String sourcePath, String targetPath) {
         //压缩 返回 bitmap / IO流
-        Object object = ImageUtils.compress(new File(sourcePath), compressOptions.getMaxWidth(),compressOptions.getMaxHeight(),compressOptions.getMaxSize());
+        Object object = ImageUtils.compress(new File(sourcePath), compressOptions.getMaxWidth(), compressOptions.getMaxHeight(), compressOptions.getMaxSize(), compressOptions.isFormatToJpg());
         //保存图片文件
         boolean success = false;
         if (object instanceof Bitmap) {

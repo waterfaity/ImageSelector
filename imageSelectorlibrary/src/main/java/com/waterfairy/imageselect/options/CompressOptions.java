@@ -15,6 +15,7 @@ public class CompressOptions implements Serializable {
     private int maxSize;//针对jpg
     private String compressPath;//压缩保存路径
     private boolean hasExtension = true;//保存是否保留后缀
+    private boolean formatToJpg = false;//png格式转jpg  注:透明背景会被处理成黑色
 
     public boolean hasExtension() {
         return hasExtension;
@@ -45,6 +46,15 @@ public class CompressOptions implements Serializable {
 
     public CompressOptions setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
+        return this;
+    }
+
+    public boolean isFormatToJpg() {
+        return formatToJpg;
+    }
+
+    public CompressOptions setFormatToJpg(boolean formatToJpg) {
+        this.formatToJpg = formatToJpg;
         return this;
     }
 
