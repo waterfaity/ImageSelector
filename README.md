@@ -1,8 +1,9 @@
 # ImageSelector
-##### 1.防微信图片选择
+ 防微信图片选择(微信7.0.7之前版本)(未加入编辑功能)
+##### 1.图片选择
 ##### 2.拍照
-##### 3.图片展示
-##### 4.图片剪切
+##### 3.图片裁剪
+##### 4.图片展示
 ##### 5.图片压缩
 
 ### 使用:
@@ -24,7 +25,7 @@ compile 'com.github.waterfaity:ImageSelector:2.2.54
 setTransitionAnimRes(int[] transitionAnimRes) 
 //设置一个tag  在onActivityResult() 中会接收该tag
 setTag(Object object) / getTag()   
-//设置屏幕方向 ConstantUtils.ORIENTATION_PORT(默认)/ConstantUtils.ORIENTATION_LAND
+//设置屏幕方向 `ConstantUtils.ORIENTATION_PORT`(默认)/`ConstantUtils.ORIENTATION_LAND`
 setScreenOrientation(int orientation) 
 
 ```
@@ -51,6 +52,10 @@ new SelectImgOptions()
     //添加忽略文件夹
     .addIgnorePaths(ignorePathList) 
 ```
+###### 说明:
+1.遍历sdcard文件夹(指定层次深度`searchDeep`),如果文件夹发现图片 , 添加到已搜索到图片的文件列表中,并跳入下一个文件夹搜索  
+2.使用`ContentResolver`搜索 添加搜索标签(png,jpg,jpeg,gif 等) 优点:更快速
+
 ##### 3.拍照(TakePhotoOptions):
 ```java
 new TakePhotoOptions() 
@@ -90,6 +95,7 @@ ShowImgOptions showImgOptions=new ShowImgOptions()
 ImageSelector.with(activity).options(showImgOptions).showImg(imageView,transitionName)
 ```
 ##### 5.图片压缩(CompressOptions):
+
 ```java
 new CompressOptions()
     //最大宽 (px)
@@ -100,6 +106,19 @@ new CompressOptions()
     .setMaxSize(500)
     //压缩路径
     .setCompressPath("/sdcard/test/img");
+``` 
+###### 内部调用说明
+压缩调用
+```java
+CompressTool.newInstance(compressPath,compressOptions,progressListener).compress(arrayList)
 ```
+###### 压缩说明
+第一步-->  
+采样率压缩:设置`BitmapFactory.Options.inSampleSize`大小  
+第二步-->  
+PNG:尺寸压缩(`Config:ARGB_4444`,工具:`Canvas`);  
+JPG:尺寸压缩(`Config:ARGB_565` ,工具:`Canvas`)+压缩质量(`bitmap.compress()`)
+
+
 
 
