@@ -92,11 +92,11 @@ ImageSelector.with(activity).options(showImgOptions).showImg(imageView,transitio
 ##### 5.图片压缩(CompressOptions):
 ```java
 new CompressOptions()
-    //最大宽
+    //最大宽 (px)
     .setMaxWidth(1500)
-    //最大高
+    //最大高 (px)
     .setMaxHeight(1500)
-    //文件最大
+    //文件最大 (kb)
     .setMaxSize(500)
     //压缩路径
     .setCompressPath("/sdcard/test/img");
