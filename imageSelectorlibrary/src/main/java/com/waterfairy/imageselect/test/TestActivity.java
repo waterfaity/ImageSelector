@@ -155,11 +155,26 @@ public class TestActivity extends RootActivity implements AdapterView.OnItemClic
             if (TextUtils.isEmpty(url)) {
                 return;
             }
-            ImageSelector.with(this).options(new CropImgOptions().setTransitionAnimRes(transAnimRes).setAspectX(1).setAspectY(2).setCropPath("/sdcard/test/img").setImgPath(url).setPathAuthority(pathName).setCropType(CropImgOptions.CROP_TYPE_SElf)).compress(getCompressOptions()).execute();
+            ImageSelector.with(this)
+                    .options(new CropImgOptions()
+                            .setTransitionAnimRes(transAnimRes)
+                            .setAspectX(1)
+                            .setAspectY(2)
+                            .setCropPath("/sdcard/test/img")
+                            .setImgPath(url).setPathAuthority(pathName)
+                            .setCropType(CropImgOptions.CROP_TYPE_SElf))
+                    .compress(getCompressOptions()).execute();
         } else if (v.getId() == R.id.show) {
             if (resultDatas == null) return;
 //            ImageSelector.with(this).options(new ShowImgOptions().addImgList(resultDatas)).execute();
-            ImageSelector.with(this).options(new ShowImgOptions().setTransitionAnimRes(transAnimRes).setClickToDismiss(true).setCurrentPos(0).addImgList(resultDatas).setHasTranslateAnim(hasTransAnim)).showImg(findViewById(R.id.zoom_img), resultDatas.get(0));
+            ImageSelector.with(this)
+                    .options(new ShowImgOptions()
+                            .setTransitionAnimRes(transAnimRes)
+                            .setClickToDismiss(true)
+                            .setCurrentPos(0)
+                            .addImgList(resultDatas)
+                            .setHasTranslateAnim(hasTransAnim))
+                    .showImg(findViewById(R.id.zoom_img), resultDatas.get(0));
         } else if (v.getId() == R.id.zoom_img) {
             Log.i(TAG, "onClick: zoom_img");
         } else if (v.getId() == R.id.show_one) {
