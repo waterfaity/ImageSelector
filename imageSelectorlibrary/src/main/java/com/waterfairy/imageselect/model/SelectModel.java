@@ -41,12 +41,15 @@ public class SelectModel implements PictureSearchTool.OnSearchListener, PictureS
     public void initData(SelectImgOptions options) {
         this.options = options;
         if (mPictureSearchTool != null)
-            mPictureSearchTool.setDeep(options.getSearchDeep())
-                    .setPaths(options.getSearchPaths(),
-                            options.getIgnorePaths()).setContainsGif(options.isContainsGif());
+            mPictureSearchTool
+                    .setDeep(options.getSearchDeep())
+                    .setPaths(options.getSearchPaths(), options.getIgnorePaths())
+                    .setContainsGif(options.isContainsGif());
 
         if (mPictureSearchTool2 != null)
-            mPictureSearchTool2.setPaths(options.getIgnorePaths()).setContainsGif(options.isContainsGif());
+            mPictureSearchTool2
+                    .setPaths(options.getIgnorePaths())
+                    .setContainsGif(options.isContainsGif());
     }
 
     public void queryFolders() {

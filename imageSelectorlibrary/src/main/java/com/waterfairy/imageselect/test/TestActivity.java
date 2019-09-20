@@ -109,14 +109,22 @@ public class TestActivity extends RootActivity implements AdapterView.OnItemClic
     }
 
 
-
     public void selectImg(View view) {
         ArrayList<String> ignore = new ArrayList<>();
         ignore.add(ConstantUtils.PATH_WX);
         ignore.add(ConstantUtils.PATH_QQ_RECV);
         ignore.add(ConstantUtils.PATH_QQ_IMAGES);
         ImageSelector.with(this)
-                .options(new SelectImgOptions().setTransitionAnimRes(transAnimRes).setContainsGif(false).setModelType(ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR).setGridNum(3).setMaxNum(9).setSearchDeep(4).setLoadCache(false).addSearchPaths(ignore).setTag("true"))
+                .options(new SelectImgOptions()
+                        .setTransitionAnimRes(transAnimRes)
+                        .setContainsGif(false)
+                        .setModelType(ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR)
+                        .setGridNum(3)
+                        .setMaxNum(9)
+                        .setSearchDeep(4)
+                        .setLoadCache(false)
+                        .addSearchPaths(ignore)
+                        .setTag("true"))
                 .compress(getCompressOptions())
                 .execute();
     }

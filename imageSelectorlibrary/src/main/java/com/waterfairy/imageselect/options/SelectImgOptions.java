@@ -21,7 +21,7 @@ public class SelectImgOptions extends AOptions implements Serializable {
     private boolean loadCache;//搜索缓存
     private ArrayList<String> searchPaths;//指定搜索路径
     private ArrayList<String> ignorePaths;//忽略路径
-    private boolean containsGif;
+    private boolean containsGif;//包涵fgif
     private int maxNum;//选择最大数 默认9
     private int searchDeep;//搜索文件夹深度 默认3
     private int gridNum;//展示grid数量 默认3
@@ -228,6 +228,7 @@ public class SelectImgOptions extends AOptions implements Serializable {
         super.screenOrientation = screenOrientation;
         return this;
     }
+
     @Override
     public SelectImgOptions setTransitionAnimRes(int[] transitionAnimRes) {
         this.transitionAnimRes = transitionAnimRes;
