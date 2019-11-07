@@ -3,9 +3,9 @@ package com.waterfairy.imageselect;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.fragment.app.Fragment;
 import android.view.View;
 
 import com.waterfairy.imageselect.activity.ImageCropActivity;

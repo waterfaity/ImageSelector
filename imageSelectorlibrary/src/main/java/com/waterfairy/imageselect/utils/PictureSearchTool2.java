@@ -123,7 +123,6 @@ public class PictureSearchTool2 {
                     if (allImageList.size() != 0) {
                         searchImgBeanAll.setFirstImgPath(allImageList.get(0).getPath());
                     }
-
                     fileList.add(0, searchImgBeanAll);
                 }
 

@@ -58,7 +58,6 @@ public class SelectPresenter implements SelectPresenterListener {
             mView.setFolderName(0);
             queryImg(0);
         }
-
     }
 
     public void queryImg(int folderPos) {
