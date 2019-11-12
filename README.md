@@ -106,6 +106,8 @@ new CompressOptions()
     .setMaxSize(500)
     //转换格式为jpg
     .setFormatToJpg(true)
+    /图片旋转(部分手机拍照会旋转90度) 开关:true  目标角度:0
+    .setRotate(true, 0)
     //压缩路径
     .setCompressPath("/sdcard/test/img");
 ``` 
