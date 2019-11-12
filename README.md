@@ -16,7 +16,7 @@ ImageSelector.with(activity)
 
 ### 依赖:
 ```java
-compile 'com.github.waterfaity:ImageSelector:2.2.54
+compile 'com.github.waterfaity:ImageSelector:2.3.1
 ```
 ### 详细:
 ##### 1.Options(AOptions): 
