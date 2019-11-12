@@ -257,6 +257,10 @@ public class ImageUtils {
     }
 
     public static Object compress(File imageFile, int maxWidth, int maxHeight, int maxSize, boolean formatToJpg) {
+        return compress(imageFile, maxWidth, maxHeight, maxSize, false, 0);
+    }
+
+    public static Object compress(File imageFile, int maxWidth, int maxHeight, int maxSize, boolean formatToJpg, int rotateDegree) {
         try {
             Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
             if (!formatToJpg && (imageFile.getAbsolutePath().endsWith(".PNG") || imageFile.getAbsolutePath().endsWith(".png"))) {
@@ -264,7 +268,7 @@ public class ImageUtils {
             }
             //从文件解码
             Bitmap bitmap = decodeFromFile(imageFile, compressFormat, maxWidth, maxHeight);
-            return compress(bitmap, maxWidth, maxHeight, maxSize, compressFormat);
+            return compress(bitmap, maxWidth, maxHeight, maxSize, compressFormat, rotateDegree);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -281,15 +285,15 @@ public class ImageUtils {
      * @param compressFormat
      * @return
      */
-    public static Object compress(Bitmap bitmap, int maxWidth, int maxHeight, int maxSize, Bitmap.CompressFormat compressFormat) {
+    public static Object compress(Bitmap bitmap, int maxWidth, int maxHeight, int maxSize, Bitmap.CompressFormat compressFormat, int rotateDegree) {
         if (bitmap == null) return null;
         if (compressFormat == Bitmap.CompressFormat.PNG) {
             //png压缩尺寸
-            return compressMeasurement(bitmap, maxWidth, maxHeight, Bitmap.Config.ARGB_4444);
+            return compressMeasurement(bitmap, maxWidth, maxHeight, Bitmap.Config.ARGB_4444, rotateDegree);
         } else {
             //jpg压缩尺寸
 //                Bitmap bitmapTemp = matrix(bitmap, compressOptions, false);
-            Bitmap bitmapTemp = compressMeasurement(bitmap, maxWidth, maxHeight, Bitmap.Config.RGB_565);
+            Bitmap bitmapTemp = compressMeasurement(bitmap, maxWidth, maxHeight, Bitmap.Config.RGB_565, rotateDegree);
             if (bitmapTemp != null) {
                 //jpg压缩质量
                 return compressQualityOutIS(bitmapTemp, maxSize);
@@ -302,16 +306,17 @@ public class ImageUtils {
      * 尺寸压缩
      *
      * @param bitmap
+     * @param rotateDegree 支持 90倍数  0 90 180
      * @return
      */
-    private static Bitmap compressMeasurement(Bitmap bitmap, int maxWidth, int maxHeight, Bitmap.Config config) {
+    private static Bitmap compressMeasurement(Bitmap bitmap, int maxWidth, int maxHeight, Bitmap.Config config, int rotateDegree) {
         //200 80
         //200 90     100 45
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 
-        int tempWidth = 0;
-        int tempHeight = 0;
+        int targetWidth = 0;
+        int targetHeight = 0;
 
         if (maxWidth <= 0 || maxHeight <= 0) {
             maxWidth = width;
@@ -321,22 +326,38 @@ public class ImageUtils {
         if ((width > maxWidth || height > maxHeight) || bitmap.getConfig() != config) {
             //压缩
             if (maxWidth / (float) maxHeight > width / (float) height) {
-                tempHeight = maxHeight;
-                tempWidth = (int) (maxHeight * width / (float) height);
+                targetHeight = maxHeight;
+                targetWidth = (int) (maxHeight * width / (float) height);
             } else {
-                tempWidth = maxWidth;
-                tempHeight = (int) (maxWidth * height / (float) width);
+                targetWidth = maxWidth;
+                targetHeight = (int) (maxWidth * height / (float) width);
             }
-            Bitmap bitmapTemp = Bitmap.createBitmap(tempWidth, tempHeight, config);
+
+            float scale = targetWidth / (float) width;
+
+            //旋转
+            if (Math.abs(rotateDegree) % 180 != 0 && (Math.abs(rotateDegree) % 90 == 0)) {
+                //宽高不变
+                int tempWith = targetWidth;
+                targetWidth = targetHeight;
+                targetHeight = tempWith;
+            }
+
+            Bitmap bitmapTemp = Bitmap.createBitmap(targetWidth, targetHeight, config);
             Canvas canvas = new Canvas(bitmapTemp);
             Paint paint = new Paint();
             paint.setAntiAlias(true);
             paint.setFilterBitmap(true);
             paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-            canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(0, 0, tempWidth, tempHeight), paint);
+
+            Matrix matrix = new Matrix();
+            matrix.postRotate(rotateDegree, height / 2, width / 2);
+            matrix.postScale(scale, scale);
+            canvas.drawBitmap(bitmap, matrix, paint);
+//            canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(0, 0, targetWidth, targetHeight), paint);
             //回收
             bitmap.recycle();
-            Log.i(TAG, "compress measure: old: " + width + "/" + height + "; new: " + tempWidth + "/" + tempHeight);
+            Log.i(TAG, "compress measure: old: " + width + "/" + height + "; new: " + targetWidth + "/" + targetHeight);
             bitmap = null;
             return bitmapTemp;
         }

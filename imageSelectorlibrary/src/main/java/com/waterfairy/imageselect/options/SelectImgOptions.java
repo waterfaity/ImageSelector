@@ -26,7 +26,7 @@ public class SelectImgOptions extends AOptions implements Serializable {
     private int searchDeep;//搜索文件夹深度 默认3
     private int gridNum;//展示grid数量 默认3
     private ArrayList<String> hasSelectFiles;//已经选择的文件
-    private int modelType;//获取图片的方式  =0  实用自动义的查询 , SELECT_IMG_MODULE_TYPE_CURSOR  系统的内容提供者
+    private int modelType = ConstantUtils.SELECT_IMG_MODULE_TYPE_CURSOR;//获取图片的方式  =0  实用自动义的查询 , SELECT_IMG_MODULE_TYPE_CURSOR  系统的内容提供者
 
     public boolean isContainsGif() {
         return containsGif;

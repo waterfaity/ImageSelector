@@ -11,6 +11,7 @@ import com.waterfairy.imageselect.utils.MD5Utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -156,7 +157,15 @@ public class CompressTool {
      */
     private String compress(String sourcePath, String targetPath) {
         //压缩 返回 bitmap / IO流
-        Object object = ImageUtils.compress(new File(sourcePath), compressOptions.getMaxWidth(), compressOptions.getMaxHeight(), compressOptions.getMaxSize(), compressOptions.isFormatToJpg());
+        //判断是否需要旋转
+        int rotateDegree = 0;
+        try {
+            int currentDegree = ImageRotateTool.newInstance().getRotate(sourcePath);
+            rotateDegree = compressOptions.getTargetDegree() - currentDegree;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Object object = ImageUtils.compress(new File(sourcePath), compressOptions.getMaxWidth(), compressOptions.getMaxHeight(), compressOptions.getMaxSize(), compressOptions.isFormatToJpg(), rotateDegree);
         //保存图片文件
         boolean success = false;
         if (object instanceof Bitmap) {

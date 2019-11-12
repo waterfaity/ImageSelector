@@ -134,6 +134,7 @@ public class TestActivity extends RootActivity implements AdapterView.OnItemClic
                 .setMaxWidth(1500)
                 .setMaxHeight(1500)
                 .setMaxSize(500)
+                .setTargetDegree(90)
                 .setFormatToJpg(false)
                 .setCompressPath("/sdcard/test/img");
     }

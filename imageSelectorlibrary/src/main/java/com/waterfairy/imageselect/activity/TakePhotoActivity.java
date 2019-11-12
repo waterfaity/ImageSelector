@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import androidx.annotation.Nullable;
+
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -59,13 +61,19 @@ public class TakePhotoActivity extends BaseActivity {
     protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            ArrayList<String> dataList = new ArrayList<String>();
-            dataList.add(file.getAbsolutePath());
-            compress(dataList);
+            String absolutePath = file.getAbsolutePath();
             Glide.with(this).load(file).into(mImg);
+
+            checkOri(absolutePath);
         } else {
             finish();
         }
+    }
+
+    private void checkOri(String absolutePath) {
+        ArrayList<String> dataList = new ArrayList<String>();
+        dataList.add(absolutePath);
+        compress(dataList);
     }
 
     @Override
