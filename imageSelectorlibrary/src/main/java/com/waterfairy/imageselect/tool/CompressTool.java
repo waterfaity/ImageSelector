@@ -160,8 +160,10 @@ public class CompressTool {
         //判断是否需要旋转
         int rotateDegree = 0;
         try {
-            int currentDegree = ImageRotateTool.newInstance().getRotate(sourcePath);
-            rotateDegree = compressOptions.getTargetDegree() - currentDegree;
+            if (compressOptions.getRotateAble()) {
+                int currentDegree = ImageRotateTool.newInstance().getRotate(sourcePath);
+                rotateDegree = compressOptions.getTargetDegree() - currentDegree;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

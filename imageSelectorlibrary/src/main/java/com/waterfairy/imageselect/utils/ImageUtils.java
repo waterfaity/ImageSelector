@@ -306,17 +306,14 @@ public class ImageUtils {
      * 尺寸压缩
      *
      * @param bitmap
-     * @param rotateDegree 支持 90倍数  0 90 180
      * @return
      */
     private static Bitmap compressMeasurement(Bitmap bitmap, int maxWidth, int maxHeight, Bitmap.Config config, int rotateDegree) {
-        //200 80
-        //200 90     100 45
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 
         int targetWidth = 0;
-        int targetHeight = 0;
+//        int targetHeight = 0;
 
         if (maxWidth <= 0 || maxHeight <= 0) {
             maxWidth = width;
@@ -326,40 +323,29 @@ public class ImageUtils {
         if ((width > maxWidth || height > maxHeight) || bitmap.getConfig() != config) {
             //压缩
             if (maxWidth / (float) maxHeight > width / (float) height) {
-                targetHeight = maxHeight;
+//                targetHeight = maxHeight;
                 targetWidth = (int) (maxHeight * width / (float) height);
             } else {
                 targetWidth = maxWidth;
-                targetHeight = (int) (maxWidth * height / (float) width);
+//                targetHeight = (int) (maxWidth * height / (float) width);
             }
-
             float scale = targetWidth / (float) width;
-
-            //旋转
-            if (Math.abs(rotateDegree) % 180 != 0 && (Math.abs(rotateDegree) % 90 == 0)) {
-                //宽高不变
-                int tempWith = targetWidth;
-                targetWidth = targetHeight;
-                targetHeight = tempWith;
-            }
-
-            Bitmap bitmapTemp = Bitmap.createBitmap(targetWidth, targetHeight, config);
-            Canvas canvas = new Canvas(bitmapTemp);
-            Paint paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setFilterBitmap(true);
-            paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-
             Matrix matrix = new Matrix();
-            matrix.postRotate(rotateDegree, height / 2, width / 2);
+            matrix.postRotate(rotateDegree, width / 2, height / 2);
             matrix.postScale(scale, scale);
-            canvas.drawBitmap(bitmap, matrix, paint);
-//            canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(0, 0, targetWidth, targetHeight), paint);
+            Bitmap bitmapTemp = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
             //回收
             bitmap.recycle();
-            Log.i(TAG, "compress measure: old: " + width + "/" + height + "; new: " + targetWidth + "/" + targetHeight);
-            bitmap = null;
             return bitmapTemp;
+        } else {
+            if (rotateDegree != 0) {
+                Matrix matrix = new Matrix();
+                matrix.postRotate(rotateDegree, width / 2, height / 2);
+                Bitmap bitmapTemp = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+                //回收
+                bitmap.recycle();
+                return bitmapTemp;
+            }
         }
         return bitmap;
     }

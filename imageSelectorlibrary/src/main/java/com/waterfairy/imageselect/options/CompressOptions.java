@@ -13,10 +13,11 @@ public class CompressOptions implements Serializable {
     private int maxWidth = -1;
     private int maxHeight = -1;
     private int maxSize;//针对jpg
-    private int targetDegree;//目标角度 (部分手机拍照会旋转)
     private String compressPath;//压缩保存路径
     private boolean hasExtension = true;//保存是否保留后缀
     private boolean formatToJpg = false;//png格式转jpg  注:透明背景会被处理成黑色
+    private boolean rotateAble;//是否可以旋转 设置targetDegree 则 =true
+    private int targetDegree;//目标角度 (部分手机拍照会旋转)
 
     public boolean hasExtension() {
         return hasExtension;
@@ -36,6 +37,13 @@ public class CompressOptions implements Serializable {
     }
 
     public CompressOptions setTargetDegree(int targetDegree) {
+        this.targetDegree = targetDegree;
+        rotateAble = true;
+        return this;
+    }
+
+    public CompressOptions setRotate(boolean rotateAble, int targetDegree) {
+        this.rotateAble = rotateAble;
         this.targetDegree = targetDegree;
         return this;
     }
@@ -84,6 +92,15 @@ public class CompressOptions implements Serializable {
 
     public CompressOptions setCompressPath(String compressPath) {
         this.compressPath = compressPath;
+        return this;
+    }
+
+    public boolean getRotateAble() {
+        return rotateAble;
+    }
+
+    public CompressOptions setRotateAble(boolean rotateAble) {
+        this.rotateAble = rotateAble;
         return this;
     }
 }

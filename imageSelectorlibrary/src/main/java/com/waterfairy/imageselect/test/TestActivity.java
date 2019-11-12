@@ -2,9 +2,11 @@ package com.waterfairy.imageselect.test;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.SharedElementCallback;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -134,7 +136,7 @@ public class TestActivity extends RootActivity implements AdapterView.OnItemClic
                 .setMaxWidth(1500)
                 .setMaxHeight(1500)
                 .setMaxSize(500)
-                .setTargetDegree(90)
+                .setRotate(true, 0)
                 .setFormatToJpg(false)
                 .setCompressPath("/sdcard/test/img");
     }
