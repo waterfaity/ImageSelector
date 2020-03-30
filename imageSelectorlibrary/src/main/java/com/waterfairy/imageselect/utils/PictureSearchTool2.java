@@ -248,6 +248,7 @@ public class PictureSearchTool2 {
      * @param fileList
      */
     private void sortByTime(ArrayList<SearchFolderBean> fileList) {
+        if (fileList == null || fileList.size() == 0) return;
         Collections.sort(fileList, new Comparator<SearchFolderBean>() {
             @Override
             public int compare(SearchFolderBean o1, SearchFolderBean o2) {

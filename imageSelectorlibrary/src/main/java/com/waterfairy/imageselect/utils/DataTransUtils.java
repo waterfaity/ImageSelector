@@ -19,7 +19,7 @@ public class DataTransUtils {
         if (compressOptions.hasExtension()) {
             if (!compressOptions.isFormatToJpg() && (sourcePath.endsWith(".png") || sourcePath.endsWith(".PNG"))) {
                 endFormat = ".png";
-            } else if (sourcePath.endsWith(".jpg") || sourcePath.endsWith(".JPG") || sourcePath.endsWith(".jpeg") || sourcePath.endsWith(".JPEG")) {
+            } else {
                 endFormat = ".jpg";
             }
         }
