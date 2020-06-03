@@ -92,12 +92,12 @@ public class ImageSelectorShareTool {
     /**
      * 保存压缩的图片 和源图片
      *
-     * @param compressPath
+     * @param compressTag
      * @param srcPath
      */
-    public void saveSrcPath(String compressPath, String srcPath) {
+    public void saveSrcPath(String compressTag, String srcPath) {
         if (share != null) {
-            share.edit().putString(compressPath, srcPath).apply();
+            share.edit().putString(compressTag, srcPath).apply();
         } else {
             new Exception("文件选择器的SharedPreferences还未初始化").printStackTrace();
         }
@@ -106,12 +106,12 @@ public class ImageSelectorShareTool {
     /**
      * 返回压缩前的文件路径 并且文件存在
      *
-     * @param compressPath
+     * @param compressTag
      * @return
      */
-    public String getSrcPath(String compressPath) {
+    public String getSrcPath(String compressTag) {
         if (share != null) {
-            return share.getString(compressPath, null);
+            return share.getString(compressTag, null);
         } else {
             new Exception("文件选择器的SharedPreferences还未初始化").printStackTrace();
         }

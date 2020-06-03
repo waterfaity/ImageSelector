@@ -3,6 +3,7 @@ package com.waterfairy.imageselect.tool;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.waterfairy.imageselect.options.CompressOptions;
 import com.waterfairy.imageselect.utils.DataTransUtils;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
  * @info:
  */
 public class CompressTool {
+    private static final String TAG = "CompressTool";
     private OnCompressListener onCompressListener;
     private String cachePath;
     private CompressOptions compressOptions;
@@ -101,26 +103,31 @@ public class CompressTool {
                     String sourcePath = arrayLists[0].get(i);
                     //判空
                     if (!TextUtils.isEmpty(sourcePath)) {
-                        String compressPath = null;
-                        File file = null;
-                        if (sourcePath.endsWith(".gif") || sourcePath.endsWith(".GIF")) {
-                            //gif  GIF 不压缩
-                            compressPath = sourcePath;
-                            file = new File(compressPath, sourcePath);
-                        } else {
-                            String cachePathName = DataTransUtils.generateFileCompressPath(compressOptions, sourcePath, MD5Utils.getMD5Code(sourcePath));
-                            //压缩保存文件
-                            file = new File(cachePath, cachePathName);
-                            if (file.exists() && file.length() > 0) {
-                                //已经压缩
-                                compressPath = file.getAbsolutePath();
+                        //是否已经有压缩的数据
+                        String compressTag = getCompressTag(sourcePath);
+                        String compressPath = DataTransUtils.getCompressPath(compressTag);
+                        if (TextUtils.isEmpty(compressPath)) {
+                            File file = null;
+                            if (sourcePath.endsWith(".gif") || sourcePath.endsWith(".GIF")) {
+                                //gif  GIF 不压缩
+                                compressPath = sourcePath;
+                                file = new File(compressPath, sourcePath);
                             } else {
-                                //压缩
-                                compressPath = compress(sourcePath, file.getAbsolutePath());
+                                String cachePathName = DataTransUtils.generateFileCompressPath(compressOptions, sourcePath, MD5Utils.getMD5Code(sourcePath));
+                                //压缩保存文件
+                                file = new File(cachePath, cachePathName);
+                                if (file.exists() && file.length() > 0) {
+                                    //已经压缩
+                                    compressPath = file.getAbsolutePath();
+                                } else {
+                                    //压缩
+                                    compressPath = compress(sourcePath, file.getAbsolutePath());
+                                }
                             }
+                            ImageSelectorShareTool.getInstance().saveSrcPath(compressTag, compressPath);
+                            ImageSelectorShareTool.getInstance().saveSrcPath(compressPath, sourcePath);
                         }
                         tempDataList.add(compressPath);
-                        ImageSelectorShareTool.getInstance().saveSrcPath(file.getAbsolutePath(), sourcePath);
                     } else {
                         //文件名为空
                         tempDataList.add(sourcePath);
@@ -148,6 +155,16 @@ public class CompressTool {
         }.execute(dataList);
     }
 
+
+    private String getCompressTag(String sourcePath) {
+        if (compressOptions != null && !TextUtils.isEmpty(sourcePath)) {
+            String s = compressOptions.toString();
+            return MD5Utils.getMD5Code(sourcePath + s);
+        } else {
+            return sourcePath;
+        }
+    }
+
     /**
      * 压缩
      *
@@ -162,7 +179,7 @@ public class CompressTool {
         try {
             if (compressOptions.getRotateAble()) {
                 int currentDegree = ImageRotateTool.newInstance().getRotate(sourcePath);
-                rotateDegree = compressOptions.getTargetDegree() - currentDegree;
+                rotateDegree = currentDegree + compressOptions.getTargetDegree();
             }
         } catch (IOException e) {
             e.printStackTrace();

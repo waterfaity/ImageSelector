@@ -41,4 +41,16 @@ public class DataTransUtils {
         if (TextUtils.isEmpty(srcPath)) return inputPath;
         else return srcPath;
     }
+
+    /**
+     * 查看保存的压缩路径
+     *
+     * @param compressTag
+     * @return
+     */
+    public static String getCompressPath(String compressTag) {
+        String srcPath = ImageSelectorShareTool.getInstance().getSrcPath(compressTag);
+        if (TextUtils.isEmpty(srcPath)) return null;
+        else return srcPath;
+    }
 }
