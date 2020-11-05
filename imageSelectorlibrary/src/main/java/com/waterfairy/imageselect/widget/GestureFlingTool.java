@@ -2,6 +2,7 @@ package com.waterfairy.imageselect.widget;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -57,6 +58,9 @@ public class GestureFlingTool {
         final float endEventX;//飞滚起点x
         final float endEventY;//飞滚起点y
 
+        private float currentEventX;
+        private float currentEventY;
+
         private OnFlingListener onFlingListener;
         private long currentTime;
 
@@ -72,8 +76,8 @@ public class GestureFlingTool {
             this.velocityX = velocityX;
             this.velocityY = velocityY;
 
-            endEventX = endEvent.getX();
-            endEventY = endEvent.getY();
+            currentEventX = endEventX = endEvent.getX();
+            currentEventY = endEventY = endEvent.getY();
 
             currentTime = System.currentTimeMillis();
 
@@ -96,18 +100,21 @@ public class GestureFlingTool {
                     if (!work) return;
                     float radio = (float) animation.getAnimatedValue();
                     //时间差
-                    long dTime = System.currentTimeMillis() - currentTime;
+                    long tempTime = System.currentTimeMillis();
+                    long dTime = tempTime - currentTime;
+                    currentTime = tempTime;
+
                     //位移=当前速度*时间差
                     float dX = velocityX * radio * (dTime / 1000F);
                     float dY = velocityY * radio * (dTime / 1000F);
 
                     //计算当前坐标
-                    float targetX = endEventX + dX;
-                    float targetY = endEventY + dY;
+                    currentEventX += dX;
+                    currentEventY += dY;
+
 
                     if (onFlingListener != null)
-                        onFlingListener.onFling((int) targetX, (int) targetY);
-                    currentTime = System.currentTimeMillis();
+                        onFlingListener.onFling((int) currentEventX, (int) currentEventY, (int) dX, (int) dY);
 
                 }
             });
@@ -147,7 +154,7 @@ public class GestureFlingTool {
 
 
     public interface OnFlingListener {
-        void onFling(int x, int y);
+        void onFling(int x, int y, int dX, int dY);
 
         void onFlingEnd();
     }

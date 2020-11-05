@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -118,7 +117,7 @@ public class BitmapDrawer {
                     gestureFlingTool = new GestureFlingTool();
                     gestureFlingTool.setOnFlingListener(new GestureFlingTool.OnFlingListener() {
                         @Override
-                        public void onFling(int x, int y) {
+                        public void onFling(int x, int y, int dX, int dY) {
                             move(x, y);
                         }
 
@@ -359,6 +358,8 @@ public class BitmapDrawer {
             Matrix imageMatrix = imageView.getImageMatrix();
             imageMatrix.postTranslate(dx, dy);
             onDrawerChangeListener.onBitmapChange();
+            lastX = x;
+            lastY = y;
         }
         return move;
     }

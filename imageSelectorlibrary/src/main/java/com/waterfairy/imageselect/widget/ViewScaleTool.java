@@ -118,7 +118,7 @@ public class ViewScaleTool {
                     gestureFlingTool = new GestureFlingTool();
                     gestureFlingTool.setOnFlingListener(new GestureFlingTool.OnFlingListener() {
                         @Override
-                        public void onFling(int x, int y) {
+                        public void onFling(int x, int y, int dX, int dY) {
                             move(x, y);
                         }
 
@@ -364,6 +364,8 @@ public class ViewScaleTool {
             Matrix imageMatrix = getViewMatrix();
             imageMatrix.postTranslate(dx, dy);
             onDrawerChangeListener.onBitmapChange();
+            lastX = x;
+            lastY = y;
         }
         return move;
     }
