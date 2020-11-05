@@ -111,11 +111,8 @@ public class GestureFlingTool {
                     //计算当前坐标
                     currentEventX += dX;
                     currentEventY += dY;
-
-
                     if (onFlingListener != null)
                         onFlingListener.onFling((int) currentEventX, (int) currentEventY, (int) dX, (int) dY);
-
                 }
             });
 
