@@ -1,4 +1,5 @@
 # ImageSelector 
+https://www.jianshu.com/p/97874de14435
 ##### 1.图片选择
 ##### 2.拍照
 ##### 3.图片裁剪
