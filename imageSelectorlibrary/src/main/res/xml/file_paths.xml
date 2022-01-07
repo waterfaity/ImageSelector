@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path
-        name="root_app_external"
-        path="download/"/>
-    <!--WidDomRead path-->
-    <external-path
-        name="root_in_sdcard"
-        path="WisDomCloud"/>
     <!--all path-->
     <external-path
         name="external_storage_root"
